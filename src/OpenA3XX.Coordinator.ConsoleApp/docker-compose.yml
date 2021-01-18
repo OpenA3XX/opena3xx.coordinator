@@ -1,0 +1,30 @@
+﻿version: '3.4'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: opena3xx.coordinator.rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: opena3xx
+      RABBITMQ_DEFAULT_PASS: opena3xx
+      
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+  seq:
+    image: datalust/seq:2020.1
+    environment:
+      "ACCEPT_EULA": "Y"
+    ports:
+      - "5341:5341"
+      - "8080:80"
+    volumes:
+      - seq_data:/data
+
+networks:
+  coordinator:
+    driver: bridge
+
+volumes:
+  seq_data:
+    driver: local

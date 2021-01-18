@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="RabbitMQ.Client" Version="6.2.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Messaging" />
+      <Folder Include="Outputs" />
+    </ItemGroup>
+
+</Project>

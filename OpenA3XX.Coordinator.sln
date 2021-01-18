@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenA3XX.Coordinator.ConsoleApp", "src\OpenA3XX.Coordinator.ConsoleApp\OpenA3XX.Coordinator.ConsoleApp.csproj", "{C3AD9237-FBC4-43F7-8BFD-72C8C49C89FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenA3XX.Core", "src\OpenA3XX.Core\OpenA3XX.Core.csproj", "{42F0133A-8604-40B3-A78B-05EC4F505889}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C3AD9237-FBC4-43F7-8BFD-72C8C49C89FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3AD9237-FBC4-43F7-8BFD-72C8C49C89FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3AD9237-FBC4-43F7-8BFD-72C8C49C89FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3AD9237-FBC4-43F7-8BFD-72C8C49C89FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42F0133A-8604-40B3-A78B-05EC4F505889}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42F0133A-8604-40B3-A78B-05EC4F505889}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42F0133A-8604-40B3-A78B-05EC4F505889}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42F0133A-8604-40B3-A78B-05EC4F505889}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
