@@ -18,18 +18,18 @@ namespace OpenA3XX.Core.Repositories
             mcdu.CockpitSide = cockpitSide;
             mcdu.Inputs = new List<PushButton>
             {
-                new() {Name = $"{sideKey}:PushButtonL1", State = PushButtonState.Off},
-                new() {Name = $"{sideKey}:PushButtonL2", State = PushButtonState.Off},
-                new() {Name = $"{sideKey}:PushButtonL3", State = PushButtonState.Off},
-                new() {Name = $"{sideKey}:PushButtonL4", State = PushButtonState.Off},
-                new() {Name = $"{sideKey}:PushButtonL5", State = PushButtonState.Off},
-                new() {Name = $"{sideKey}:PushButtonL6", State = PushButtonState.Off},
-                new() {Name = $"{sideKey}:PushButtonR1", State = PushButtonState.Off},
-                new() {Name = $"{sideKey}:PushButtonR2", State = PushButtonState.Off},
-                new() {Name = $"{sideKey}:PushButtonR3", State = PushButtonState.Off},
-                new() {Name = $"{sideKey}:PushButtonR4", State = PushButtonState.Off},
-                new() {Name = $"{sideKey}:PushButtonR5", State = PushButtonState.Off},
-                new() {Name = $"{sideKey}:PushButtonR6", State = PushButtonState.Off},
+                new() {Name = $"{sideKey}:PushButtonLSK1", State = PushButtonState.Off},
+                new() {Name = $"{sideKey}:PushButtonLSK2", State = PushButtonState.Off},
+                new() {Name = $"{sideKey}:PushButtonLSK3", State = PushButtonState.Off},
+                new() {Name = $"{sideKey}:PushButtonLSK4", State = PushButtonState.Off},
+                new() {Name = $"{sideKey}:PushButtonLSK5", State = PushButtonState.Off},
+                new() {Name = $"{sideKey}:PushButtonLSK6", State = PushButtonState.Off},
+                new() {Name = $"{sideKey}:PushButtonRSK1", State = PushButtonState.Off},
+                new() {Name = $"{sideKey}:PushButtonRSK2", State = PushButtonState.Off},
+                new() {Name = $"{sideKey}:PushButtonRSK3", State = PushButtonState.Off},
+                new() {Name = $"{sideKey}:PushButtonRSK4", State = PushButtonState.Off},
+                new() {Name = $"{sideKey}:PushButtonRSK5", State = PushButtonState.Off},
+                new() {Name = $"{sideKey}:PushButtonRSK6", State = PushButtonState.Off},
                 new() {Name = $"{sideKey}:PushButtonDIR", State = PushButtonState.Off},
                 new() {Name = $"{sideKey}:PushButtonPROG", State = PushButtonState.Off},
                 new() {Name = $"{sideKey}:PushButtonPERF", State = PushButtonState.Off},
@@ -86,7 +86,9 @@ namespace OpenA3XX.Core.Repositories
                 new() {Name = $"{sideKey}:PushButtonDIV", State = PushButtonState.Off},
                 new() {Name = $"{sideKey}:PushButtonSP", State = PushButtonState.Off},
                 new() {Name = $"{sideKey}:PushButtonOVFY", State = PushButtonState.Off},
-                new() {Name = $"{sideKey}:PushButtonCLR", State = PushButtonState.Off}
+                new() {Name = $"{sideKey}:PushButtonCLR", State = PushButtonState.Off},
+                new() {Name = $"{sideKey}:PushButtonBRT", State = PushButtonState.Off},
+                new() {Name = $"{sideKey}:PushButtonDIM", State = PushButtonState.Off}
             };
 
             return mcdu;
