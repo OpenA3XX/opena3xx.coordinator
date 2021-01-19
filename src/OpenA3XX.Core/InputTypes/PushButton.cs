@@ -1,6 +1,6 @@
 ﻿using OpenA3XX.Core.InputState;
 
-namespace OpenA3XX.Core.Inputs
+namespace OpenA3XX.Core.InputTypes
 {
     public class PushButton
     {

@@ -1,0 +1,13 @@
+﻿{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "OpenA3XX.Coordinator.EventsProcessor": {
+      "commandName": "Project",
+      "launchBrowser": false,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:1111"
+    }
+  }
+}

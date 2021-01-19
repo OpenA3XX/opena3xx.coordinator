@@ -1,7 +1,7 @@
 ﻿using System;
 using OpenA3XX.Core.Enums;
 
-namespace OpenA3XX.Core.Models
+namespace OpenA3XX.Core.Eventing
 {
     public class HardwareEvent
     {

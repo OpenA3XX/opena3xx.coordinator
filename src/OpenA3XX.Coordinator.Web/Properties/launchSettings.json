@@ -1,0 +1,12 @@
+﻿{
+  "profiles": {
+    "OpenA3XX.Coordinator.Web": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "applicationUrl": "https://localhost:2222",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

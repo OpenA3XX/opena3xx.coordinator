@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using OpenA3XX.Core.Enums;
-using OpenA3XX.Core.Inputs;
 using OpenA3XX.Core.InputState;
+using OpenA3XX.Core.InputTypes;
 using OpenA3XX.Core.Models;
 
 namespace OpenA3XX.Core.Repositories
@@ -12,7 +12,7 @@ namespace OpenA3XX.Core.Repositories
         {
             var mcdu = new Mcdu();
 
-            var sideKey = cockpitSide == CockpitSide.Captain ? "c" : "fo";
+            var sideKey = cockpitSide == CockpitSide.Captain ? "pilot" : "co-pilot";
 
             mcdu.Id = $"cockpit:{sideKey}:mcdu";
             mcdu.CockpitSide = cockpitSide;
