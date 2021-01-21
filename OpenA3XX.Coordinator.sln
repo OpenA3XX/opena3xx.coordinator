@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenA3XX.Core", "src\OpenA3
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Opena3XX.Coordinator.Web", "src\OpenA3XX.Coordinator.Web\OpenA3XX.Coordinator.Web.csproj", "{EFAF8979-98AF-46E1-9D88-BBFAC389D038}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenA3XX.Coordinator.TestHarness", "src\OpenA3XX.Coordinator.TestHarness\OpenA3XX.Coordinator.TestHarness.csproj", "{A92752AA-DF92-4DF2-B057-DD187F685FA7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{EFAF8979-98AF-46E1-9D88-BBFAC389D038}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFAF8979-98AF-46E1-9D88-BBFAC389D038}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFAF8979-98AF-46E1-9D88-BBFAC389D038}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A92752AA-DF92-4DF2-B057-DD187F685FA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A92752AA-DF92-4DF2-B057-DD187F685FA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A92752AA-DF92-4DF2-B057-DD187F685FA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A92752AA-DF92-4DF2-B057-DD187F685FA7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

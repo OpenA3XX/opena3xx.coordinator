@@ -1,0 +1,86 @@
+﻿[
+  {
+    "calculatorCode": "EXTERNAL POWER ON",
+    "modelSpecific": false,
+    "varClassification": "FsDefault", //L, H, K, false, FsDefault
+    "varType": "Bool" //Bool, Number, Degrees, Percentage
+  },
+  {
+    "calculatorCode": "EXTERNAL POWER AVAILABLE:1",
+    "modelSpecific": false,
+    "varClassification": "FsDefault", //L, H, K, false, FsDefault
+    "varType": "Bool" //Bool, Number, Degrees, Percentage
+  },
+  {
+    "calculatorCode": "APU_GEN_ONLINE",
+    "modelSpecific": false,
+    "varClassification": "L", //L, H, K, false, FsDefault
+    "varType": "Bool" //Bool, Number, Degrees, Percentage
+  },
+  {
+    "calculatorCode": "ACPowerAvailable",
+    "modelSpecific": false,
+    "varClassification": "L", //L, H, K, false, FsDefault
+    "varType": "Bool" //Bool, Number, Degrees, Percentage
+  },
+  {
+    "calculatorCode": "DCPowerAvailable",
+    "modelSpecific": false,
+    "varClassification": "L", //L, H, K, false, FsDefault
+    "varType": "Bool" //Bool, Number, Degrees, Percentage
+  },
+  {
+    "calculatorCode": "SIM ON GROUND",
+    "modelSpecific": false,
+    "varClassification": "FsDefault", //L, H, K, false, FsDefault
+    "varType": "Bool" //Bool, Number, Degrees, Percentage
+  },
+  {
+    "calculatorCode": "AUTOPILOT MASTER",
+    "modelSpecific": false,
+    "varClassification": "FsDefault", //L, H, K, false, FsDefault
+    "varType": "Bool" //Bool, Number, Degrees, Percentage
+  },
+  {
+    "calculatorCode": "A32NX_AIRCOND_PACK1_TOGGLE",
+    "modelSpecific": true,
+    "varClassification": "L", //L, H, K, false, FsDefault
+    "varType": "Bool" //Bool, Number, Degrees, Percentage
+  },
+  {
+    "calculatorCode": "A32NX_AIRCOND_PACK2_TOGGLE",
+    "modelSpecific": true,
+    "varClassification": "L", //L, H, K, false, FsDefault
+    "varType": "Bool" //Bool, Number, Degrees, Percentage
+  },
+  {
+    "calculatorCode": "A32NX_AIRCOND_RAMAIR_TOGGLE",
+    "modelSpecific": true,
+    "varClassification": "L", //L, H, K, false, FsDefault
+    "varType": "Bool" //Bool, Number, Degrees, Percentage
+  },
+  {
+    "calculatorCode": "A32NX_AIRCOND_HOTAIR_TOGGLE",
+    "modelSpecific": true,
+    "varClassification": "L", //L, H, K, false, FsDefault
+    "varType": "Bool" //Bool, Number, Degrees, Percentage
+  },
+  {
+    "calculatorCode": "A32NX_HYD_ENG1PUMP_TOGGLE",
+    "modelSpecific": true,
+    "varClassification": "L", //L, H, K, false, FsDefault
+    "varType": "Bool" //Bool, Number, Degrees, Percentage
+  },
+  {
+    "calculatorCode": "A32NX_HYD_ENG2PUMP_TOGGLE",
+    "modelSpecific": true,
+    "varClassification": "L", //L, H, K, false, FsDefault
+    "varType": "Bool" //Bool, Number, Degrees, Percentage
+  },
+  {
+    "calculatorCode": "AUTO_THROTTLE_ARM",
+    "modelSpecific": false,
+    "varClassification": "K", //L, H, K, false, FsDefault
+    "varType": "Bool" //Bool, Number, Degrees, Percentage
+  }
+]

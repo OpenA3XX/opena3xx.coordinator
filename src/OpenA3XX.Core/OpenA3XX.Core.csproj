@@ -5,6 +5,11 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.2">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="5.0.2" />
         <PackageReference Include="RabbitMQ.Client" Version="6.2.1" />
         <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
         <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
@@ -20,11 +25,13 @@
         <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
         <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
         <PackageReference Include="Serilog.Sinks.Seq" Version="4.0.0" />
+        <PackageReference Include="sqlite" Version="3.13.0" />
     </ItemGroup>
 
     <ItemGroup>
         <Folder Include="Messaging" />
         <Folder Include="OutputTypes" />
+        <Folder Include="Services" />
     </ItemGroup>
 
     <ItemGroup>
