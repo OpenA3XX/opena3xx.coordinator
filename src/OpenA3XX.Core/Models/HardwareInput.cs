@@ -10,5 +10,7 @@ namespace OpenA3XX.Core.Models
         public string Name { get; set; }
 
         public virtual HardwareInputType HardwareInputType { get; set; }
+        
+        public int? State { get; set; }
     }
 }

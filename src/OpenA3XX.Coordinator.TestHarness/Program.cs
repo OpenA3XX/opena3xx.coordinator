@@ -14,9 +14,9 @@ namespace OpenA3XX.Coordinator.TestHarness
             var dbContextOptionsBuilder = new DbContextOptionsBuilder<HardwareDataContext>();
             dbContextOptionsBuilder.UseSqlite(CoordinatorConfiguration.GetDatabasesFolderPath(OpenA3XXDatabase.Hardware));
 
-            var repo = new HardwareComponentRepository(new HardwareDataContext(dbContextOptionsBuilder.Options));
+            var repo = new ManufacturerRepository(new HardwareDataContext(dbContextOptionsBuilder.Options));
 
-            var data = repo.GetAllHardwareComponents();
+            var data = repo.GetAllManufacturers();
 
             Console.ReadLine();
         }
