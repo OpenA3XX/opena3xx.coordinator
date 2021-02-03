@@ -11,11 +11,11 @@ namespace OpenA3XX.Processors.CockpitEvents
     {
         static void Main(string[] args)
         {
-            var dbContextOptionsBuilder = new DbContextOptionsBuilder<HardwareDataContext>();
+            var dbContextOptionsBuilder = new DbContextOptionsBuilder<CoreDataContext>();
             dbContextOptionsBuilder.UseSqlite(
-                CoordinatorConfiguration.GetDatabasesFolderPath(OpenA3XXDatabase.Hardware));
+                CoordinatorConfiguration.GetDatabasesFolderPath(OpenA3XXDatabase.Core));
 
-            var repo = new ManufacturerRepository(new HardwareDataContext(dbContextOptionsBuilder.Options));
+            var repo = new ManufacturerRepository(new CoreDataContext(dbContextOptionsBuilder.Options));
 
             var data = repo.GetAllManufacturers();
 

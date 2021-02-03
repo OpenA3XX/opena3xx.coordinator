@@ -12,7 +12,7 @@ namespace OpenA3XX.Core.Configuration
                 throw new ApplicationException("opena3xx.database.path Environment Variable not set.");
             }
 
-            if (database == OpenA3XXDatabase.Hardware)
+            if (database == OpenA3XXDatabase.Core)
             {
                 return $"Data Source = {databasesPath}\\hardware.db";
             }
@@ -23,6 +23,6 @@ namespace OpenA3XX.Core.Configuration
 
     public enum OpenA3XXDatabase
     {
-        Hardware
+        Core
     }
 }

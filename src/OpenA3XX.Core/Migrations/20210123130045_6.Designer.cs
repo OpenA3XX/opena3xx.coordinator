@@ -9,7 +9,7 @@ using OpenA3XX.Core.DataContexts;
 
 namespace OpenA3XX.Coordinator.TestHarness.Migrations
 {
-    [DbContext(typeof(HardwareDataContext))]
+    [DbContext(typeof(CoreDataContext))]
     [Migration("20210123130045_6")]
     partial class _6
     {

@@ -4,14 +4,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using OpenA3XX.Coordinator.TestHarness;
 using OpenA3XX.Core.DataContexts;
 
 namespace OpenA3XX.Coordinator.TestHarness.Migrations
 {
     [DbContext(typeof(CoreDataContext))]
-    [Migration("20210122211219_3")]
-    partial class _3
+    [Migration("20210203221705_Adding Last Seen")]
+    partial class AddingLastSeen
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -25,7 +24,7 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("ManufucturerId")
+                    b.Property<int?>("ManufacturerId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Model")
@@ -33,31 +32,9 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ManufucturerId");
+                    b.HasIndex("ManufacturerId");
 
                     b.ToTable("AircraftModels");
-                });
-
-            modelBuilder.Entity("OpenA3XX.Core.Models.HardwareComponent", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("HardwarePanelId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("InternalId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("HardwarePanelId");
-
-                    b.ToTable("HardwareComponents");
                 });
 
             modelBuilder.Entity("OpenA3XX.Core.Models.HardwareInput", b =>
@@ -66,20 +43,23 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("HardwareComponentId")
+                    b.Property<int?>("HardwareInputTypeId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("HardwareInputTypeId")
+                    b.Property<int?>("HardwarePanelId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
+                    b.Property<int?>("State")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("HardwareComponentId");
-
                     b.HasIndex("HardwareInputTypeId");
+
+                    b.HasIndex("HardwarePanelId");
 
                     b.ToTable("HardwareInputs");
                 });
@@ -104,20 +84,23 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("HardwareComponentId")
+                    b.Property<int?>("HardwareOutputTypeId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("HardwareOutputTypeId")
+                    b.Property<int?>("HardwarePanelId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
+                    b.Property<int?>("State")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("HardwareComponentId");
-
                     b.HasIndex("HardwareOutputTypeId");
+
+                    b.HasIndex("HardwarePanelId");
 
                     b.ToTable("HardwareOutputs");
                 });
@@ -161,7 +144,35 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
                     b.ToTable("HardwarePanels");
                 });
 
-            modelBuilder.Entity("OpenA3XX.Core.Models.Manufucturer", b =>
+            modelBuilder.Entity("OpenA3XX.Core.Models.HardwarePanelToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DeviceIpAddress")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DeviceToken")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("HardwarePanelId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("LastSeen")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HardwarePanelId");
+
+                    b.ToTable("HardwarePanelTokens");
+                });
+
+            modelBuilder.Entity("OpenA3XX.Core.Models.Manufacturer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -172,49 +183,40 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Manufucturers");
+                    b.ToTable("Manufacturers");
                 });
 
             modelBuilder.Entity("OpenA3XX.Core.Models.AircraftModel", b =>
                 {
-                    b.HasOne("OpenA3XX.Core.Models.Manufucturer", "Manufucturer")
+                    b.HasOne("OpenA3XX.Core.Models.Manufacturer", "Manufacturer")
                         .WithMany("AircraftModels")
-                        .HasForeignKey("ManufucturerId");
+                        .HasForeignKey("ManufacturerId");
 
-                    b.Navigation("Manufucturer");
-                });
-
-            modelBuilder.Entity("OpenA3XX.Core.Models.HardwareComponent", b =>
-                {
-                    b.HasOne("OpenA3XX.Core.Models.HardwarePanel", "HardwarePanel")
-                        .WithMany("HardwareComponents")
-                        .HasForeignKey("HardwarePanelId");
-
-                    b.Navigation("HardwarePanel");
+                    b.Navigation("Manufacturer");
                 });
 
             modelBuilder.Entity("OpenA3XX.Core.Models.HardwareInput", b =>
                 {
-                    b.HasOne("OpenA3XX.Core.Models.HardwareComponent", null)
-                        .WithMany("HardwareInput")
-                        .HasForeignKey("HardwareComponentId");
-
                     b.HasOne("OpenA3XX.Core.Models.HardwareInputType", "HardwareInputType")
                         .WithMany()
                         .HasForeignKey("HardwareInputTypeId");
+
+                    b.HasOne("OpenA3XX.Core.Models.HardwarePanel", null)
+                        .WithMany("HardwareInput")
+                        .HasForeignKey("HardwarePanelId");
 
                     b.Navigation("HardwareInputType");
                 });
 
             modelBuilder.Entity("OpenA3XX.Core.Models.HardwareOutput", b =>
                 {
-                    b.HasOne("OpenA3XX.Core.Models.HardwareComponent", null)
-                        .WithMany("HardwareOutput")
-                        .HasForeignKey("HardwareComponentId");
-
                     b.HasOne("OpenA3XX.Core.Models.HardwareOutputType", "HardwareOutputType")
                         .WithMany()
                         .HasForeignKey("HardwareOutputTypeId");
+
+                    b.HasOne("OpenA3XX.Core.Models.HardwarePanel", null)
+                        .WithMany("HardwareOutput")
+                        .HasForeignKey("HardwarePanelId");
 
                     b.Navigation("HardwareOutputType");
                 });
@@ -228,24 +230,30 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
                     b.Navigation("AircraftModel");
                 });
 
+            modelBuilder.Entity("OpenA3XX.Core.Models.HardwarePanelToken", b =>
+                {
+                    b.HasOne("OpenA3XX.Core.Models.HardwarePanel", "HardwarePanel")
+                        .WithMany()
+                        .HasForeignKey("HardwarePanelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("HardwarePanel");
+                });
+
             modelBuilder.Entity("OpenA3XX.Core.Models.AircraftModel", b =>
                 {
                     b.Navigation("HardwarePanels");
                 });
 
-            modelBuilder.Entity("OpenA3XX.Core.Models.HardwareComponent", b =>
+            modelBuilder.Entity("OpenA3XX.Core.Models.HardwarePanel", b =>
                 {
                     b.Navigation("HardwareInput");
 
                     b.Navigation("HardwareOutput");
                 });
 
-            modelBuilder.Entity("OpenA3XX.Core.Models.HardwarePanel", b =>
-                {
-                    b.Navigation("HardwareComponents");
-                });
-
-            modelBuilder.Entity("OpenA3XX.Core.Models.Manufucturer", b =>
+            modelBuilder.Entity("OpenA3XX.Core.Models.Manufacturer", b =>
                 {
                     b.Navigation("AircraftModels");
                 });

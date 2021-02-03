@@ -7,7 +7,7 @@ using OpenA3XX.Core.DataContexts;
 
 namespace OpenA3XX.Coordinator.TestHarness.Migrations
 {
-    [DbContext(typeof(HardwareDataContext))]
+    [DbContext(typeof(CoreDataContext))]
     partial class HardwareDataContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -142,6 +142,34 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
                     b.ToTable("HardwarePanels");
                 });
 
+            modelBuilder.Entity("OpenA3XX.Core.Models.HardwarePanelToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DeviceIpAddress")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DeviceToken")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("HardwarePanelId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("LastSeen")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HardwarePanelId");
+
+                    b.ToTable("HardwarePanelTokens");
+                });
+
             modelBuilder.Entity("OpenA3XX.Core.Models.Manufacturer", b =>
                 {
                     b.Property<int>("Id")
@@ -198,6 +226,17 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
                         .HasForeignKey("AircraftModelId");
 
                     b.Navigation("AircraftModel");
+                });
+
+            modelBuilder.Entity("OpenA3XX.Core.Models.HardwarePanelToken", b =>
+                {
+                    b.HasOne("OpenA3XX.Core.Models.HardwarePanel", "HardwarePanel")
+                        .WithMany()
+                        .HasForeignKey("HardwarePanelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("HardwarePanel");
                 });
 
             modelBuilder.Entity("OpenA3XX.Core.Models.AircraftModel", b =>

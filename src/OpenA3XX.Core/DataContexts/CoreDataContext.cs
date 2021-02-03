@@ -4,9 +4,9 @@ using OpenA3XX.Core.Models;
 
 namespace OpenA3XX.Core.DataContexts
 {
-    public class HardwareDataContext : DbContext
+    public class CoreDataContext : DbContext
     {
-        public HardwareDataContext(DbContextOptions options)
+        public CoreDataContext(DbContextOptions options)
             : base(options)
         {
         }
@@ -21,8 +21,10 @@ namespace OpenA3XX.Core.DataContexts
         
         public DbSet<HardwareOutput> HardwareOutputs { get; set; }
         
+        public DbSet<HardwarePanelToken> HardwarePanelTokens { get; set; }
+        
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlite(CoordinatorConfiguration.GetDatabasesFolderPath(OpenA3XXDatabase.Hardware));
+            => options.UseSqlite(CoordinatorConfiguration.GetDatabasesFolderPath(OpenA3XXDatabase.Core));
     }
 }
