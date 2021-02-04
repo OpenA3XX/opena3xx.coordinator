@@ -23,6 +23,8 @@ namespace OpenA3XX.Core.DataContexts
         
         public DbSet<HardwarePanelToken> HardwarePanelTokens { get; set; }
         
+        public DbSet<SystemConfiguration> SystemConfiguration { get; set; }
+        
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
             => options.UseSqlite(CoordinatorConfiguration.GetDatabasesFolderPath(OpenA3XXDatabase.Core));

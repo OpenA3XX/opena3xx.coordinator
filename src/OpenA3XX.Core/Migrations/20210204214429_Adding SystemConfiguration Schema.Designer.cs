@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OpenA3XX.Core.DataContexts;
 
 namespace OpenA3XX.Coordinator.TestHarness.Migrations
 {
     [DbContext(typeof(CoreDataContext))]
-    partial class HardwareDataContextModelSnapshot : ModelSnapshot
+    [Migration("20210204214429_Adding SystemConfiguration Schema")]
+    partial class AddingSystemConfigurationSchema
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -182,23 +184,6 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Manufacturers");
-                });
-
-            modelBuilder.Entity("OpenA3XX.Core.Models.SystemConfiguration", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Key")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SystemConfiguration");
                 });
 
             modelBuilder.Entity("OpenA3XX.Core.Models.AircraftModel", b =>

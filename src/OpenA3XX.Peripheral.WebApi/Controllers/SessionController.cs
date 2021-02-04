@@ -41,7 +41,7 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
             return data;
         }
         
-        [HttpGet("token/{token}")]
+        [HttpGet("token-details/{token}")]
         public HardwarePanelToken GetByHardwarePanelToken(Guid token)
         {
             var data = _hardwarePanelTokensRepository.GetByHardwarePanelToken(token);
@@ -49,13 +49,20 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
             return data;
         }
         
-        [HttpPost("heartbeat/{token}")]
+        [HttpPost("keep-alive/{token}")]
         public HardwarePanelToken Heartbeat(Guid token)
         {
             var data = _hardwarePanelTokensRepository.UpdateLastSeenForHardwarePanel(token);
 
             return data;
         }
+
+        [HttpGet("ping")]
+        public string Ping()
+        {
+            return "Pong from OpenA3XX";
+        }
+        
         
 
         [HttpPost]
