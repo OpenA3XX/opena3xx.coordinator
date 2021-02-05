@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace OpenA3XX.Peripheral.WebApi.Models
+namespace OpenA3XX.Core.Dtos
 {
-    public class SystemConfigurationResponse
+    public class SystemConfigurationResponseDto
     {
         public Dictionary<string, string> Configuration { get; set; }
     }

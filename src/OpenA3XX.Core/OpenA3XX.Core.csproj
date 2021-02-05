@@ -5,6 +5,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="AutoMapper" Version="10.1.1" />
+        <PackageReference Include="Humanizer.Core" Version="2.8.26" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.2">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -41,7 +43,8 @@
     <ItemGroup>
         <Folder Include="Messaging" />
         <Folder Include="OutputTypes" />
-        <Folder Include="Services" />
+        <Folder Include="Requests" />
+        <Folder Include="Responses" />
     </ItemGroup>
 
     <ItemGroup>
