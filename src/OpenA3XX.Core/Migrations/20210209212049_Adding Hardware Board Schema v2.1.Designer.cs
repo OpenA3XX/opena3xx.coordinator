@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OpenA3XX.Core.DataContexts;
 
 namespace OpenA3XX.Coordinator.TestHarness.Migrations
 {
     [DbContext(typeof(CoreDataContext))]
-    partial class HardwareDataContextModelSnapshot : ModelSnapshot
+    [Migration("20210209212049_Adding Hardware Board Schema v2.1")]
+    partial class AddingHardwareBoardSchemav21
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -193,9 +195,6 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
                     b.Property<int>("ExtenderBusBitType")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("HardwareBit")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int?>("HardwareInputId")
                         .HasColumnType("INTEGER");
 
@@ -223,9 +222,6 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("HardwareBoardId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("HardwareBus")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");

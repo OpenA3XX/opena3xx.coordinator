@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OpenA3XX.Core.DataContexts;
 
 namespace OpenA3XX.Coordinator.TestHarness.Migrations
 {
     [DbContext(typeof(CoreDataContext))]
-    partial class HardwareDataContextModelSnapshot : ModelSnapshot
+    [Migration("20210208225951_Allow HardwareInputId, OutputId as nullable")]
+    partial class AllowHardwareInputIdOutputIdasnullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,10 +43,50 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("Bus1Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("Bus2Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("Bus3Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("Bus4Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("Bus5Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("Bus6Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("Bus7Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("Bus8Id")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Bus1Id");
+
+                    b.HasIndex("Bus2Id");
+
+                    b.HasIndex("Bus3Id");
+
+                    b.HasIndex("Bus4Id");
+
+                    b.HasIndex("Bus5Id");
+
+                    b.HasIndex("Bus6Id");
+
+                    b.HasIndex("Bus7Id");
+
+                    b.HasIndex("Bus8Id");
 
                     b.ToTable("HardwareBoards");
                 });
@@ -193,16 +235,10 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
                     b.Property<int>("ExtenderBusBitType")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("HardwareBit")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int?>("HardwareInputId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("HardwareOutputId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("IOExtenderBusId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -211,9 +247,7 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
 
                     b.HasIndex("HardwareOutputId");
 
-                    b.HasIndex("IOExtenderBusId");
-
-                    b.ToTable("IOExtenderBits");
+                    b.ToTable("IOExtenderBit");
                 });
 
             modelBuilder.Entity("OpenA3XX.Core.Models.IOExtenderBus", b =>
@@ -222,15 +256,87 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("HardwareBoardId")
+                    b.Property<int?>("Bit0Id")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("HardwareBus")
+                    b.Property<int?>("Bit10Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("Bit11Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("Bit12Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("Bit13Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("Bit14Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("Bit15Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("Bit1Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("Bit2Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("Bit3Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("Bit4Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("Bit5Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("Bit6Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("Bit7Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("Bit8Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("Bit9Id")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("HardwareBoardId");
+                    b.HasIndex("Bit0Id");
+
+                    b.HasIndex("Bit10Id");
+
+                    b.HasIndex("Bit11Id");
+
+                    b.HasIndex("Bit12Id");
+
+                    b.HasIndex("Bit13Id");
+
+                    b.HasIndex("Bit14Id");
+
+                    b.HasIndex("Bit15Id");
+
+                    b.HasIndex("Bit1Id");
+
+                    b.HasIndex("Bit2Id");
+
+                    b.HasIndex("Bit3Id");
+
+                    b.HasIndex("Bit4Id");
+
+                    b.HasIndex("Bit5Id");
+
+                    b.HasIndex("Bit6Id");
+
+                    b.HasIndex("Bit7Id");
+
+                    b.HasIndex("Bit8Id");
+
+                    b.HasIndex("Bit9Id");
 
                     b.ToTable("IOExtenderBuses");
                 });
@@ -273,6 +379,57 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
                         .HasForeignKey("ManufacturerId");
 
                     b.Navigation("Manufacturer");
+                });
+
+            modelBuilder.Entity("OpenA3XX.Core.Models.HardwareBoard", b =>
+                {
+                    b.HasOne("OpenA3XX.Core.Models.IOExtenderBus", "Bus1")
+                        .WithMany()
+                        .HasForeignKey("Bus1Id");
+
+                    b.HasOne("OpenA3XX.Core.Models.IOExtenderBus", "Bus2")
+                        .WithMany()
+                        .HasForeignKey("Bus2Id");
+
+                    b.HasOne("OpenA3XX.Core.Models.IOExtenderBus", "Bus3")
+                        .WithMany()
+                        .HasForeignKey("Bus3Id");
+
+                    b.HasOne("OpenA3XX.Core.Models.IOExtenderBus", "Bus4")
+                        .WithMany()
+                        .HasForeignKey("Bus4Id");
+
+                    b.HasOne("OpenA3XX.Core.Models.IOExtenderBus", "Bus5")
+                        .WithMany()
+                        .HasForeignKey("Bus5Id");
+
+                    b.HasOne("OpenA3XX.Core.Models.IOExtenderBus", "Bus6")
+                        .WithMany()
+                        .HasForeignKey("Bus6Id");
+
+                    b.HasOne("OpenA3XX.Core.Models.IOExtenderBus", "Bus7")
+                        .WithMany()
+                        .HasForeignKey("Bus7Id");
+
+                    b.HasOne("OpenA3XX.Core.Models.IOExtenderBus", "Bus8")
+                        .WithMany()
+                        .HasForeignKey("Bus8Id");
+
+                    b.Navigation("Bus1");
+
+                    b.Navigation("Bus2");
+
+                    b.Navigation("Bus3");
+
+                    b.Navigation("Bus4");
+
+                    b.Navigation("Bus5");
+
+                    b.Navigation("Bus6");
+
+                    b.Navigation("Bus7");
+
+                    b.Navigation("Bus8");
                 });
 
             modelBuilder.Entity("OpenA3XX.Core.Models.HardwareInput", b =>
@@ -331,28 +488,108 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
                         .WithMany()
                         .HasForeignKey("HardwareOutputId");
 
-                    b.HasOne("OpenA3XX.Core.Models.IOExtenderBus", "IOExtenderBus")
-                        .WithMany("Bits")
-                        .HasForeignKey("IOExtenderBusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("HardwareInput");
 
                     b.Navigation("HardwareOutput");
-
-                    b.Navigation("IOExtenderBus");
                 });
 
             modelBuilder.Entity("OpenA3XX.Core.Models.IOExtenderBus", b =>
                 {
-                    b.HasOne("OpenA3XX.Core.Models.HardwareBoard", "HardwareBoard")
-                        .WithMany("Buses")
-                        .HasForeignKey("HardwareBoardId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("OpenA3XX.Core.Models.IOExtenderBit", "Bit0")
+                        .WithMany()
+                        .HasForeignKey("Bit0Id");
 
-                    b.Navigation("HardwareBoard");
+                    b.HasOne("OpenA3XX.Core.Models.IOExtenderBit", "Bit10")
+                        .WithMany()
+                        .HasForeignKey("Bit10Id");
+
+                    b.HasOne("OpenA3XX.Core.Models.IOExtenderBit", "Bit11")
+                        .WithMany()
+                        .HasForeignKey("Bit11Id");
+
+                    b.HasOne("OpenA3XX.Core.Models.IOExtenderBit", "Bit12")
+                        .WithMany()
+                        .HasForeignKey("Bit12Id");
+
+                    b.HasOne("OpenA3XX.Core.Models.IOExtenderBit", "Bit13")
+                        .WithMany()
+                        .HasForeignKey("Bit13Id");
+
+                    b.HasOne("OpenA3XX.Core.Models.IOExtenderBit", "Bit14")
+                        .WithMany()
+                        .HasForeignKey("Bit14Id");
+
+                    b.HasOne("OpenA3XX.Core.Models.IOExtenderBit", "Bit15")
+                        .WithMany()
+                        .HasForeignKey("Bit15Id");
+
+                    b.HasOne("OpenA3XX.Core.Models.IOExtenderBit", "Bit1")
+                        .WithMany()
+                        .HasForeignKey("Bit1Id");
+
+                    b.HasOne("OpenA3XX.Core.Models.IOExtenderBit", "Bit2")
+                        .WithMany()
+                        .HasForeignKey("Bit2Id");
+
+                    b.HasOne("OpenA3XX.Core.Models.IOExtenderBit", "Bit3")
+                        .WithMany()
+                        .HasForeignKey("Bit3Id");
+
+                    b.HasOne("OpenA3XX.Core.Models.IOExtenderBit", "Bit4")
+                        .WithMany()
+                        .HasForeignKey("Bit4Id");
+
+                    b.HasOne("OpenA3XX.Core.Models.IOExtenderBit", "Bit5")
+                        .WithMany()
+                        .HasForeignKey("Bit5Id");
+
+                    b.HasOne("OpenA3XX.Core.Models.IOExtenderBit", "Bit6")
+                        .WithMany()
+                        .HasForeignKey("Bit6Id");
+
+                    b.HasOne("OpenA3XX.Core.Models.IOExtenderBit", "Bit7")
+                        .WithMany()
+                        .HasForeignKey("Bit7Id");
+
+                    b.HasOne("OpenA3XX.Core.Models.IOExtenderBit", "Bit8")
+                        .WithMany()
+                        .HasForeignKey("Bit8Id");
+
+                    b.HasOne("OpenA3XX.Core.Models.IOExtenderBit", "Bit9")
+                        .WithMany()
+                        .HasForeignKey("Bit9Id");
+
+                    b.Navigation("Bit0");
+
+                    b.Navigation("Bit1");
+
+                    b.Navigation("Bit10");
+
+                    b.Navigation("Bit11");
+
+                    b.Navigation("Bit12");
+
+                    b.Navigation("Bit13");
+
+                    b.Navigation("Bit14");
+
+                    b.Navigation("Bit15");
+
+                    b.Navigation("Bit2");
+
+                    b.Navigation("Bit3");
+
+                    b.Navigation("Bit4");
+
+                    b.Navigation("Bit5");
+
+                    b.Navigation("Bit6");
+
+                    b.Navigation("Bit7");
+
+                    b.Navigation("Bit8");
+
+                    b.Navigation("Bit9");
                 });
 
             modelBuilder.Entity("OpenA3XX.Core.Models.AircraftModel", b =>
@@ -360,21 +597,11 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
                     b.Navigation("HardwarePanels");
                 });
 
-            modelBuilder.Entity("OpenA3XX.Core.Models.HardwareBoard", b =>
-                {
-                    b.Navigation("Buses");
-                });
-
             modelBuilder.Entity("OpenA3XX.Core.Models.HardwarePanel", b =>
                 {
                     b.Navigation("HardwareInput");
 
                     b.Navigation("HardwareOutput");
-                });
-
-            modelBuilder.Entity("OpenA3XX.Core.Models.IOExtenderBus", b =>
-                {
-                    b.Navigation("Bits");
                 });
 
             modelBuilder.Entity("OpenA3XX.Core.Models.Manufacturer", b =>

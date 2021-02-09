@@ -25,6 +25,11 @@ namespace OpenA3XX.Core.DataContexts
         
         public DbSet<SystemConfiguration> SystemConfiguration { get; set; }
         
+        public DbSet<HardwareBoard> HardwareBoards { get; set; }
+        
+        public DbSet<IOExtenderBus> IOExtenderBuses { get; set; }
+        
+        public DbSet<IOExtenderBit> IOExtenderBits { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
             => options.UseSqlite(CoordinatorConfiguration.GetDatabasesFolderPath(OpenA3XXDatabase.Core));

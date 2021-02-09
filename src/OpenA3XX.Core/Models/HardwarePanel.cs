@@ -9,7 +9,6 @@ namespace OpenA3XX.Core.Models
         public string Name { get; set; }
         
         public virtual IList<HardwareInput> HardwareInput { get; set; }
-        
         public virtual IList<HardwareOutput> HardwareOutput { get; set; }
         
         public virtual AircraftModel AircraftModel { get; set; }
