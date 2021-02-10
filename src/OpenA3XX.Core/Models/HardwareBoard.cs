@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace OpenA3XX.Core.Models
 {
@@ -17,7 +16,7 @@ namespace OpenA3XX.Core.Models
         public int Id { get; set; }
 
         public int HardwareBoardId { get; set; }
-        
+
         public HardwareBus HardwareBus { get; set; }
 
         public virtual HardwareBoard HardwareBoard { get; set; }
@@ -30,7 +29,7 @@ namespace OpenA3XX.Core.Models
         public int Id { get; set; }
 
         public HardwareBit HardwareBit { get; set; }
-        
+
         public int IOExtenderBusId { get; set; }
 
         public virtual IOExtenderBus IOExtenderBus { get; set; }
@@ -70,6 +69,7 @@ namespace OpenA3XX.Core.Models
         Bit14,
         Bit15
     }
+
     public enum HardwareBus
     {
         Bus0,
@@ -79,6 +79,6 @@ namespace OpenA3XX.Core.Models
         Bus4,
         Bus5,
         Bus6,
-        Bus7,
+        Bus7
     }
 }

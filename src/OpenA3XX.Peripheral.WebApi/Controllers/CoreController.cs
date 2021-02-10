@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using OpenA3XX.Core.Configuration;
-using OpenA3XX.Core.DataContexts;
-using OpenA3XX.Core.Models;
 using OpenA3XX.Core.Repositories;
 
 namespace OpenA3XX.Peripheral.WebApi.Controllers
@@ -18,15 +12,15 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
         private readonly IHttpContextAccessor _accessor;
         private readonly ILogger<HardwarePanelController> _logger;
 
-        public CoreController(ILogger<HardwarePanelController> logger, IHttpContextAccessor accessor, IHardwarePanelTokensRepository hardwarePanelTokensRepository)
+        public CoreController(ILogger<HardwarePanelController> logger, IHttpContextAccessor accessor,
+            IHardwarePanelTokensRepository hardwarePanelTokensRepository)
         {
             _logger = logger;
             _accessor = accessor;
-            
         }
 
         /// <summary>
-        /// Ping endpoint used for network discovery functionality in the hardware panels
+        ///     Ping endpoint used for network discovery functionality in the hardware panels
         /// </summary>
         /// <returns></returns>
         [HttpGet("heartbeat/ping")]
@@ -34,6 +28,5 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
         {
             return "Pong from OpenA3XX";
         }
-        
     }
 }

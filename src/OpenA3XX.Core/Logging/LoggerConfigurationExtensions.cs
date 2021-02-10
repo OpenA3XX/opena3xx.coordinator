@@ -6,7 +6,6 @@ using Serilog;
 using Serilog.Core.Enrichers;
 using Serilog.Enrichers.AspNetCore.HttpContext;
 
-
 namespace OpenA3XX.Core.Logging
 {
     public static class LoggerConfigurationExtensions

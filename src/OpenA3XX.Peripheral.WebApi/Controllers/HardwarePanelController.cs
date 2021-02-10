@@ -16,7 +16,8 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
         private readonly IHardwarePanelTokensService _hardwarePanelTokensService;
         private readonly ILogger<HardwarePanelController> _logger;
 
-        public HardwarePanelController(ILogger<HardwarePanelController> logger, IHttpContextAccessor accessor, IHardwarePanelTokensService hardwarePanelTokensService)
+        public HardwarePanelController(ILogger<HardwarePanelController> logger, IHttpContextAccessor accessor,
+            IHardwarePanelTokensService hardwarePanelTokensService)
         {
             _logger = logger;
             _accessor = accessor;
@@ -24,7 +25,7 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
         }
 
         /// <summary>
-        /// Get Hardware Panel by their respective Hardware Panel Id
+        ///     Get Hardware Panel by their respective Hardware Panel Id
         /// </summary>
         /// <param name="id">The Hardware Panel Id</param>
         /// <returns></returns>
@@ -35,9 +36,9 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
 
             return data;
         }
-        
+
         /// <summary>
-        /// Get Hardware Panel by Token.
+        ///     Get Hardware Panel by Token.
         /// </summary>
         /// <param name="token">The Hardware Panel Token</param>
         /// <returns></returns>
@@ -48,9 +49,9 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
 
             return data;
         }
-        
+
         /// <summary>
-        /// Get all Hardware Panels.
+        ///     Get all Hardware Panels.
         /// </summary>
         /// <returns></returns>
         [HttpGet("details")]
@@ -60,10 +61,10 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
 
             return data;
         }
-        
-        
+
+
         /// <summary>
-        /// Registering a new hardware panel.
+        ///     Registering a new hardware panel.
         /// </summary>
         /// <param name="deviceRegistrationRequest">Information about the hardware panel to register</param>
         /// <returns></returns>
@@ -74,7 +75,7 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
         }
 
         /// <summary>
-        /// Endpoint which is used by hardware panels to notify their presence in the system.
+        ///     Endpoint which is used by hardware panels to notify their presence in the system.
         /// </summary>
         /// <param name="token">The Hardware Panel Token</param>
         /// <returns></returns>

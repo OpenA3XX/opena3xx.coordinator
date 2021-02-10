@@ -26,9 +26,9 @@ namespace OpenA3XX.Coordinator.SimulatorEventProcessor
                 app.UseDeveloperExceptionPage();
             }
 
-            var webSocketOptions = new WebSocketOptions()
+            var webSocketOptions = new WebSocketOptions
             {
-                KeepAliveInterval = TimeSpan.FromSeconds(120),
+                KeepAliveInterval = TimeSpan.FromSeconds(120)
             };
             app.UseWebSockets(webSocketOptions);
             app.UseLoggingConfiguration(env);

@@ -3,6 +3,5 @@
     public class DeviceRegistrationRequestDto
     {
         public int HardwarePanelId { get; set; }
-        
     }
 }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using OpenA3XX.Core.Configuration;
 using OpenA3XX.Core.DataContexts;
 using OpenA3XX.Core.Models;
@@ -10,9 +9,9 @@ using OpenA3XX.Core.Repositories;
 
 namespace OpenA3XX.Processors.CockpitEvents
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             var dbContextOptionsBuilder = new DbContextOptionsBuilder<CoreDataContext>();
             dbContextOptionsBuilder.UseSqlite(
@@ -34,24 +33,24 @@ namespace OpenA3XX.Processors.CockpitEvents
                 Name = "MCDU1",
                 Buses = new List<IOExtenderBus>
                 {
-                    new IOExtenderBus()
+                    new()
                     {
                         HardwareBus = HardwareBus.Bus0,
-                        Bits = new List<IOExtenderBit>()
+                        Bits = new List<IOExtenderBit>
                         {
-                            new IOExtenderBit
+                            new()
                             {
                                 ExtenderBusBitType = ExtenderBusBitType.Input, HardwareInputId = 13
                             },
-                            new IOExtenderBit
+                            new()
                             {
                                 ExtenderBusBitType = ExtenderBusBitType.Input, HardwareInputId = 14
                             },
-                            new IOExtenderBit
+                            new()
                             {
                                 ExtenderBusBitType = ExtenderBusBitType.Input, HardwareInputId = 15
                             },
-                            new IOExtenderBit
+                            new()
                             {
                                 ExtenderBusBitType = ExtenderBusBitType.Input, HardwareInputId = 16
                             }
@@ -61,19 +60,18 @@ namespace OpenA3XX.Processors.CockpitEvents
             };
 
 
-
             var repo = new HardwareBoardRepository(new CoreDataContext(dbContextOptionsBuilder.Options));
-           // var x = repo.AddHardwareBoard(hardwareBoard);
-           var data = repo.GetAll()
-               .Include(c => c.Buses)
-               .ThenInclude(c => c.Bits)
-               .ThenInclude(c => c.HardwareInput)
-               .ThenInclude(c => c.HardwareInputType)
-               .Include(c => c.Buses)
-               .ThenInclude(c => c.Bits)
-               .ThenInclude(c => c.HardwareOutput)
-               .ThenInclude(c => c.HardwareOutputType)
-               .ToList();
+            // var x = repo.AddHardwareBoard(hardwareBoard);
+            var data = repo.GetAll()
+                .Include(c => c.Buses)
+                .ThenInclude(c => c.Bits)
+                .ThenInclude(c => c.HardwareInput)
+                .ThenInclude(c => c.HardwareInputType)
+                .Include(c => c.Buses)
+                .ThenInclude(c => c.Bits)
+                .ThenInclude(c => c.HardwareOutput)
+                .ThenInclude(c => c.HardwareOutputType)
+                .ToList();
 
             Console.ReadLine();
         }

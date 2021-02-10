@@ -2,6 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
+        <LangVersion>9</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
@@ -36,15 +37,6 @@
         <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
-    </ItemGroup>
-
-    
-    
-    <ItemGroup>
-        <Folder Include="Messaging" />
-        <Folder Include="OutputTypes" />
-        <Folder Include="Requests" />
-        <Folder Include="Responses" />
     </ItemGroup>
 
     <ItemGroup>

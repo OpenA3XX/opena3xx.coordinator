@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using OpenA3XX.Core.Eventing;
 using OpenA3XX.Core.Repositories;
-using RabbitMQ.Client;
 using Serilog;
 
 namespace OpenA3XX.Core.Sockets.Handlers
@@ -46,7 +45,6 @@ namespace OpenA3XX.Core.Sockets.Handlers
                             var body = Encoding.UTF8.GetBytes(bufferAsString);
                             channel.BasicPublish("simulator_events_exchange", "", null, body);
                         }*/
-
 
 
                         Log.Information("{@data}", data);

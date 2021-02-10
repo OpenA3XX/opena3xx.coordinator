@@ -8,7 +8,7 @@ using OpenA3XX.Core.Repositories;
 
 namespace OpenA3XX.Core.Services
 {
-    public class HardwarePanelTokensService: IHardwarePanelTokensService
+    public class HardwarePanelTokensService : IHardwarePanelTokensService
     {
         private readonly IHttpContextAccessor _accessor;
         private readonly IHardwarePanelTokensRepository _hardwarePanelTokensRepository;
@@ -20,6 +20,7 @@ namespace OpenA3XX.Core.Services
             _hardwarePanelTokensRepository = hardwarePanelTokensRepository;
             _mapper = mapper;
         }
+
         public void UpdateLastSeenForHardwarePane(Guid token)
         {
             _hardwarePanelTokensRepository.UpdateLastSeenForHardwarePanel(token);
@@ -29,13 +30,15 @@ namespace OpenA3XX.Core.Services
         {
             var hardwarePanelToken = _hardwarePanelTokensRepository.GetByHardwarePanelId(id);
             var hardwarePanelTokenDto = _mapper.Map<HardwarePanelToken, HardwarePanelTokenDto>(hardwarePanelToken);
+
             return hardwarePanelTokenDto;
         }
-        
+
         public HardwarePanelTokenDto GetByHardwarePanelToken(Guid token)
         {
             var hardwarePanelToken = _hardwarePanelTokensRepository.GetByHardwarePanelToken(token);
             var hardwarePanelTokenDto = _mapper.Map<HardwarePanelToken, HardwarePanelTokenDto>(hardwarePanelToken);
+
             return hardwarePanelTokenDto;
         }
 
@@ -43,6 +46,7 @@ namespace OpenA3XX.Core.Services
         {
             var hardwarePanelTokens = _hardwarePanelTokensRepository.GetAllHardwarePanelTokens();
             var hardwarePanelTokenDtoList = _mapper.Map<IList<HardwarePanelToken>, IList<HardwarePanelTokenDto>>(hardwarePanelTokens);
+
             return hardwarePanelTokenDtoList;
         }
 

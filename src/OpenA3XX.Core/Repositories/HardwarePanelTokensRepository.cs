@@ -11,6 +11,7 @@ namespace OpenA3XX.Core.Repositories
         public HardwarePanelTokensRepository(DbContext context) : base(context)
         {
         }
+
         public HardwarePanelToken GetByHardwarePanelToken(Guid hardwarePanelToken)
         {
             return FindBy(c => c.DeviceToken == hardwarePanelToken.ToString()).Include(c => c.HardwarePanel).First();
@@ -35,7 +36,7 @@ namespace OpenA3XX.Core.Repositories
 
         public HardwarePanelToken UpdateLastSeenForHardwarePanel(Guid hardwarePanelToken)
         {
-            var session =  FindBy(c => c.DeviceToken == hardwarePanelToken.ToString()).First();
+            var session = FindBy(c => c.DeviceToken == hardwarePanelToken.ToString()).First();
             session.LastSeen = DateTime.Now;
             Update(session, session.Id);
             return session;
@@ -50,6 +51,5 @@ namespace OpenA3XX.Core.Repositories
         HardwarePanelToken SaveHardwarePanelToken(HardwarePanelToken hardwarePanelToken);
 
         HardwarePanelToken UpdateLastSeenForHardwarePanel(Guid hardwarePanelToken);
-
     }
 }
