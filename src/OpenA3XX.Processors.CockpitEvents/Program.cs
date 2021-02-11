@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using OpenA3XX.Core.Configuration;
 using OpenA3XX.Core.DataContexts;
+using OpenA3XX.Core.Dtos;
 using OpenA3XX.Core.Models;
 using OpenA3XX.Core.Repositories;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 
 namespace OpenA3XX.Processors.CockpitEvents
 {
@@ -33,24 +36,24 @@ namespace OpenA3XX.Processors.CockpitEvents
                 Name = "MCDU1",
                 Buses = new List<IOExtenderBus>
                 {
-                    new()
+                    new IOExtenderBus()
                     {
                         HardwareBus = HardwareBus.Bus0,
                         Bits = new List<IOExtenderBit>
                         {
-                            new()
+                            new IOExtenderBit()
                             {
                                 ExtenderBusBitType = ExtenderBusBitType.Input, HardwareInputId = 13
                             },
-                            new()
+                            new IOExtenderBit()
                             {
                                 ExtenderBusBitType = ExtenderBusBitType.Input, HardwareInputId = 14
                             },
-                            new()
+                            new IOExtenderBit()
                             {
                                 ExtenderBusBitType = ExtenderBusBitType.Input, HardwareInputId = 15
                             },
-                            new()
+                            new IOExtenderBit()
                             {
                                 ExtenderBusBitType = ExtenderBusBitType.Input, HardwareInputId = 16
                             }
@@ -59,40 +62,33 @@ namespace OpenA3XX.Processors.CockpitEvents
                 }
             };
 
+            var factory = new ConnectionFactory()
+            {
+                UserName = "opena3xx",
+                Password = "opena3xx",
+                VirtualHost = "/",
+                HostName = "192.168.50.22",
+                ClientProvidedName = "app:opena3xx.processors component:cockpitevents"
+            };
+            var conn = factory.CreateConnection();
+            var channel = conn.CreateModel();
 
-            var repo = new HardwareBoardRepository(new CoreDataContext(dbContextOptionsBuilder.Options));
-            // var x = repo.AddHardwareBoard(hardwareBoard);
-            var data = repo.GetAll()
-                .Include(c => c.Buses)
-                .ThenInclude(c => c.Bits)
-                .ThenInclude(c => c.HardwareInput)
-                .ThenInclude(c => c.HardwareInputType)
-                .Include(c => c.Buses)
-                .ThenInclude(c => c.Bits)
-                .ThenInclude(c => c.HardwareOutput)
-                .ThenInclude(c => c.HardwareOutputType)
-                .ToList();
+            channel.QueueDeclare("hardware_events", false, false, false, null);
+            var consumer = new EventingBasicConsumer(channel);
+            consumer.Received += (ch, ea) =>
+            {
+                channel.BasicAck(ea.DeliveryTag, false);
+                var result = System.Text.Encoding.UTF8.GetString(ea.Body.ToArray());
+                var hardwareSignalDto = JsonConvert.DeserializeObject<HardwareSignalDto>(result);
+                var hardwareBoardRepository =
+                    new HardwareBoardRepository(new CoreDataContext(dbContextOptionsBuilder.Options));
+                var response = hardwareBoardRepository.GetByHardwarePanel(hardwareSignalDto.HardwareBoardId);
+            };
+
+            var consumerTag = channel.BasicConsume("hardware_events", false, consumer);
+
 
             Console.ReadLine();
-        }
-    }
-
-    public static class ExtMethods
-    {
-        public static IQueryable<T> IncludeAll<T>(this IQueryable<T> queryable) where T : class
-        {
-            var type = typeof(T);
-            var properties = type.GetProperties();
-            foreach (var property in properties)
-            {
-                var isVirtual = property.GetGetMethod().IsVirtual;
-                if (isVirtual && properties.FirstOrDefault(c => c.Name == property.Name + "Id") != null)
-                {
-                    queryable = queryable.Include(property.Name);
-                }
-            }
-
-            return queryable;
         }
     }
 }
