@@ -22,6 +22,7 @@ namespace OpenA3XX.Peripheral.WebApi
 {
     public class Startup
     {
+        
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -53,6 +54,7 @@ namespace OpenA3XX.Peripheral.WebApi
                     }
                 });
             });
+            
 
             services.AddDbContext<CoreDataContext>(options => { options.UseSqlite(CoordinatorConfiguration.GetDatabasesFolderPath(OpenA3XXDatabase.Core)); });
 
@@ -85,7 +87,7 @@ namespace OpenA3XX.Peripheral.WebApi
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }

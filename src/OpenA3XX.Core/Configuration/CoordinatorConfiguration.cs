@@ -6,7 +6,8 @@ namespace OpenA3XX.Core.Configuration
     {
         public static string GetDatabasesFolderPath(OpenA3XXDatabase database)
         {
-            var databasesPath = Environment.GetEnvironmentVariable("opena3xx.database.path");
+            //var databasesPath = Environment.GetEnvironmentVariable("opena3xx.database.path");
+            var databasesPath = "C:\\Users\\david\\git\\opena3xx\\opena3xx.database";
             if (string.IsNullOrWhiteSpace(databasesPath))
             {
                 throw new ApplicationException("opena3xx.database.path Environment Variable not set.");
