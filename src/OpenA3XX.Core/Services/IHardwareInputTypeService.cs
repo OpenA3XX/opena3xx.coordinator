@@ -7,6 +7,8 @@ namespace OpenA3XX.Core.Services
     {
         IList<HardwareInputTypeDto> GetAll();
 
+        HardwareInputTypeDto GetBy(int id);
+
         HardwareInputTypeDto Add(HardwareInputTypeDto hardwareInputTypeDto);
 
         HardwareInputTypeDto Update(HardwareInputTypeDto hardwareInputTypeDto);

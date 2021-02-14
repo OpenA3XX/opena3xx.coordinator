@@ -17,6 +17,11 @@ namespace OpenA3XX.Core.Repositories
             return GetAll().ToList();
         }
 
+        public HardwareInputType GetHardwareInputTypeBy(int id)
+        {
+            return Get(id);
+        }
+
         public HardwareInputType AddHardwareInputType(HardwareInputType hardwareInputType)
         {
             var storedModel = Find(c => c.Name == hardwareInputType.Name);

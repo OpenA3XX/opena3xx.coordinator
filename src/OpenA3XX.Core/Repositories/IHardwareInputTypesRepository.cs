@@ -7,6 +7,8 @@ namespace OpenA3XX.Core.Repositories
     {
         IList<HardwareInputType> GetAllHardwareInputTypes();
 
+        HardwareInputType GetHardwareInputTypeBy(int id);
+
         HardwareInputType AddHardwareInputType(HardwareInputType hardwareInputType);
 
         HardwareInputType UpdateHardwareInputType(HardwareInputType hardwareInputType);

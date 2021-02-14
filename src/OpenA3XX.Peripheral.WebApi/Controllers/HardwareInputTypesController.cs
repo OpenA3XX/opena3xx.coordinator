@@ -31,6 +31,14 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
 
             return data;
         }
+        
+        [HttpGet("{hardwareInputTypeId}")]
+        public HardwareInputTypeDto GetById(int hardwareInputTypeId)
+        {
+            var data = _hardwareInputTypeService.GetBy(hardwareInputTypeId);
+    
+            return data;
+        }
 
         [HttpPost]
         public IActionResult AddHardwareInputType([FromBody]HardwareInputTypeDto hardwareInputTypeDto)

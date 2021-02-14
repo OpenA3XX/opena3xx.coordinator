@@ -30,6 +30,13 @@ namespace OpenA3XX.Core.Services
             return hardwareInputTypesDtoList;
         }
 
+        public HardwareInputTypeDto GetBy(int id)
+        {
+            var hardwareInputType = _hardwareInputTypesRepository.GetHardwareInputTypeBy(id);
+            var hardwareInputTypeDto = _mapper.Map<HardwareInputType, HardwareInputTypeDto>(hardwareInputType);
+            return hardwareInputTypeDto;
+        }
+
         public HardwareInputTypeDto Add(HardwareInputTypeDto hardwareInputTypeDto)
         {
             try
