@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using OpenA3XX.Core.Exceptions;
 using OpenA3XX.Core.Models;
 
 namespace OpenA3XX.Core.Repositories
@@ -15,11 +16,22 @@ namespace OpenA3XX.Core.Repositories
         {
             return GetAll().ToList();
         }
-        
-    }
 
-    public interface IHardwareInputTypesRepository
-    {
-        IList<HardwareInputType> GetAllHardwareInputTypes();
+        public HardwareInputType AddHardwareInputType(HardwareInputType hardwareInputType)
+        {
+            var storedModel = Find(c => c.Name == hardwareInputType.Name);
+            if (storedModel == null)
+            {
+                return Add(hardwareInputType);
+            }
+
+            throw new HardwareInputTypeExistsException(
+                $"Hardware Input Type with {hardwareInputType.Name} already exists");
+        }
+
+        public HardwareInputType UpdateHardwareInputType(HardwareInputType hardwareInputType)
+        {
+            return Update(hardwareInputType, hardwareInputType.Id);
+        }
     }
 }

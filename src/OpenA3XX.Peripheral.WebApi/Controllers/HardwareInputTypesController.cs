@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using OpenA3XX.Core.Dtos;
+using OpenA3XX.Core.Exceptions;
 using OpenA3XX.Core.Services;
 
 namespace OpenA3XX.Peripheral.WebApi.Controllers
@@ -28,6 +30,31 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
             var data = _hardwareInputTypeService.GetAll();
 
             return data;
+        }
+
+        [HttpPost]
+        public IActionResult AddHardwareInputType([FromBody]HardwareInputTypeDto hardwareInputTypeDto)
+        {
+            try
+            {
+                hardwareInputTypeDto = _hardwareInputTypeService.Add(hardwareInputTypeDto);
+                return Ok(hardwareInputTypeDto);
+            }
+            catch (HardwareInputTypeExistsException e)
+            {
+                return BadRequest(new ErrorDto()
+                {
+                    ErrorMessage = e.Message
+                });
+            }
+           
+        }
+
+        [HttpPatch]
+        public HardwareInputTypeDto UpdateHardwareInputType([FromBody] HardwareInputTypeDto hardwareInputTypeDto)
+        {
+            hardwareInputTypeDto = _hardwareInputTypeService.Update(hardwareInputTypeDto);
+            return hardwareInputTypeDto;
         }
     }
 }

@@ -9,6 +9,7 @@ namespace OpenA3XX.Core.Profiles
         public HardwareInputTypeProfile()
         {
             CreateMap<HardwareInputType, HardwareInputTypeDto>();
+            CreateMap<HardwareInputTypeDto, HardwareInputType>();
         }
     }
 }

@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using OpenA3XX.Core.Dtos;
+using OpenA3XX.Core.Exceptions;
 using OpenA3XX.Core.Models;
 using OpenA3XX.Core.Repositories;
 
@@ -27,10 +29,29 @@ namespace OpenA3XX.Core.Services
 
             return hardwareInputTypesDtoList;
         }
-    }
 
-    public interface IHardwareInputTypeService
-    {
-        IList<HardwareInputTypeDto> GetAll();
+        public HardwareInputTypeDto Add(HardwareInputTypeDto hardwareInputTypeDto)
+        {
+            try
+            {
+                var hardwareInputType = _mapper.Map<HardwareInputTypeDto, HardwareInputType>(hardwareInputTypeDto);
+                hardwareInputType = _hardwareInputTypesRepository.AddHardwareInputType(hardwareInputType);
+                hardwareInputTypeDto = _mapper.Map<HardwareInputType, HardwareInputTypeDto>(hardwareInputType);
+                return hardwareInputTypeDto;
+            }
+            catch (HardwareInputTypeExistsException e)
+            {
+                throw;
+            }
+            
+        }
+
+        public HardwareInputTypeDto Update(HardwareInputTypeDto hardwareInputTypeDto)
+        {
+            var hardwareInputType = _mapper.Map<HardwareInputTypeDto, HardwareInputType>(hardwareInputTypeDto);
+            hardwareInputType = _hardwareInputTypesRepository.UpdateHardwareInputType(hardwareInputType);
+            hardwareInputTypeDto = _mapper.Map<HardwareInputType, HardwareInputTypeDto>(hardwareInputType);
+            return hardwareInputTypeDto;
+        }
     }
 }
