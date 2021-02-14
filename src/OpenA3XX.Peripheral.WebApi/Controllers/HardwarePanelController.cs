@@ -13,15 +13,15 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
     public class HardwarePanelController : ControllerBase
     {
         private readonly IHttpContextAccessor _accessor;
-        private readonly IHardwarePanelTokensService _hardwarePanelTokensService;
+        private readonly IHardwarePanelService _hardwarePanelService;
         private readonly ILogger<HardwarePanelController> _logger;
 
         public HardwarePanelController(ILogger<HardwarePanelController> logger, IHttpContextAccessor accessor,
-            IHardwarePanelTokensService hardwarePanelTokensService)
+            IHardwarePanelService hardwarePanelTokensService)
         {
             _logger = logger;
             _accessor = accessor;
-            _hardwarePanelTokensService = hardwarePanelTokensService;
+            _hardwarePanelService = hardwarePanelTokensService;
         }
 
         /// <summary>
@@ -29,10 +29,10 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
         /// </summary>
         /// <param name="id">The Hardware Panel Id</param>
         /// <returns></returns>
-        [HttpGet("details/{id}")]
+        [HttpGet("details/token/id/{id}")]
         public HardwarePanelTokenDto GetByHardwarePanelId(int id)
         {
-            var data = _hardwarePanelTokensService.GetByHardwarePanelId(id);
+            var data = _hardwarePanelService.GetTokenDetailsByHardwarePanelId(id);
 
             return data;
         }
@@ -45,7 +45,15 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
         [HttpGet("details/token/{token}")]
         public HardwarePanelTokenDto GetByHardwarePanelToken(Guid token)
         {
-            var data = _hardwarePanelTokensService.GetByHardwarePanelToken(token);
+            var data = _hardwarePanelService.GetTokenDetailsByHardwarePanelToken(token);
+
+            return data;
+        }
+        
+        [HttpGet("all")]
+        public IList<HardwarePanelDto> GetAllHardwarePanels()
+        {
+            var data = _hardwarePanelService.GetAllHardwarePanels();
 
             return data;
         }
@@ -55,9 +63,21 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("details")]
+        public IList<HardwarePanelTokenDto> GetAllHardwarePanelDetails()
+        {
+            var data = _hardwarePanelService.GetAllHardwarePanelTokens();
+
+            return data;
+        }
+        
+        /// <summary>
+        ///     Get all Hardware Panels.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("token/details")]
         public IList<HardwarePanelTokenDto> GetAllHardwarePanelTokens()
         {
-            var data = _hardwarePanelTokensService.GetAllHardwarePanelTokens();
+            var data = _hardwarePanelService.GetAllHardwarePanelTokens();
 
             return data;
         }
@@ -71,7 +91,7 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
         [HttpPost]
         public HardwarePanelTokenDto RegisterHardwarePanel([FromBody] DeviceRegistrationRequestDto deviceRegistrationRequest)
         {
-            return _hardwarePanelTokensService.RegisterHardwarePanel(deviceRegistrationRequest);
+            return _hardwarePanelService.RegisterHardwarePanel(deviceRegistrationRequest);
         }
 
         /// <summary>
@@ -82,7 +102,7 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
         [HttpPost("keep-alive/{token}")]
         public void KeepAlive(Guid token)
         {
-            _hardwarePanelTokensService.UpdateLastSeenForHardwarePane(token);
+            _hardwarePanelService.UpdateLastSeenForHardwarePane(token);
         }
     }
 }

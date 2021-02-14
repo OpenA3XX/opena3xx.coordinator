@@ -4,15 +4,17 @@ using OpenA3XX.Core.Dtos;
 
 namespace OpenA3XX.Core.Services
 {
-    public interface IHardwarePanelTokensService
+    public interface IHardwarePanelService
     {
         void UpdateLastSeenForHardwarePane(Guid token);
 
-        HardwarePanelTokenDto GetByHardwarePanelId(int id);
+        HardwarePanelTokenDto GetTokenDetailsByHardwarePanelId(int id);
 
-        HardwarePanelTokenDto GetByHardwarePanelToken(Guid token);
+        HardwarePanelTokenDto GetTokenDetailsByHardwarePanelToken(Guid token);
 
         IList<HardwarePanelTokenDto> GetAllHardwarePanelTokens();
+
+        IList<HardwarePanelDto> GetAllHardwarePanels();
 
         HardwarePanelTokenDto RegisterHardwarePanel(DeviceRegistrationRequestDto deviceRegistrationRequest);
     }

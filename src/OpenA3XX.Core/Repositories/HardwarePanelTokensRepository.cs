@@ -6,6 +6,7 @@ using OpenA3XX.Core.Models;
 
 namespace OpenA3XX.Core.Repositories
 {
+    
     public class HardwarePanelTokensRepository : BaseRepository<HardwarePanelToken>, IHardwarePanelTokensRepository
     {
         public HardwarePanelTokensRepository(DbContext context) : base(context)
@@ -41,15 +42,5 @@ namespace OpenA3XX.Core.Repositories
             Update(session, session.Id);
             return session;
         }
-    }
-
-    public interface IHardwarePanelTokensRepository
-    {
-        HardwarePanelToken GetByHardwarePanelToken(Guid hardwarePanelToken);
-        HardwarePanelToken GetByHardwarePanelId(int id);
-        IList<HardwarePanelToken> GetAllHardwarePanelTokens();
-        HardwarePanelToken SaveHardwarePanelToken(HardwarePanelToken hardwarePanelToken);
-
-        HardwarePanelToken UpdateLastSeenForHardwarePanel(Guid hardwarePanelToken);
     }
 }

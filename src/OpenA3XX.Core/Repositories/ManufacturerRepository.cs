@@ -25,9 +25,4 @@ namespace OpenA3XX.Core.Repositories
                 .ToList();
         }
     }
-
-    public interface IManufacturerRepository
-    {
-        IList<Manufacturer> GetAllManufacturers();
-    }
 }

@@ -16,9 +16,4 @@ namespace OpenA3XX.Core.Repositories
             return GetAll().ToList();
         }
     }
-
-    public interface ISystemConfigurationRepository
-    {
-        IList<SystemConfiguration> GetAllConfiguration();
-    }
 }

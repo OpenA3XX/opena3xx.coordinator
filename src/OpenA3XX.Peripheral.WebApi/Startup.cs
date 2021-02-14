@@ -64,9 +64,10 @@ namespace OpenA3XX.Peripheral.WebApi
             services.AddTransient<ISystemConfigurationRepository, SystemConfigurationRepository>();
             services.AddTransient<IHardwarePanelTokensRepository, HardwarePanelTokensRepository>();
             services.AddTransient<IHardwareInputTypesRepository, HardwareInputTypesRepository>();
+            services.AddTransient<IHardwarePanelRepository, HardwarePanelRepository>();
             
 
-            services.AddTransient<IHardwarePanelTokensService, HardwarePanelTokensService>();
+            services.AddTransient<IHardwarePanelService, HardwarePanelService>();
             services.AddTransient<IHardwareInputTypeService, HardwareInputTypeService>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
