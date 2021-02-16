@@ -12,5 +12,6 @@ namespace OpenA3XX.Core.Repositories
         HardwarePanelToken SaveHardwarePanelToken(HardwarePanelToken hardwarePanelToken);
 
         HardwarePanelToken UpdateLastSeenForHardwarePanel(Guid hardwarePanelToken);
+        
     }
 }

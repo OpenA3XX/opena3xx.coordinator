@@ -8,14 +8,18 @@ namespace OpenA3XX.Core.Services
     {
         void UpdateLastSeenForHardwarePane(Guid token);
 
+        //Tokens
         HardwarePanelTokenDto GetTokenDetailsByHardwarePanelId(int id);
 
         HardwarePanelTokenDto GetTokenDetailsByHardwarePanelToken(Guid token);
 
         IList<HardwarePanelTokenDto> GetAllHardwarePanelTokens();
-
-        IList<HardwarePanelDto> GetAllHardwarePanels();
-
+        
         HardwarePanelTokenDto RegisterHardwarePanel(DeviceRegistrationRequestDto deviceRegistrationRequest);
+
+        //Panels
+        IList<HardwarePanelOverviewDto> GetAllHardwarePanels();
+
+        HardwarePanelDto GetHardwarePanelDetails(int id);
     }
 }

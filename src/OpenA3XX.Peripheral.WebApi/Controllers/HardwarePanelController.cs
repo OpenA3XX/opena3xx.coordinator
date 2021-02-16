@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using OpenA3XX.Core.Dtos;
+using OpenA3XX.Core.Models;
 using OpenA3XX.Core.Services;
 
 namespace OpenA3XX.Peripheral.WebApi.Controllers
@@ -21,13 +22,25 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
             _hardwarePanelService = hardwarePanelTokensService;
         }
 
-        [HttpGet("details/all")]
-        public IList<HardwarePanelDto> GetAllHardwarePanels()
+        [HttpGet("overview/all")]
+        public IList<HardwarePanelOverviewDto> GetAllHardwarePanels()
         {
             var data = _hardwarePanelService.GetAllHardwarePanels();
 
             return data;
         }
+
+        [HttpGet("details/{hardwarePanelId}")]
+        public HardwarePanelDto GetHardwarePanelDetails(int hardwarePanelId)
+        {
+            var data = _hardwarePanelService.GetHardwarePanelDetails(hardwarePanelId);
+            
+            return data;
+        }
+        
+        
+        
+        
 
 
     }
