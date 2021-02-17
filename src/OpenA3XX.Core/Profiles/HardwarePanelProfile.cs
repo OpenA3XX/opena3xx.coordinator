@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using OpenA3XX.Core.Dtos;
 using OpenA3XX.Core.Models;
@@ -23,7 +24,9 @@ namespace OpenA3XX.Core.Profiles
                 .ForMember(c => c.TotalInputs, m => m.MapFrom(c => c.HardwareInput.Count))
                 .ForMember(c => c.TotalOutputs, m => m.MapFrom(c => c.HardwareOutput.Count))
                 .ForMember(c => c.HardwareInputs, m => m.MapFrom(c => c.HardwareInput))
-                .ForMember(c => c.HardwareOutputs, m => m.MapFrom(c => c.HardwareOutput));
+                .ForMember(c => c.HardwareOutputs, m => m.MapFrom(c => c.HardwareOutput))
+                .ForMember(c => c.TotalInputsDiscrete,
+                    m => m.MapFrom(c => c.HardwareInput.Sum(c => c.HardwareInputSelectorList.Count)));
         }
     }
 }

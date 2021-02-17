@@ -1,4 +1,6 @@
-﻿namespace OpenA3XX.Core.Dtos
+﻿using System.Collections.Generic;
+
+namespace OpenA3XX.Core.Dtos
 {
     public class HardwareInputDto
     {
@@ -7,5 +9,7 @@
         public string Name { get; set; }
         
         public string HardwareInputType { get; set; }
+        
+        public IList<HardwareInputSelectorDto> HardwareInputSelectors { get; set; }
     }
 }

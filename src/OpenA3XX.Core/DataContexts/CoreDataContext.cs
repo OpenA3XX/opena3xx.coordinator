@@ -18,6 +18,8 @@ namespace OpenA3XX.Core.DataContexts
         public DbSet<Manufacturer> Manufacturers { get; set; }
 
         public DbSet<HardwareInput> HardwareInputs { get; set; }
+        
+        public DbSet<HardwareInputSelector> HardwareInputSelectors { get; set; }
 
         public DbSet<HardwareOutput> HardwareOutputs { get; set; }
 

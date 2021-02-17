@@ -44,13 +44,4 @@ namespace OpenA3XX.Core.Repositories
                 .First();
         }
     }
-
-    public interface IHardwareBoardRepository
-    {
-        HardwareBoard AddHardwareBoard(HardwareBoard hardwareBoard);
-
-        IList<HardwareBoard> GetAllHardwareBoards();
-
-        HardwareBoard GetByHardwarePanel(int id);
-    }
 }

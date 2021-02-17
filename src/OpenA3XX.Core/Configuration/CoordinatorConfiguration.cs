@@ -23,9 +23,4 @@ namespace OpenA3XX.Core.Configuration
             throw new ApplicationException("Database file path not defined");
         }
     }
-
-    public enum OpenA3XXDatabase
-    {
-        Core
-    }
 }
