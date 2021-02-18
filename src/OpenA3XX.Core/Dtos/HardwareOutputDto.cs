@@ -1,4 +1,6 @@
-﻿namespace OpenA3XX.Core.Dtos
+﻿using System.Collections.Generic;
+
+namespace OpenA3XX.Core.Dtos
 {
     public class HardwareOutputDto
     {
@@ -7,5 +9,7 @@
         public string Name { get; set; }
         
         public string HardwareOutputType { get; set; }
+        
+        public IList<HardwareOutputSelectorDto> HardwareOutputSelectors { get; set; }
     }
 }

@@ -27,6 +27,8 @@ namespace OpenA3XX.Core.Repositories
                 .ThenInclude(c=>c.HardwareInputSelectorList)
                 .Include(c => c.HardwareOutput)
                 .ThenInclude(c => c.HardwareOutputType)
+                .Include(c=>c.HardwareOutput)
+                .ThenInclude(c=>c.HardwareOutputSelectorList)
                 .First();
         }
     }

@@ -25,6 +25,8 @@ namespace OpenA3XX.Core.Profiles
                 .ForMember(c => c.TotalOutputs, m => m.MapFrom(c => c.HardwareOutput.Count))
                 .ForMember(c => c.HardwareInputs, m => m.MapFrom(c => c.HardwareInput))
                 .ForMember(c => c.HardwareOutputs, m => m.MapFrom(c => c.HardwareOutput))
+                .ForMember(c => c.TotalOutputsDiscrete,
+                    m => m.MapFrom(c => c.HardwareOutput.Sum(c => c.HardwareOutputSelectorList.Count)))
                 .ForMember(c => c.TotalInputsDiscrete,
                     m => m.MapFrom(c => c.HardwareInput.Sum(c => c.HardwareInputSelectorList.Count)));
         }

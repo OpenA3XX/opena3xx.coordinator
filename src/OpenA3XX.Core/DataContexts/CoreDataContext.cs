@@ -13,20 +13,28 @@ namespace OpenA3XX.Core.DataContexts
 
         public DbSet<AircraftModel> AircraftModels { get; set; }
 
-        public DbSet<HardwarePanel> HardwarePanels { get; set; }
-
         public DbSet<Manufacturer> Manufacturers { get; set; }
 
+        public DbSet<HardwarePanel> HardwarePanels { get; set; }
+        
+        
         public DbSet<HardwareInput> HardwareInputs { get; set; }
         
         public DbSet<HardwareInputSelector> HardwareInputSelectors { get; set; }
-
+        
+        
         public DbSet<HardwareOutput> HardwareOutputs { get; set; }
+        
+        public DbSet<HardwareOutputSelector> HardwareOutputSelectors { get; set; }
+
+        
 
         public DbSet<HardwarePanelToken> HardwarePanelTokens { get; set; }
 
         public DbSet<SystemConfiguration> SystemConfiguration { get; set; }
 
+        
+        
         public DbSet<HardwareBoard> HardwareBoards { get; set; }
 
         public DbSet<IOExtenderBus> IOExtenderBuses { get; set; }

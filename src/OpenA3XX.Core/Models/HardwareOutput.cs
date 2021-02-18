@@ -1,4 +1,6 @@
-﻿namespace OpenA3XX.Core.Models
+﻿using System.Collections.Generic;
+
+namespace OpenA3XX.Core.Models
 {
     public class HardwareOutput
     {
@@ -8,6 +10,6 @@
 
         public virtual HardwareOutputType HardwareOutputType { get; set; }
 
-        public int? State { get; set; }
+        public IList<HardwareOutputSelector> HardwareOutputSelectorList { get; set; }
     }
 }
