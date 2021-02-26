@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace OpenA3XX.Core.Repositories
+namespace OpenA3XX.Core.Repositories.Base
 {
     public abstract class BaseRepository<T> : IBaseRepository<T> where T : class
     {

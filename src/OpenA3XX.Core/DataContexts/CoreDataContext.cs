@@ -40,6 +40,11 @@ namespace OpenA3XX.Core.DataContexts
         public DbSet<IOExtenderBus> IOExtenderBuses { get; set; }
 
         public DbSet<IOExtenderBit> IOExtenderBits { get; set; }
+        
+        
+        public DbSet<SimulatorEvent> SimulatorEvents { get; set; }
+        
+        public DbSet<SimulatorEventLink> SimulatorEventLink { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {

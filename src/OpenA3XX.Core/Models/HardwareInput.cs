@@ -11,5 +11,9 @@ namespace OpenA3XX.Core.Models
         
         public IList<HardwareInputSelector> HardwareInputSelectorList { get; set; }
 
+        
+        public int HardwarePanelId { get; set; }
+        
+        public virtual HardwarePanel HardwarePanel { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using OpenA3XX.Core.Models;
+using OpenA3XX.Core.Repositories.Base;
 
 namespace OpenA3XX.Core.Repositories
 {

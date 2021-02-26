@@ -13,6 +13,7 @@ namespace OpenA3XX.Core.Sockets.Handlers
 {
     public class FlightSimulatorEventingHandler : ISimEventingHandler
     {
+        /*
         public async Task Handle(ISimulatorEventsRepository simulatorEventsRepository, WebSocket webSocket)
         {
             while (webSocket.State == WebSocketState.Open)
@@ -35,6 +36,10 @@ namespace OpenA3XX.Core.Sockets.Handlers
                         var data = JsonConvert.DeserializeObject<FlightSimulatorEvent>(bufferAsString);
 
                         var allEvents = simulatorEventsRepository.GetAll();
+                        
+                        
+                        
+                        
                         /*
                         var factory = new ConnectionFactory {HostName = "localhost"};
                         using (var connection = factory.CreateConnection())
@@ -44,7 +49,7 @@ namespace OpenA3XX.Core.Sockets.Handlers
 
                             var body = Encoding.UTF8.GetBytes(bufferAsString);
                             channel.BasicPublish("simulator_events_exchange", "", null, body);
-                        }*/
+                        }**\
 
 
                         Log.Information("{@data}", data);
@@ -53,6 +58,6 @@ namespace OpenA3XX.Core.Sockets.Handlers
             }
 
             await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
-        }
+        }*/
     }
 }

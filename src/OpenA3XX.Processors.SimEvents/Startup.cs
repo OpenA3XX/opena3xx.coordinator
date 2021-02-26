@@ -15,7 +15,7 @@ namespace OpenA3XX.Coordinator.SimulatorEventProcessor
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton(typeof(ISimEventingHandler), new FlightSimulatorEventingHandler());
-            services.AddSingleton(typeof(ISimulatorEventsRepository), new SimulatorEventsRepository());
+            //services.AddSingleton(typeof(ISimulatorEventsRepository), new SimulatorEventsRepository());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,8 +42,8 @@ namespace OpenA3XX.Coordinator.SimulatorEventProcessor
                     {
                         var socket = await context.WebSockets.AcceptWebSocketAsync();
                         var simEventingHandler = app.ApplicationServices.GetService<ISimEventingHandler>();
-                        var simulatorEventsRepository = app.ApplicationServices.GetService<ISimulatorEventsRepository>();
-                        if (simEventingHandler != null) await simEventingHandler.Handle(simulatorEventsRepository, socket);
+                        //var simulatorEventsRepository = app.ApplicationServices.GetService<ISimulatorEventsRepository>();
+                        //if (simEventingHandler != null) await simEventingHandler.Handle(simulatorEventsRepository, socket);
                     }
                     else
                     {

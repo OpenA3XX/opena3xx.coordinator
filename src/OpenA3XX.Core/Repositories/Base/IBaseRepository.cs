@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace OpenA3XX.Core.Repositories
+namespace OpenA3XX.Core.Repositories.Base
 {
     public interface IBaseRepository<T> where T : class
     {
