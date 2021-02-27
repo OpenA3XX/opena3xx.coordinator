@@ -4,6 +4,8 @@
     {
         public int Id { get; set; }
         
+        public string FriendlyName { get; set; }
+        
         public string EventName { get; set; }
         
         public SimulatorEventType SimulatorEventType { get; set; }
@@ -13,6 +15,9 @@
         public SimulatorEventSdkType SimulatorEventSdkType { get; set; }
         
         public string EventCode { get; set; }
-
+        
+        public int? HardwarePanelId { get; set; }
+        
+        public virtual HardwarePanel HardwarePanel { get; set; }
     }
 }

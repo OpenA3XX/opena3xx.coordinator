@@ -2,7 +2,9 @@
 {
     public enum SimulatorEventSdkType
     {
-        SimConnect,
-        FsUipc
+        SimConnectGauge,
+        SimConnectDirect,
+        FsUipc,
+        WebSockets
     }
 }

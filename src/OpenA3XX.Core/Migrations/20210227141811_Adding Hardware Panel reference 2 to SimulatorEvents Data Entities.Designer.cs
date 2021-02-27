@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OpenA3XX.Core.DataContexts;
 
 namespace OpenA3XX.Coordinator.TestHarness.Migrations
 {
     [DbContext(typeof(CoreDataContext))]
-    partial class HardwareDataContextModelSnapshot : ModelSnapshot
+    [Migration("20210227141811_Adding Hardware Panel reference 2 to SimulatorEvents Data Entities")]
+    partial class AddingHardwarePanelreference2toSimulatorEventsDataEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -291,9 +293,6 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("EventName")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("FriendlyName")
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("HardwarePanelId")
