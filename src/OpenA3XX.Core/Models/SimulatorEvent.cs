@@ -16,8 +16,12 @@
         
         public string EventCode { get; set; }
         
-        public int? HardwarePanelId { get; set; }
+        public int? HardwareInputSelectorId { get; set; }
         
-        public virtual HardwarePanel HardwarePanel { get; set; }
+        public virtual HardwareInputSelector HardwareInputSelector { get; set; }
+        
+        public int? HardwareOutputSelectorId { get; set; }
+        
+        public virtual HardwareOutputSelector HardwareOutputSelector { get; set; }
     }
 }

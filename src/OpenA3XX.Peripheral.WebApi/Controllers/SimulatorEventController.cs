@@ -12,14 +12,12 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
     public class SimulatorEventController : ControllerBase
     {
         private readonly ISimulatorEventRepository _simulatorEventRepository;
-        private readonly ISimulatorEventLinkRepository _simulatorEventLinkRepository;
         private readonly ILogger<SimulatorEventController> _logger;
 
-        public SimulatorEventController(ILogger<SimulatorEventController> logger, IHttpContextAccessor accessor, ISimulatorEventRepository simulatorEventRepository, ISimulatorEventLinkRepository simulatorEventLinkRepository)
+        public SimulatorEventController(ILogger<SimulatorEventController> logger, IHttpContextAccessor accessor, ISimulatorEventRepository simulatorEventRepository)
         {
             _logger = logger;
             _simulatorEventRepository = simulatorEventRepository;
-            _simulatorEventLinkRepository = simulatorEventLinkRepository;
         }
 
         [HttpPost]
@@ -28,11 +26,5 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
             return new SimulatorEvent();
         }
 
-        [HttpGet("links")]
-        public IList<SimulatorEventLink> GetAllSimulatorEventLinks()
-        {
-            var data = _simulatorEventLinkRepository.GetAllSimulatorEventLinks();
-            return data;
-        }
     }
 }

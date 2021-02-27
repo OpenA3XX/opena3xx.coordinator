@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using EasyCaching.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -26,7 +27,6 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
         public IList<HardwarePanelOverviewDto> GetAllHardwarePanels()
         {
             var data = _hardwarePanelService.GetAllHardwarePanels();
-
             return data;
         }
 
@@ -34,7 +34,6 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
         public HardwarePanelDto GetHardwarePanelDetails(int hardwarePanelId)
         {
             var data = _hardwarePanelService.GetHardwarePanelDetails(hardwarePanelId);
-            
             return data;
         }
         

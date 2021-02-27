@@ -44,7 +44,6 @@ namespace OpenA3XX.Core.DataContexts
         
         public DbSet<SimulatorEvent> SimulatorEvents { get; set; }
         
-        public DbSet<SimulatorEventLink> SimulatorEventLink { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {

@@ -56,7 +56,10 @@ namespace OpenA3XX.Peripheral.WebApi
             });
             
 
-            services.AddDbContext<CoreDataContext>(options => { options.UseSqlite(CoordinatorConfiguration.GetDatabasesFolderPath(OpenA3XXDatabase.Core)); });
+            services.AddDbContext<CoreDataContext>(options =>
+            {
+                options.UseSqlite(CoordinatorConfiguration.GetDatabasesFolderPath(OpenA3XXDatabase.Core));
+            });
 
             // DI Configuration
             services.AddScoped<DbContext, CoreDataContext>();
@@ -68,7 +71,6 @@ namespace OpenA3XX.Peripheral.WebApi
             services.AddTransient<IHardwarePanelRepository, HardwarePanelRepository>();
             
             services.AddTransient<ISimulatorEventRepository, SimulatorEventRepository>();
-            services.AddTransient<ISimulatorEventLinkRepository, SimulatorEventLinkRepository>();
             
 
             services.AddTransient<IHardwarePanelService, HardwarePanelService>();
@@ -77,6 +79,13 @@ namespace OpenA3XX.Peripheral.WebApi
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddAutoMapper(Assembly.GetAssembly(typeof(HardwarePanelToken)));
+            
+            
+            
+            services.AddEasyCaching(option =>
+            {
+                option.UseInMemory("m1");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
