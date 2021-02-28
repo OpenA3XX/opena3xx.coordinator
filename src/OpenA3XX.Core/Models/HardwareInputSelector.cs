@@ -10,5 +10,6 @@
         
         public virtual HardwareInput HardwareInput { get; set; }
         
+        public SimulatorEvent SimulatorEvent { get; set; }
     }
 }

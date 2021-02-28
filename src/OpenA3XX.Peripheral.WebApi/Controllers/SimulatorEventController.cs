@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using OpenA3XX.Core.Dtos;
 using OpenA3XX.Core.Models;
 using OpenA3XX.Core.Repositories;
+using OpenA3XX.Core.Services;
 
 namespace OpenA3XX.Peripheral.WebApi.Controllers
 {
@@ -11,19 +13,20 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
     [Route("simulator-event")]
     public class SimulatorEventController : ControllerBase
     {
-        private readonly ISimulatorEventRepository _simulatorEventRepository;
         private readonly ILogger<SimulatorEventController> _logger;
+        private readonly ISimulatorEventService _simulatorEventService;
 
-        public SimulatorEventController(ILogger<SimulatorEventController> logger, IHttpContextAccessor accessor, ISimulatorEventRepository simulatorEventRepository)
+        public SimulatorEventController(ILogger<SimulatorEventController> logger, IHttpContextAccessor accessor, ISimulatorEventService simulatorEventService)
         {
             _logger = logger;
-            _simulatorEventRepository = simulatorEventRepository;
+            _simulatorEventService = simulatorEventService;
         }
 
-        [HttpPost]
-        public SimulatorEvent AddSimulatorEvent(SimulatorEvent simulatorEvent)
+        [HttpGet("all")]
+        public IList<SimulatorEventDto> GetAll()
         {
-            return new SimulatorEvent();
+            var data = _simulatorEventService.GetAllSimulatorEvents();
+            return data;
         }
 
     }

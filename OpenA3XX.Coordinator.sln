@@ -8,8 +8,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Processors", "Processors", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenA3XX.Processors.CockpitEvents", "src\OpenA3XX.Processors.CockpitEvents\OpenA3XX.Processors.CockpitEvents.csproj", "{452AEE25-4245-4D2B-AE89-5A842174AAE7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApis", "WebApis", "{C92B3FE2-5AD4-4F1D-86FA-6795AC7C32CE}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenA3XX.Peripheral.WebApi", "src\OpenA3XX.Peripheral.WebApi\OpenA3XX.Peripheral.WebApi.csproj", "{31A65E6E-9105-4E4A-B24D-2134505E4339}"
 EndProject
 Global
@@ -38,6 +36,5 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{C3AD9237-FBC4-43F7-8BFD-72C8C49C89FB} = {0F369FE2-0D8E-4D6A-A23B-F92EF1AFD9AF}
 		{452AEE25-4245-4D2B-AE89-5A842174AAE7} = {0F369FE2-0D8E-4D6A-A23B-F92EF1AFD9AF}
-		{31A65E6E-9105-4E4A-B24D-2134505E4339} = {C92B3FE2-5AD4-4F1D-86FA-6795AC7C32CE}
 	EndGlobalSection
 EndGlobal

@@ -71,11 +71,12 @@ namespace OpenA3XX.Peripheral.WebApi
             services.AddTransient<IHardwarePanelRepository, HardwarePanelRepository>();
             
             services.AddTransient<ISimulatorEventRepository, SimulatorEventRepository>();
-            
+            services.AddTransient<ISimulatorEventService, SimulatorEventService>();
 
             services.AddTransient<IHardwarePanelService, HardwarePanelService>();
             services.AddTransient<IHardwareInputTypeService, HardwareInputTypeService>();
             services.AddTransient<IHardwareOutputTypeService, HardwareOutputTypeService>();
+            
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddAutoMapper(Assembly.GetAssembly(typeof(HardwarePanelToken)));
