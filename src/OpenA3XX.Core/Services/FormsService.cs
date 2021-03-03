@@ -20,6 +20,7 @@ namespace OpenA3XX.Core.Services
                     InputType = "text",
                     Label = "Enter your name",
                     Name = "name",
+                    Hint = "This is name hint",
                     Validations = new List<FieldValidatorConfig>()
                     {
                         new ()
@@ -40,7 +41,8 @@ namespace OpenA3XX.Core.Services
                     Type = "input",
                     InputType = "password",
                     Label = "Enter your name",
-                    Name = "password"
+                    Name = "password",
+                    Hint = "This is password hint",
                 },
                 new ()
                 {
@@ -48,6 +50,7 @@ namespace OpenA3XX.Core.Services
                     Label = "Enter Country",
                     Name = "country",
                     Value = "Comino",
+                    Hint = "This is a select hint",
                     Options = new List<string> {"Malta", "Gozo", "Comino", "Ras Zobbi"}
                 },
                 new ()
@@ -56,6 +59,7 @@ namespace OpenA3XX.Core.Services
                     Label = "Gender",
                     Name = "gender",
                     Value = "Male",
+                    Hint = "This is a radio button hint",
                     Options = new List<string> {"Male", "Female"}
                 },
                 new ()
@@ -63,6 +67,7 @@ namespace OpenA3XX.Core.Services
                     Type = "date",
                     Label = "Date of Birth",
                     Name = "dob",
+                    Hint = "This is a date hint",
                     Validations = new List<FieldValidatorConfig>()
                     {
                         new FieldValidatorConfig()
@@ -77,6 +82,7 @@ namespace OpenA3XX.Core.Services
                     Type = "checkbox",
                     Label = "Accept Terms & Conditions",
                     Name = "terms",
+                    Hint = "This is a checkbox hint",
                     Value = "true"
                 },
                 new ()
