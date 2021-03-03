@@ -76,7 +76,8 @@ namespace OpenA3XX.Peripheral.WebApi
             services.AddTransient<IHardwarePanelService, HardwarePanelService>();
             services.AddTransient<IHardwareInputTypeService, HardwareInputTypeService>();
             services.AddTransient<IHardwareOutputTypeService, HardwareOutputTypeService>();
-            
+
+            services.AddTransient<IFormService, FormsService>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddAutoMapper(Assembly.GetAssembly(typeof(HardwarePanelToken)));

@@ -25,5 +25,7 @@ namespace OpenA3XX.Core.Services
             var simulatorEventDtoList = _mapper.Map<IList<SimulatorEvent>, IList<SimulatorEventDto>>(data);
             return simulatorEventDtoList;
         }
+        
     }
+
 }
