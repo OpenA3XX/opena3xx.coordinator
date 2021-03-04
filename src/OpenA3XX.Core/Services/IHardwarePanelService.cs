@@ -14,7 +14,7 @@ namespace OpenA3XX.Core.Services
         HardwarePanelTokenDto GetTokenDetailsByHardwarePanelToken(Guid token);
 
         IList<HardwarePanelTokenDto> GetAllHardwarePanelTokens();
-        
+
         HardwarePanelTokenDto RegisterHardwarePanel(DeviceRegistrationRequestDto deviceRegistrationRequest);
 
         //Panels

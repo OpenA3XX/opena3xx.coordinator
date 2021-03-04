@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using AutoMapper;
 using OpenA3XX.Core.Dtos;
 using OpenA3XX.Core.Models;

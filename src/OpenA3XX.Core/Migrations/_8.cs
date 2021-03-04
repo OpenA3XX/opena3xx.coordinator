@@ -7,17 +7,17 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<int>(
-                name: "State",
-                table: "HardwareOutputs",
-                type: "INTEGER",
+                "State",
+                "HardwareOutputs",
+                "INTEGER",
                 nullable: true,
                 oldClrType: typeof(int),
                 oldType: "INTEGER");
 
             migrationBuilder.AlterColumn<int>(
-                name: "State",
-                table: "HardwareInputs",
-                type: "INTEGER",
+                "State",
+                "HardwareInputs",
+                "INTEGER",
                 nullable: true,
                 oldClrType: typeof(int),
                 oldType: "INTEGER");
@@ -26,9 +26,9 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<int>(
-                name: "State",
-                table: "HardwareOutputs",
-                type: "INTEGER",
+                "State",
+                "HardwareOutputs",
+                "INTEGER",
                 nullable: false,
                 defaultValue: 0,
                 oldClrType: typeof(int),
@@ -36,9 +36,9 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<int>(
-                name: "State",
-                table: "HardwareInputs",
-                type: "INTEGER",
+                "State",
+                "HardwareInputs",
+                "INTEGER",
                 nullable: false,
                 defaultValue: 0,
                 oldClrType: typeof(int),

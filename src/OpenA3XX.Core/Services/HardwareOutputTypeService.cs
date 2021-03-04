@@ -2,19 +2,19 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using OpenA3XX.Core.Dtos;
-using OpenA3XX.Core.Exceptions;
 using OpenA3XX.Core.Models;
 using OpenA3XX.Core.Repositories;
 
 namespace OpenA3XX.Core.Services
 {
-    public class HardwareOutputTypeService: IHardwareOutputTypeService
+    public class HardwareOutputTypeService : IHardwareOutputTypeService
     {
         private readonly IHttpContextAccessor _accessor;
-        private readonly IMapper _mapper;
         private readonly IHardwareOutputTypesRepository _hardwareOutputTypesRepository;
+        private readonly IMapper _mapper;
 
-        public HardwareOutputTypeService(IHttpContextAccessor accessor, IHardwareOutputTypesRepository hardwareOutputTypesRepository, IMapper mapper)
+        public HardwareOutputTypeService(IHttpContextAccessor accessor,
+            IHardwareOutputTypesRepository hardwareOutputTypesRepository, IMapper mapper)
         {
             _accessor = accessor;
             _hardwareOutputTypesRepository = hardwareOutputTypesRepository;
@@ -24,7 +24,8 @@ namespace OpenA3XX.Core.Services
         public IList<HardwareOutputTypeDto> GetAll()
         {
             var hardwareOutputTypes = _hardwareOutputTypesRepository.GetAllHardwareOutputTypes();
-            var hardwareOutputTypesDtoList = _mapper.Map<IList<HardwareOutputType>, IList<HardwareOutputTypeDto>>(hardwareOutputTypes);
+            var hardwareOutputTypesDtoList =
+                _mapper.Map<IList<HardwareOutputType>, IList<HardwareOutputTypeDto>>(hardwareOutputTypes);
 
             return hardwareOutputTypesDtoList;
         }
@@ -38,18 +39,10 @@ namespace OpenA3XX.Core.Services
 
         public HardwareOutputTypeDto Add(HardwareOutputTypeDto hardwareOutputTypeDto)
         {
-            try
-            {
-                var hardwareOutputType = _mapper.Map<HardwareOutputTypeDto, HardwareOutputType>(hardwareOutputTypeDto);
-                hardwareOutputType = _hardwareOutputTypesRepository.AddHardwareOutputType(hardwareOutputType);
-                hardwareOutputTypeDto = _mapper.Map<HardwareOutputType, HardwareOutputTypeDto>(hardwareOutputType);
-                return hardwareOutputTypeDto;
-            }
-            catch (HardwareOutputTypeExistsException e)
-            {
-                throw;
-            }
-            
+            var hardwareOutputType = _mapper.Map<HardwareOutputTypeDto, HardwareOutputType>(hardwareOutputTypeDto);
+            hardwareOutputType = _hardwareOutputTypesRepository.AddHardwareOutputType(hardwareOutputType);
+            hardwareOutputTypeDto = _mapper.Map<HardwareOutputType, HardwareOutputTypeDto>(hardwareOutputType);
+            return hardwareOutputTypeDto;
         }
 
         public HardwareOutputTypeDto Update(HardwareOutputTypeDto hardwareOutputTypeDto)

@@ -7,46 +7,46 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_HardwareInputs_HardwareComponents_HardwareComponentId",
-                table: "HardwareInputs");
+                "FK_HardwareInputs_HardwareComponents_HardwareComponentId",
+                "HardwareInputs");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_HardwareOutputs_HardwareComponents_HardwareComponentId",
-                table: "HardwareOutputs");
+                "FK_HardwareOutputs_HardwareComponents_HardwareComponentId",
+                "HardwareOutputs");
 
             migrationBuilder.RenameColumn(
-                name: "HardwareComponentId",
-                table: "HardwareOutputs",
-                newName: "HardwarePanelId");
+                "HardwareComponentId",
+                "HardwareOutputs",
+                "HardwarePanelId");
 
             migrationBuilder.RenameIndex(
-                name: "IX_HardwareOutputs_HardwareComponentId",
+                "IX_HardwareOutputs_HardwareComponentId",
                 table: "HardwareOutputs",
                 newName: "IX_HardwareOutputs_HardwarePanelId");
 
             migrationBuilder.RenameColumn(
-                name: "HardwareComponentId",
-                table: "HardwareInputs",
-                newName: "HardwarePanelId");
+                "HardwareComponentId",
+                "HardwareInputs",
+                "HardwarePanelId");
 
             migrationBuilder.RenameIndex(
-                name: "IX_HardwareInputs_HardwareComponentId",
+                "IX_HardwareInputs_HardwareComponentId",
                 table: "HardwareInputs",
                 newName: "IX_HardwareInputs_HardwarePanelId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_HardwareInputs_HardwarePanels_HardwarePanelId",
-                table: "HardwareInputs",
-                column: "HardwarePanelId",
-                principalTable: "HardwarePanels",
+                "FK_HardwareInputs_HardwarePanels_HardwarePanelId",
+                "HardwareInputs",
+                "HardwarePanelId",
+                "HardwarePanels",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_HardwareOutputs_HardwarePanels_HardwarePanelId",
-                table: "HardwareOutputs",
-                column: "HardwarePanelId",
-                principalTable: "HardwarePanels",
+                "FK_HardwareOutputs_HardwarePanels_HardwarePanelId",
+                "HardwareOutputs",
+                "HardwarePanelId",
+                "HardwarePanels",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
         }
@@ -54,46 +54,46 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_HardwareInputs_HardwarePanels_HardwarePanelId",
-                table: "HardwareInputs");
+                "FK_HardwareInputs_HardwarePanels_HardwarePanelId",
+                "HardwareInputs");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_HardwareOutputs_HardwarePanels_HardwarePanelId",
-                table: "HardwareOutputs");
+                "FK_HardwareOutputs_HardwarePanels_HardwarePanelId",
+                "HardwareOutputs");
 
             migrationBuilder.RenameColumn(
-                name: "HardwarePanelId",
-                table: "HardwareOutputs",
-                newName: "HardwareComponentId");
+                "HardwarePanelId",
+                "HardwareOutputs",
+                "HardwareComponentId");
 
             migrationBuilder.RenameIndex(
-                name: "IX_HardwareOutputs_HardwarePanelId",
+                "IX_HardwareOutputs_HardwarePanelId",
                 table: "HardwareOutputs",
                 newName: "IX_HardwareOutputs_HardwareComponentId");
 
             migrationBuilder.RenameColumn(
-                name: "HardwarePanelId",
-                table: "HardwareInputs",
-                newName: "HardwareComponentId");
+                "HardwarePanelId",
+                "HardwareInputs",
+                "HardwareComponentId");
 
             migrationBuilder.RenameIndex(
-                name: "IX_HardwareInputs_HardwarePanelId",
+                "IX_HardwareInputs_HardwarePanelId",
                 table: "HardwareInputs",
                 newName: "IX_HardwareInputs_HardwareComponentId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_HardwareInputs_HardwareComponents_HardwareComponentId",
-                table: "HardwareInputs",
-                column: "HardwareComponentId",
-                principalTable: "HardwareComponents",
+                "FK_HardwareInputs_HardwareComponents_HardwareComponentId",
+                "HardwareInputs",
+                "HardwareComponentId",
+                "HardwareComponents",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_HardwareOutputs_HardwareComponents_HardwareComponentId",
-                table: "HardwareOutputs",
-                column: "HardwareComponentId",
-                principalTable: "HardwareComponents",
+                "FK_HardwareOutputs_HardwareComponents_HardwareComponentId",
+                "HardwareOutputs",
+                "HardwareComponentId",
+                "HardwareComponents",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
         }

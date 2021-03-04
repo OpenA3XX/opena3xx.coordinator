@@ -7,42 +7,42 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_IOExtenderBit_HardwareInputs_HardwareInputId",
-                table: "IOExtenderBit");
+                "FK_IOExtenderBit_HardwareInputs_HardwareInputId",
+                "IOExtenderBit");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_IOExtenderBit_HardwareOutputs_HardwareOutputId",
-                table: "IOExtenderBit");
+                "FK_IOExtenderBit_HardwareOutputs_HardwareOutputId",
+                "IOExtenderBit");
 
             migrationBuilder.AlterColumn<int>(
-                name: "HardwareOutputId",
-                table: "IOExtenderBit",
-                type: "INTEGER",
+                "HardwareOutputId",
+                "IOExtenderBit",
+                "INTEGER",
                 nullable: true,
                 oldClrType: typeof(int),
                 oldType: "INTEGER");
 
             migrationBuilder.AlterColumn<int>(
-                name: "HardwareInputId",
-                table: "IOExtenderBit",
-                type: "INTEGER",
+                "HardwareInputId",
+                "IOExtenderBit",
+                "INTEGER",
                 nullable: true,
                 oldClrType: typeof(int),
                 oldType: "INTEGER");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_IOExtenderBit_HardwareInputs_HardwareInputId",
-                table: "IOExtenderBit",
-                column: "HardwareInputId",
-                principalTable: "HardwareInputs",
+                "FK_IOExtenderBit_HardwareInputs_HardwareInputId",
+                "IOExtenderBit",
+                "HardwareInputId",
+                "HardwareInputs",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_IOExtenderBit_HardwareOutputs_HardwareOutputId",
-                table: "IOExtenderBit",
-                column: "HardwareOutputId",
-                principalTable: "HardwareOutputs",
+                "FK_IOExtenderBit_HardwareOutputs_HardwareOutputId",
+                "IOExtenderBit",
+                "HardwareOutputId",
+                "HardwareOutputs",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
         }
@@ -50,17 +50,17 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_IOExtenderBit_HardwareInputs_HardwareInputId",
-                table: "IOExtenderBit");
+                "FK_IOExtenderBit_HardwareInputs_HardwareInputId",
+                "IOExtenderBit");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_IOExtenderBit_HardwareOutputs_HardwareOutputId",
-                table: "IOExtenderBit");
+                "FK_IOExtenderBit_HardwareOutputs_HardwareOutputId",
+                "IOExtenderBit");
 
             migrationBuilder.AlterColumn<int>(
-                name: "HardwareOutputId",
-                table: "IOExtenderBit",
-                type: "INTEGER",
+                "HardwareOutputId",
+                "IOExtenderBit",
+                "INTEGER",
                 nullable: false,
                 defaultValue: 0,
                 oldClrType: typeof(int),
@@ -68,9 +68,9 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<int>(
-                name: "HardwareInputId",
-                table: "IOExtenderBit",
-                type: "INTEGER",
+                "HardwareInputId",
+                "IOExtenderBit",
+                "INTEGER",
                 nullable: false,
                 defaultValue: 0,
                 oldClrType: typeof(int),
@@ -78,18 +78,18 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
                 oldNullable: true);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_IOExtenderBit_HardwareInputs_HardwareInputId",
-                table: "IOExtenderBit",
-                column: "HardwareInputId",
-                principalTable: "HardwareInputs",
+                "FK_IOExtenderBit_HardwareInputs_HardwareInputId",
+                "IOExtenderBit",
+                "HardwareInputId",
+                "HardwareInputs",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_IOExtenderBit_HardwareOutputs_HardwareOutputId",
-                table: "IOExtenderBit",
-                column: "HardwareOutputId",
-                principalTable: "HardwareOutputs",
+                "FK_IOExtenderBit_HardwareOutputs_HardwareOutputId",
+                "IOExtenderBit",
+                "HardwareOutputId",
+                "HardwareOutputs",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
         }

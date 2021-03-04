@@ -7,78 +7,75 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "SimulatorEvents",
-                columns: table => new
+                "SimulatorEvents",
+                table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>("INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    EventName = table.Column<string>(type: "TEXT", nullable: true),
-                    SimulatorEventType = table.Column<int>(type: "INTEGER", nullable: false),
-                    SimulatorSoftware = table.Column<int>(type: "INTEGER", nullable: false),
-                    SimulatorEventSdkType = table.Column<int>(type: "INTEGER", nullable: false),
-                    EventCode = table.Column<string>(type: "TEXT", nullable: true)
+                    EventName = table.Column<string>("TEXT", nullable: true),
+                    SimulatorEventType = table.Column<int>("INTEGER", nullable: false),
+                    SimulatorSoftware = table.Column<int>("INTEGER", nullable: false),
+                    SimulatorEventSdkType = table.Column<int>("INTEGER", nullable: false),
+                    EventCode = table.Column<string>("TEXT", nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SimulatorEvents", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_SimulatorEvents", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "SimulatorEventLink",
-                columns: table => new
+                "SimulatorEventLink",
+                table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>("INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    SimulatorEventId = table.Column<int>(type: "INTEGER", nullable: true),
-                    HardwareInputSelectorId = table.Column<int>(type: "INTEGER", nullable: true),
-                    HardwareOutputSelectorId = table.Column<int>(type: "INTEGER", nullable: true)
+                    SimulatorEventId = table.Column<int>("INTEGER", nullable: true),
+                    HardwareInputSelectorId = table.Column<int>("INTEGER", nullable: true),
+                    HardwareOutputSelectorId = table.Column<int>("INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SimulatorEventLink", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SimulatorEventLink_HardwareInputSelectors_HardwareInputSelectorId",
-                        column: x => x.HardwareInputSelectorId,
-                        principalTable: "HardwareInputSelectors",
-                        principalColumn: "Id",
+                        "FK_SimulatorEventLink_HardwareInputSelectors_HardwareInputSelectorId",
+                        x => x.HardwareInputSelectorId,
+                        "HardwareInputSelectors",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_SimulatorEventLink_HardwareInputSelectors_HardwareOutputSelectorId",
-                        column: x => x.HardwareOutputSelectorId,
-                        principalTable: "HardwareInputSelectors",
-                        principalColumn: "Id",
+                        "FK_SimulatorEventLink_HardwareInputSelectors_HardwareOutputSelectorId",
+                        x => x.HardwareOutputSelectorId,
+                        "HardwareInputSelectors",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_SimulatorEventLink_SimulatorEvents_SimulatorEventId",
-                        column: x => x.SimulatorEventId,
-                        principalTable: "SimulatorEvents",
-                        principalColumn: "Id",
+                        "FK_SimulatorEventLink_SimulatorEvents_SimulatorEventId",
+                        x => x.SimulatorEventId,
+                        "SimulatorEvents",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_SimulatorEventLink_HardwareInputSelectorId",
-                table: "SimulatorEventLink",
-                column: "HardwareInputSelectorId");
+                "IX_SimulatorEventLink_HardwareInputSelectorId",
+                "SimulatorEventLink",
+                "HardwareInputSelectorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SimulatorEventLink_HardwareOutputSelectorId",
-                table: "SimulatorEventLink",
-                column: "HardwareOutputSelectorId");
+                "IX_SimulatorEventLink_HardwareOutputSelectorId",
+                "SimulatorEventLink",
+                "HardwareOutputSelectorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SimulatorEventLink_SimulatorEventId",
-                table: "SimulatorEventLink",
-                column: "SimulatorEventId");
+                "IX_SimulatorEventLink_SimulatorEventId",
+                "SimulatorEventLink",
+                "SimulatorEventId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "SimulatorEventLink");
+                "SimulatorEventLink");
 
             migrationBuilder.DropTable(
-                name: "SimulatorEvents");
+                "SimulatorEvents");
         }
     }
 }

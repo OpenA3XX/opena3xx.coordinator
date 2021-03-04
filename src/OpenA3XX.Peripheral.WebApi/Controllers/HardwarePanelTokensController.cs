@@ -22,7 +22,7 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
             _hardwarePanelService = hardwarePanelTokensService;
         }
 
-        
+
         [HttpGet("details/panel-id/{hardwarePanelId}")]
         public HardwarePanelTokenDto GetTokenDetailsByHardwarePanelId(int hardwarePanelId)
         {
@@ -38,7 +38,7 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
 
             return data;
         }
-        
+
 
         [HttpGet("details/all")]
         public IList<HardwarePanelTokenDto> GetAllHardwarePanelDetails()
@@ -47,10 +47,11 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
 
             return data;
         }
-        
-        
+
+
         [HttpPost("register")]
-        public HardwarePanelTokenDto RegisterHardwarePanel([FromBody] DeviceRegistrationRequestDto deviceRegistrationRequest)
+        public HardwarePanelTokenDto RegisterHardwarePanel(
+            [FromBody] DeviceRegistrationRequestDto deviceRegistrationRequest)
         {
             return _hardwarePanelService.RegisterHardwarePanel(deviceRegistrationRequest);
         }

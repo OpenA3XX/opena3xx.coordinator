@@ -9,8 +9,8 @@ namespace OpenA3XX.Core.Services
 {
     public class SimulatorEventService : ISimulatorEventService
     {
-        private readonly ISimulatorEventRepository _simulatorEventRepository;
         private readonly IMapper _mapper;
+        private readonly ISimulatorEventRepository _simulatorEventRepository;
 
         public SimulatorEventService(IHttpContextAccessor accessor,
             ISimulatorEventRepository simulatorEventRepository, IMapper mapper)
@@ -25,7 +25,5 @@ namespace OpenA3XX.Core.Services
             var simulatorEventDtoList = _mapper.Map<IList<SimulatorEvent>, IList<SimulatorEventDto>>(data);
             return simulatorEventDtoList;
         }
-        
     }
-
 }

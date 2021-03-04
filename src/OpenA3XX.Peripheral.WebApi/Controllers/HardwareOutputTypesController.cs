@@ -16,13 +16,14 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
         private readonly IHardwareOutputTypeService _hardwareOutputTypeService;
         private readonly ILogger<HardwareOutputTypesController> _logger;
 
-        public HardwareOutputTypesController(ILogger<HardwareOutputTypesController> logger, IHttpContextAccessor accessor, IHardwareOutputTypeService hardwareOutputTypeService)
+        public HardwareOutputTypesController(ILogger<HardwareOutputTypesController> logger,
+            IHttpContextAccessor accessor, IHardwareOutputTypeService hardwareOutputTypeService)
         {
             _logger = logger;
             _accessor = accessor;
             _hardwareOutputTypeService = hardwareOutputTypeService;
         }
-        
+
         [HttpGet]
         public IList<HardwareOutputTypeDto> GetAll()
         {
@@ -30,17 +31,17 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
 
             return data;
         }
-        
+
         [HttpGet("{hardwareOutputTypeId}")]
         public HardwareOutputTypeDto GetById(int hardwareOutputTypeId)
         {
             var data = _hardwareOutputTypeService.GetBy(hardwareOutputTypeId);
-    
+
             return data;
         }
 
         [HttpPost]
-        public IActionResult AddHardwareOutputType([FromBody]HardwareOutputTypeDto hardwareOutputTypeDto)
+        public IActionResult AddHardwareOutputType([FromBody] HardwareOutputTypeDto hardwareOutputTypeDto)
         {
             try
             {
@@ -49,12 +50,11 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
             }
             catch (HardwareOutputTypeExistsException e)
             {
-                return BadRequest(new ErrorDto()
+                return BadRequest(new ErrorDto
                 {
                     ErrorMessage = e.Message
                 });
             }
-           
         }
 
         [HttpPatch]

@@ -1,94 +1,186 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using OpenA3XX.Core.Forms;
+using OpenA3XX.Core.Repositories;
 
 namespace OpenA3XX.Core.Services
 {
     public class FormsService : IFormService
     {
+        private readonly ISystemConfigurationRepository _systemConfigurationRepository;
+
+        public FormsService(ISystemConfigurationRepository systemConfigurationRepository)
+        {
+            _systemConfigurationRepository = systemConfigurationRepository;
+        }
+
         public IList<FieldConfig> GetSettingsFormFields()
         {
-            var settingsForm = new List<FieldConfig>()
+            var configuration = _systemConfigurationRepository.GetAllConfiguration();
+
+            var settingsForm = new List<FieldConfig>
             {
                 new()
                 {
-                    Type = "heading", 
+                    FieldType = FieldType.Heading,
                     Label = "RabbitMQ Configuration"
                 },
-                new ()
+                new()
                 {
-                    Type = "input",
-                    InputType = "text",
-                    Label = "Enter your name",
-                    Name = "name",
-                    Hint = "This is name hint",
-                    Validations = new List<FieldValidatorConfig>()
+                    FieldType = FieldType.Input,
+                    InputFieldType = InputFieldType.Text,
+                    Label = "RabbitMQ Host Address",
+                    Name = "opena3xx-amqp-host",
+                    Hint = "RabbitMQ Host Address is the IP Address where RabbitMQ is running.",
+                    Value = configuration.First(c => c.Key == "opena3xx-amqp-host").Value,
+                    Validations = new List<FieldValidatorConfig>
                     {
-                        new ()
+                        new()
                         {
-                            Name = "required",
-                            Message = "Name is required!"
+                            FieldValidationType = FieldValidationType.Required,
+                            Message = "RabbitMQ Host is Required"
                         },
-                        new ()
+                        new()
                         {
-                            Name = "pattern",
-                            Pattern = "(localhost|\\b(?:(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.){3}(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)(?::\\d{0,4})?\\b)",
-                            Message = "Invalid IP Address or 'localhost'"
+                            FieldValidationType = FieldValidationType.Pattern,
+                            Pattern =
+                                "(localhost|\\b(?:(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.){3}(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)(?::\\d{0,4})?\\b)",
+                            Message = "Accept only IPv4 Address or localhost"
                         }
                     }
                 },
-                new ()
+                new()
                 {
-                    Type = "input",
-                    InputType = "password",
-                    Label = "Enter your name",
-                    Name = "password",
-                    Hint = "This is password hint",
-                },
-                new ()
-                {
-                    Type = "select",
-                    Label = "Enter Country",
-                    Name = "country",
-                    Value = "Comino",
-                    Hint = "This is a select hint",
-                    Options = new List<string> {"Malta", "Gozo", "Comino", "Ras Zobbi"}
-                },
-                new ()
-                {
-                    Type = "radiobutton",
-                    Label = "Gender",
-                    Name = "gender",
-                    Value = "Male",
-                    Hint = "This is a radio button hint",
-                    Options = new List<string> {"Male", "Female"}
-                },
-                new ()
-                {
-                    Type = "date",
-                    Label = "Date of Birth",
-                    Name = "dob",
-                    Hint = "This is a date hint",
-                    Validations = new List<FieldValidatorConfig>()
+                    FieldType = FieldType.Input,
+                    InputFieldType = InputFieldType.Text,
+                    Label = "RabbitMQ Host Port",
+                    Name = "opena3xx-amqp-port",
+                    Hint = "RabbitMQ Port on which it is running (amqp protocol)",
+                    Value = configuration.First(c => c.Key == "opena3xx-amqp-port").Value,
+                    Validations = new List<FieldValidatorConfig>
                     {
-                        new FieldValidatorConfig()
+                        new()
                         {
-                            Name = "required",
-                            Message = "Date of Birth Required"
+                            FieldValidationType = FieldValidationType.Required,
+                            Message = "RabbitMQ Port is Required"
+                        },
+                        new()
+                        {
+                            FieldValidationType = FieldValidationType.Pattern,
+                            Pattern =
+                                "^()([1-9]|[1-5]?[0-9]{2,4}|6[1-4][0-9]{3}|65[1-4][0-9]{2}|655[1-2][0-9]|6553[1-5])$",
+                            Message = "RabbitMQ Port is required: 1-65535"
                         }
-                    },
+                    }
                 },
-                new ()
+                new()
                 {
-                    Type = "checkbox",
-                    Label = "Accept Terms & Conditions",
-                    Name = "terms",
-                    Hint = "This is a checkbox hint",
-                    Value = "true"
+                    FieldType = FieldType.Input,
+                    InputFieldType = InputFieldType.Text,
+                    Label = "RabbitMQ Username",
+                    Name = "opena3xx-amqp-username",
+                    Hint = "RabbitMQ Username used for Authentication",
+                    Value = configuration.First(c => c.Key == "opena3xx-amqp-username").Value,
+                    Validations = new List<FieldValidatorConfig>
+                    {
+                        new()
+                        {
+                            FieldValidationType = FieldValidationType.Required,
+                            Message = "RabbitMQ Username is Required"
+                        }
+                    }
                 },
-                new ()
+                new()
                 {
-                    Type = "button",
-                    Label = "Save"
+                    FieldType = FieldType.Input,
+                    InputFieldType = InputFieldType.Text,
+                    Label = "RabbitMQ Password",
+                    Name = "opena3xx-amqp-password",
+                    Hint = "RabbitMQ Password used for Authentication",
+                    Value = configuration.First(c => c.Key == "opena3xx-amqp-password").Value,
+                    Validations = new List<FieldValidatorConfig>
+                    {
+                        new()
+                        {
+                            FieldValidationType = FieldValidationType.Required,
+                            Message = "RabbitMQ Password is Required"
+                        }
+                    }
+                },
+                new()
+                {
+                    FieldType = FieldType.Input,
+                    InputFieldType = InputFieldType.Text,
+                    Label = "RabbitMQ Virtual Host",
+                    Name = "opena3xx-amqp-vhost",
+                    Hint = "RabbitMQ Virtual Host",
+                    Value = configuration.First(c => c.Key == "opena3xx-amqp-vhost").Value,
+                    Validations = new List<FieldValidatorConfig>
+                    {
+                        new()
+                        {
+                            FieldValidationType = FieldValidationType.Required,
+                            Message = "RabbitMQ Virtual Host is Required"
+                        }
+                    }
+                },
+                new()
+                {
+                    FieldType = FieldType.Heading,
+                    Label = "SEQ Configuration"
+                },
+                new()
+                {
+                    FieldType = FieldType.Input,
+                    InputFieldType = InputFieldType.Text,
+                    Label = "SEQ Host Address",
+                    Name = "opena3xx-logging-seq-host",
+                    Hint = "SEQ Host Address is the IP Address where SEQ is running.",
+                    Value = configuration.First(c => c.Key == "opena3xx-logging-seq-host").Value,
+                    Validations = new List<FieldValidatorConfig>
+                    {
+                        new()
+                        {
+                            FieldValidationType = FieldValidationType.Required,
+                            Message = "SEQ Host is Required"
+                        },
+                        new()
+                        {
+                            FieldValidationType = FieldValidationType.Pattern,
+                            Pattern =
+                                "(localhost|\\b(?:(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.){3}(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)(?::\\d{0,4})?\\b)",
+                            Message = "Accept only IPv4 Address or localhost"
+                        }
+                    }
+                },
+                new()
+                {
+                    FieldType = FieldType.Input,
+                    InputFieldType = InputFieldType.Text,
+                    Label = "SEQ Host Port",
+                    Name = "opena3xx-logging-seq-port",
+                    Hint = "SEQ Port on which it is running",
+                    Value = configuration.First(c => c.Key == "opena3xx-logging-seq-port").Value,
+                    Validations = new List<FieldValidatorConfig>
+                    {
+                        new()
+                        {
+                            FieldValidationType = FieldValidationType.Required,
+                            Message = "SEQ Port is Required"
+                        },
+                        new()
+                        {
+                            FieldValidationType = FieldValidationType.Pattern,
+                            Pattern =
+                                "^()([1-9]|[1-5]?[0-9]{2,4}|6[1-4][0-9]{3}|65[1-4][0-9]{2}|655[1-2][0-9]|6553[1-5])$",
+                            Message = "SEQ Port is required: 1-65535"
+                        }
+                    }
+                },
+                new()
+                {
+                    FieldType = FieldType.Button,
+                    Label = "Save All Settings"
                 }
             };
             return settingsForm;

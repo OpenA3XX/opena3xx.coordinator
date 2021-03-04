@@ -7,17 +7,17 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "FriendlyName",
-                table: "SimulatorEvents",
-                type: "TEXT",
+                "FriendlyName",
+                "SimulatorEvents",
+                "TEXT",
                 nullable: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "FriendlyName",
-                table: "SimulatorEvents");
+                "FriendlyName",
+                "SimulatorEvents");
         }
     }
 }

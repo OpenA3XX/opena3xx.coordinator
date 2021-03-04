@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using OpenA3XX.Core.Dtos;
-using OpenA3XX.Core.Models;
-using OpenA3XX.Core.Repositories;
 using OpenA3XX.Core.Services;
 
 namespace OpenA3XX.Peripheral.WebApi.Controllers
@@ -16,7 +14,8 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
         private readonly ILogger<SimulatorEventController> _logger;
         private readonly ISimulatorEventService _simulatorEventService;
 
-        public SimulatorEventController(ILogger<SimulatorEventController> logger, IHttpContextAccessor accessor, ISimulatorEventService simulatorEventService)
+        public SimulatorEventController(ILogger<SimulatorEventController> logger, IHttpContextAccessor accessor,
+            ISimulatorEventService simulatorEventService)
         {
             _logger = logger;
             _simulatorEventService = simulatorEventService;
@@ -28,6 +27,5 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
             var data = _simulatorEventService.GetAllSimulatorEvents();
             return data;
         }
-
     }
 }

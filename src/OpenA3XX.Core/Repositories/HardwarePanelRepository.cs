@@ -20,17 +20,17 @@ namespace OpenA3XX.Core.Repositories
         public HardwarePanel GetHardwarePanelDetails(int id)
         {
             return FindBy(c => c.Id == id)
-                .Include(c=>c.AircraftModel)
-                .ThenInclude(c=>c.Manufacturer)
+                .Include(c => c.AircraftModel)
+                .ThenInclude(c => c.Manufacturer)
                 .Include(c => c.HardwareInput)
                 .ThenInclude(c => c.HardwareInputType)
-                .Include(c=>c.HardwareInput)
-                .ThenInclude(c=>c.HardwareInputSelectorList)
-                .ThenInclude(c=>c.SimulatorEvent)
+                .Include(c => c.HardwareInput)
+                .ThenInclude(c => c.HardwareInputSelectorList)
+                .ThenInclude(c => c.SimulatorEvent)
                 .Include(c => c.HardwareOutput)
                 .ThenInclude(c => c.HardwareOutputType)
-                .Include(c=>c.HardwareOutput)
-                .ThenInclude(c=>c.HardwareOutputSelectorList)
+                .Include(c => c.HardwareOutput)
+                .ThenInclude(c => c.HardwareOutputSelectorList)
                 .First();
         }
     }

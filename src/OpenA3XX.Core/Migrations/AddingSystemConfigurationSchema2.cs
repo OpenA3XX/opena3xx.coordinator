@@ -7,24 +7,21 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "SystemConfiguration",
-                columns: table => new
+                "SystemConfiguration",
+                table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>("INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Key = table.Column<string>(type: "TEXT", nullable: true),
-                    Value = table.Column<string>(type: "TEXT", nullable: true)
+                    Key = table.Column<string>("TEXT", nullable: true),
+                    Value = table.Column<string>("TEXT", nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SystemConfiguration", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_SystemConfiguration", x => x.Id); });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "SystemConfiguration");
+                "SystemConfiguration");
         }
     }
 }

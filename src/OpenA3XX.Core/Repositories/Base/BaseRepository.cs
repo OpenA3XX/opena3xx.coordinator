@@ -145,10 +145,7 @@ namespace OpenA3XX.Core.Repositories.Base
         public IQueryable<T> GetAllIncluding(params Expression<Func<T, object>>[] includeProperties)
         {
             var queryable = GetAll();
-            foreach (var includeProperty in includeProperties)
-            {
-                queryable = queryable.Include(includeProperty);
-            }
+            foreach (var includeProperty in includeProperties) queryable = queryable.Include(includeProperty);
 
             return queryable;
         }

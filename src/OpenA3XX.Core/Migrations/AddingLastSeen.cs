@@ -8,13 +8,13 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_HardwarePanelTokens_HardwarePanels_HardwarePanelId",
-                table: "HardwarePanelTokens");
+                "FK_HardwarePanelTokens_HardwarePanels_HardwarePanelId",
+                "HardwarePanelTokens");
 
             migrationBuilder.AlterColumn<int>(
-                name: "HardwarePanelId",
-                table: "HardwarePanelTokens",
-                type: "INTEGER",
+                "HardwarePanelId",
+                "HardwarePanelTokens",
+                "INTEGER",
                 nullable: false,
                 defaultValue: 0,
                 oldClrType: typeof(int),
@@ -22,17 +22,17 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
                 oldNullable: true);
 
             migrationBuilder.AddColumn<DateTime>(
-                name: "LastSeen",
-                table: "HardwarePanelTokens",
-                type: "TEXT",
+                "LastSeen",
+                "HardwarePanelTokens",
+                "TEXT",
                 nullable: false,
                 defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
             migrationBuilder.AddForeignKey(
-                name: "FK_HardwarePanelTokens_HardwarePanels_HardwarePanelId",
-                table: "HardwarePanelTokens",
-                column: "HardwarePanelId",
-                principalTable: "HardwarePanels",
+                "FK_HardwarePanelTokens_HardwarePanels_HardwarePanelId",
+                "HardwarePanelTokens",
+                "HardwarePanelId",
+                "HardwarePanels",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
         }
@@ -40,26 +40,26 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_HardwarePanelTokens_HardwarePanels_HardwarePanelId",
-                table: "HardwarePanelTokens");
+                "FK_HardwarePanelTokens_HardwarePanels_HardwarePanelId",
+                "HardwarePanelTokens");
 
             migrationBuilder.DropColumn(
-                name: "LastSeen",
-                table: "HardwarePanelTokens");
+                "LastSeen",
+                "HardwarePanelTokens");
 
             migrationBuilder.AlterColumn<int>(
-                name: "HardwarePanelId",
-                table: "HardwarePanelTokens",
-                type: "INTEGER",
+                "HardwarePanelId",
+                "HardwarePanelTokens",
+                "INTEGER",
                 nullable: true,
                 oldClrType: typeof(int),
                 oldType: "INTEGER");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_HardwarePanelTokens_HardwarePanels_HardwarePanelId",
-                table: "HardwarePanelTokens",
-                column: "HardwarePanelId",
-                principalTable: "HardwarePanels",
+                "FK_HardwarePanelTokens_HardwarePanels_HardwarePanelId",
+                "HardwarePanelTokens",
+                "HardwarePanelId",
+                "HardwarePanels",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
         }

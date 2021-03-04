@@ -11,8 +11,8 @@ namespace OpenA3XX.Core.Services
     public class HardwarePanelService : IHardwarePanelService
     {
         private readonly IHttpContextAccessor _accessor;
-        private readonly IHardwarePanelTokensRepository _hardwarePanelTokensRepository;
         private readonly IHardwarePanelRepository _hardwarePanelRepository;
+        private readonly IHardwarePanelTokensRepository _hardwarePanelTokensRepository;
         private readonly IMapper _mapper;
 
         public HardwarePanelService(IHttpContextAccessor accessor,
@@ -58,7 +58,8 @@ namespace OpenA3XX.Core.Services
         public IList<HardwarePanelOverviewDto> GetAllHardwarePanels()
         {
             var hardwarePanelList = _hardwarePanelRepository.GetAllHardwarePanels();
-            var hardwarePaneDtoList = _mapper.Map<IList<HardwarePanel>, IList<HardwarePanelOverviewDto>>(hardwarePanelList);
+            var hardwarePaneDtoList =
+                _mapper.Map<IList<HardwarePanel>, IList<HardwarePanelOverviewDto>>(hardwarePanelList);
             return hardwarePaneDtoList;
         }
 
@@ -77,13 +78,12 @@ namespace OpenA3XX.Core.Services
 
             return hardwarePanelTokenDto;
         }
-        
+
         public HardwarePanelDto GetHardwarePanelDetails(int id)
         {
             var hardwarePanel = _hardwarePanelRepository.GetHardwarePanelDetails(id);
             var hardwarePanelDto = _mapper.Map<HardwarePanel, HardwarePanelDto>(hardwarePanel);
             return hardwarePanelDto;
         }
-        
     }
 }

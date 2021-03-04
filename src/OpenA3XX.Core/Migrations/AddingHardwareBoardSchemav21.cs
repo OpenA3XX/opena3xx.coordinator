@@ -7,377 +7,377 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_HardwareBoards_IOExtenderBuses_Bus1Id",
-                table: "HardwareBoards");
+                "FK_HardwareBoards_IOExtenderBuses_Bus1Id",
+                "HardwareBoards");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_HardwareBoards_IOExtenderBuses_Bus2Id",
-                table: "HardwareBoards");
+                "FK_HardwareBoards_IOExtenderBuses_Bus2Id",
+                "HardwareBoards");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_HardwareBoards_IOExtenderBuses_Bus3Id",
-                table: "HardwareBoards");
+                "FK_HardwareBoards_IOExtenderBuses_Bus3Id",
+                "HardwareBoards");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_HardwareBoards_IOExtenderBuses_Bus4Id",
-                table: "HardwareBoards");
+                "FK_HardwareBoards_IOExtenderBuses_Bus4Id",
+                "HardwareBoards");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_HardwareBoards_IOExtenderBuses_Bus5Id",
-                table: "HardwareBoards");
+                "FK_HardwareBoards_IOExtenderBuses_Bus5Id",
+                "HardwareBoards");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_HardwareBoards_IOExtenderBuses_Bus6Id",
-                table: "HardwareBoards");
+                "FK_HardwareBoards_IOExtenderBuses_Bus6Id",
+                "HardwareBoards");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_HardwareBoards_IOExtenderBuses_Bus7Id",
-                table: "HardwareBoards");
+                "FK_HardwareBoards_IOExtenderBuses_Bus7Id",
+                "HardwareBoards");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_HardwareBoards_IOExtenderBuses_Bus8Id",
-                table: "HardwareBoards");
+                "FK_HardwareBoards_IOExtenderBuses_Bus8Id",
+                "HardwareBoards");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_IOExtenderBit_HardwareInputs_HardwareInputId",
-                table: "IOExtenderBit");
+                "FK_IOExtenderBit_HardwareInputs_HardwareInputId",
+                "IOExtenderBit");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_IOExtenderBit_HardwareOutputs_HardwareOutputId",
-                table: "IOExtenderBit");
+                "FK_IOExtenderBit_HardwareOutputs_HardwareOutputId",
+                "IOExtenderBit");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_IOExtenderBuses_IOExtenderBit_Bit0Id",
-                table: "IOExtenderBuses");
+                "FK_IOExtenderBuses_IOExtenderBit_Bit0Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_IOExtenderBuses_IOExtenderBit_Bit10Id",
-                table: "IOExtenderBuses");
+                "FK_IOExtenderBuses_IOExtenderBit_Bit10Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_IOExtenderBuses_IOExtenderBit_Bit11Id",
-                table: "IOExtenderBuses");
+                "FK_IOExtenderBuses_IOExtenderBit_Bit11Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_IOExtenderBuses_IOExtenderBit_Bit12Id",
-                table: "IOExtenderBuses");
+                "FK_IOExtenderBuses_IOExtenderBit_Bit12Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_IOExtenderBuses_IOExtenderBit_Bit13Id",
-                table: "IOExtenderBuses");
+                "FK_IOExtenderBuses_IOExtenderBit_Bit13Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_IOExtenderBuses_IOExtenderBit_Bit14Id",
-                table: "IOExtenderBuses");
+                "FK_IOExtenderBuses_IOExtenderBit_Bit14Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_IOExtenderBuses_IOExtenderBit_Bit15Id",
-                table: "IOExtenderBuses");
+                "FK_IOExtenderBuses_IOExtenderBit_Bit15Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_IOExtenderBuses_IOExtenderBit_Bit1Id",
-                table: "IOExtenderBuses");
+                "FK_IOExtenderBuses_IOExtenderBit_Bit1Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_IOExtenderBuses_IOExtenderBit_Bit2Id",
-                table: "IOExtenderBuses");
+                "FK_IOExtenderBuses_IOExtenderBit_Bit2Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_IOExtenderBuses_IOExtenderBit_Bit3Id",
-                table: "IOExtenderBuses");
+                "FK_IOExtenderBuses_IOExtenderBit_Bit3Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_IOExtenderBuses_IOExtenderBit_Bit4Id",
-                table: "IOExtenderBuses");
+                "FK_IOExtenderBuses_IOExtenderBit_Bit4Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_IOExtenderBuses_IOExtenderBit_Bit5Id",
-                table: "IOExtenderBuses");
+                "FK_IOExtenderBuses_IOExtenderBit_Bit5Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_IOExtenderBuses_IOExtenderBit_Bit6Id",
-                table: "IOExtenderBuses");
+                "FK_IOExtenderBuses_IOExtenderBit_Bit6Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_IOExtenderBuses_IOExtenderBit_Bit7Id",
-                table: "IOExtenderBuses");
+                "FK_IOExtenderBuses_IOExtenderBit_Bit7Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_IOExtenderBuses_IOExtenderBit_Bit8Id",
-                table: "IOExtenderBuses");
+                "FK_IOExtenderBuses_IOExtenderBit_Bit8Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_IOExtenderBuses_IOExtenderBit_Bit9Id",
-                table: "IOExtenderBuses");
+                "FK_IOExtenderBuses_IOExtenderBit_Bit9Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropIndex(
-                name: "IX_IOExtenderBuses_Bit0Id",
-                table: "IOExtenderBuses");
+                "IX_IOExtenderBuses_Bit0Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropIndex(
-                name: "IX_IOExtenderBuses_Bit10Id",
-                table: "IOExtenderBuses");
+                "IX_IOExtenderBuses_Bit10Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropIndex(
-                name: "IX_IOExtenderBuses_Bit11Id",
-                table: "IOExtenderBuses");
+                "IX_IOExtenderBuses_Bit11Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropIndex(
-                name: "IX_IOExtenderBuses_Bit12Id",
-                table: "IOExtenderBuses");
+                "IX_IOExtenderBuses_Bit12Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropIndex(
-                name: "IX_IOExtenderBuses_Bit13Id",
-                table: "IOExtenderBuses");
+                "IX_IOExtenderBuses_Bit13Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropIndex(
-                name: "IX_IOExtenderBuses_Bit14Id",
-                table: "IOExtenderBuses");
+                "IX_IOExtenderBuses_Bit14Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropIndex(
-                name: "IX_IOExtenderBuses_Bit15Id",
-                table: "IOExtenderBuses");
+                "IX_IOExtenderBuses_Bit15Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropIndex(
-                name: "IX_IOExtenderBuses_Bit1Id",
-                table: "IOExtenderBuses");
+                "IX_IOExtenderBuses_Bit1Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropIndex(
-                name: "IX_IOExtenderBuses_Bit2Id",
-                table: "IOExtenderBuses");
+                "IX_IOExtenderBuses_Bit2Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropIndex(
-                name: "IX_IOExtenderBuses_Bit3Id",
-                table: "IOExtenderBuses");
+                "IX_IOExtenderBuses_Bit3Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropIndex(
-                name: "IX_IOExtenderBuses_Bit4Id",
-                table: "IOExtenderBuses");
+                "IX_IOExtenderBuses_Bit4Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropIndex(
-                name: "IX_IOExtenderBuses_Bit5Id",
-                table: "IOExtenderBuses");
+                "IX_IOExtenderBuses_Bit5Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropIndex(
-                name: "IX_IOExtenderBuses_Bit6Id",
-                table: "IOExtenderBuses");
+                "IX_IOExtenderBuses_Bit6Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropIndex(
-                name: "IX_IOExtenderBuses_Bit7Id",
-                table: "IOExtenderBuses");
+                "IX_IOExtenderBuses_Bit7Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropIndex(
-                name: "IX_IOExtenderBuses_Bit8Id",
-                table: "IOExtenderBuses");
+                "IX_IOExtenderBuses_Bit8Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropIndex(
-                name: "IX_IOExtenderBuses_Bit9Id",
-                table: "IOExtenderBuses");
+                "IX_IOExtenderBuses_Bit9Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropIndex(
-                name: "IX_HardwareBoards_Bus1Id",
-                table: "HardwareBoards");
+                "IX_HardwareBoards_Bus1Id",
+                "HardwareBoards");
 
             migrationBuilder.DropIndex(
-                name: "IX_HardwareBoards_Bus2Id",
-                table: "HardwareBoards");
+                "IX_HardwareBoards_Bus2Id",
+                "HardwareBoards");
 
             migrationBuilder.DropIndex(
-                name: "IX_HardwareBoards_Bus3Id",
-                table: "HardwareBoards");
+                "IX_HardwareBoards_Bus3Id",
+                "HardwareBoards");
 
             migrationBuilder.DropIndex(
-                name: "IX_HardwareBoards_Bus4Id",
-                table: "HardwareBoards");
+                "IX_HardwareBoards_Bus4Id",
+                "HardwareBoards");
 
             migrationBuilder.DropIndex(
-                name: "IX_HardwareBoards_Bus5Id",
-                table: "HardwareBoards");
+                "IX_HardwareBoards_Bus5Id",
+                "HardwareBoards");
 
             migrationBuilder.DropIndex(
-                name: "IX_HardwareBoards_Bus6Id",
-                table: "HardwareBoards");
+                "IX_HardwareBoards_Bus6Id",
+                "HardwareBoards");
 
             migrationBuilder.DropIndex(
-                name: "IX_HardwareBoards_Bus7Id",
-                table: "HardwareBoards");
+                "IX_HardwareBoards_Bus7Id",
+                "HardwareBoards");
 
             migrationBuilder.DropIndex(
-                name: "IX_HardwareBoards_Bus8Id",
-                table: "HardwareBoards");
+                "IX_HardwareBoards_Bus8Id",
+                "HardwareBoards");
 
             migrationBuilder.DropPrimaryKey(
-                name: "PK_IOExtenderBit",
-                table: "IOExtenderBit");
+                "PK_IOExtenderBit",
+                "IOExtenderBit");
 
             migrationBuilder.DropColumn(
-                name: "Bit0Id",
-                table: "IOExtenderBuses");
+                "Bit0Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropColumn(
-                name: "Bit10Id",
-                table: "IOExtenderBuses");
+                "Bit10Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropColumn(
-                name: "Bit11Id",
-                table: "IOExtenderBuses");
+                "Bit11Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropColumn(
-                name: "Bit12Id",
-                table: "IOExtenderBuses");
+                "Bit12Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropColumn(
-                name: "Bit13Id",
-                table: "IOExtenderBuses");
+                "Bit13Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropColumn(
-                name: "Bit14Id",
-                table: "IOExtenderBuses");
+                "Bit14Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropColumn(
-                name: "Bit15Id",
-                table: "IOExtenderBuses");
+                "Bit15Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropColumn(
-                name: "Bit1Id",
-                table: "IOExtenderBuses");
+                "Bit1Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropColumn(
-                name: "Bit2Id",
-                table: "IOExtenderBuses");
+                "Bit2Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropColumn(
-                name: "Bit3Id",
-                table: "IOExtenderBuses");
+                "Bit3Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropColumn(
-                name: "Bit4Id",
-                table: "IOExtenderBuses");
+                "Bit4Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropColumn(
-                name: "Bit5Id",
-                table: "IOExtenderBuses");
+                "Bit5Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropColumn(
-                name: "Bit6Id",
-                table: "IOExtenderBuses");
+                "Bit6Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropColumn(
-                name: "Bit7Id",
-                table: "IOExtenderBuses");
+                "Bit7Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropColumn(
-                name: "Bit8Id",
-                table: "IOExtenderBuses");
+                "Bit8Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropColumn(
-                name: "Bit9Id",
-                table: "IOExtenderBuses");
+                "Bit9Id",
+                "IOExtenderBuses");
 
             migrationBuilder.DropColumn(
-                name: "Bus1Id",
-                table: "HardwareBoards");
+                "Bus1Id",
+                "HardwareBoards");
 
             migrationBuilder.DropColumn(
-                name: "Bus2Id",
-                table: "HardwareBoards");
+                "Bus2Id",
+                "HardwareBoards");
 
             migrationBuilder.DropColumn(
-                name: "Bus3Id",
-                table: "HardwareBoards");
+                "Bus3Id",
+                "HardwareBoards");
 
             migrationBuilder.DropColumn(
-                name: "Bus4Id",
-                table: "HardwareBoards");
+                "Bus4Id",
+                "HardwareBoards");
 
             migrationBuilder.DropColumn(
-                name: "Bus5Id",
-                table: "HardwareBoards");
+                "Bus5Id",
+                "HardwareBoards");
 
             migrationBuilder.DropColumn(
-                name: "Bus6Id",
-                table: "HardwareBoards");
+                "Bus6Id",
+                "HardwareBoards");
 
             migrationBuilder.DropColumn(
-                name: "Bus7Id",
-                table: "HardwareBoards");
+                "Bus7Id",
+                "HardwareBoards");
 
             migrationBuilder.DropColumn(
-                name: "Bus8Id",
-                table: "HardwareBoards");
+                "Bus8Id",
+                "HardwareBoards");
 
             migrationBuilder.RenameTable(
-                name: "IOExtenderBit",
+                "IOExtenderBit",
                 newName: "IOExtenderBits");
 
             migrationBuilder.RenameIndex(
-                name: "IX_IOExtenderBit_HardwareOutputId",
+                "IX_IOExtenderBit_HardwareOutputId",
                 table: "IOExtenderBits",
                 newName: "IX_IOExtenderBits_HardwareOutputId");
 
             migrationBuilder.RenameIndex(
-                name: "IX_IOExtenderBit_HardwareInputId",
+                "IX_IOExtenderBit_HardwareInputId",
                 table: "IOExtenderBits",
                 newName: "IX_IOExtenderBits_HardwareInputId");
 
             migrationBuilder.AddColumn<int>(
-                name: "HardwareBoardId",
-                table: "IOExtenderBuses",
-                type: "INTEGER",
+                "HardwareBoardId",
+                "IOExtenderBuses",
+                "INTEGER",
                 nullable: false,
                 defaultValue: 0);
 
             migrationBuilder.AddColumn<int>(
-                name: "IOExtenderBusId",
-                table: "IOExtenderBits",
-                type: "INTEGER",
+                "IOExtenderBusId",
+                "IOExtenderBits",
+                "INTEGER",
                 nullable: false,
                 defaultValue: 0);
 
             migrationBuilder.AddPrimaryKey(
-                name: "PK_IOExtenderBits",
-                table: "IOExtenderBits",
-                column: "Id");
+                "PK_IOExtenderBits",
+                "IOExtenderBits",
+                "Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_IOExtenderBuses_HardwareBoardId",
-                table: "IOExtenderBuses",
-                column: "HardwareBoardId");
+                "IX_IOExtenderBuses_HardwareBoardId",
+                "IOExtenderBuses",
+                "HardwareBoardId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_IOExtenderBits_IOExtenderBusId",
-                table: "IOExtenderBits",
-                column: "IOExtenderBusId");
+                "IX_IOExtenderBits_IOExtenderBusId",
+                "IOExtenderBits",
+                "IOExtenderBusId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_IOExtenderBits_HardwareInputs_HardwareInputId",
-                table: "IOExtenderBits",
-                column: "HardwareInputId",
-                principalTable: "HardwareInputs",
+                "FK_IOExtenderBits_HardwareInputs_HardwareInputId",
+                "IOExtenderBits",
+                "HardwareInputId",
+                "HardwareInputs",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_IOExtenderBits_HardwareOutputs_HardwareOutputId",
-                table: "IOExtenderBits",
-                column: "HardwareOutputId",
-                principalTable: "HardwareOutputs",
+                "FK_IOExtenderBits_HardwareOutputs_HardwareOutputId",
+                "IOExtenderBits",
+                "HardwareOutputId",
+                "HardwareOutputs",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_IOExtenderBits_IOExtenderBuses_IOExtenderBusId",
-                table: "IOExtenderBits",
-                column: "IOExtenderBusId",
-                principalTable: "IOExtenderBuses",
+                "FK_IOExtenderBits_IOExtenderBuses_IOExtenderBusId",
+                "IOExtenderBits",
+                "IOExtenderBusId",
+                "IOExtenderBuses",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_IOExtenderBuses_HardwareBoards_HardwareBoardId",
-                table: "IOExtenderBuses",
-                column: "HardwareBoardId",
-                principalTable: "HardwareBoards",
+                "FK_IOExtenderBuses_HardwareBoards_HardwareBoardId",
+                "IOExtenderBuses",
+                "HardwareBoardId",
+                "HardwareBoards",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
         }
@@ -385,529 +385,529 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_IOExtenderBits_HardwareInputs_HardwareInputId",
-                table: "IOExtenderBits");
+                "FK_IOExtenderBits_HardwareInputs_HardwareInputId",
+                "IOExtenderBits");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_IOExtenderBits_HardwareOutputs_HardwareOutputId",
-                table: "IOExtenderBits");
+                "FK_IOExtenderBits_HardwareOutputs_HardwareOutputId",
+                "IOExtenderBits");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_IOExtenderBits_IOExtenderBuses_IOExtenderBusId",
-                table: "IOExtenderBits");
+                "FK_IOExtenderBits_IOExtenderBuses_IOExtenderBusId",
+                "IOExtenderBits");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_IOExtenderBuses_HardwareBoards_HardwareBoardId",
-                table: "IOExtenderBuses");
+                "FK_IOExtenderBuses_HardwareBoards_HardwareBoardId",
+                "IOExtenderBuses");
 
             migrationBuilder.DropIndex(
-                name: "IX_IOExtenderBuses_HardwareBoardId",
-                table: "IOExtenderBuses");
+                "IX_IOExtenderBuses_HardwareBoardId",
+                "IOExtenderBuses");
 
             migrationBuilder.DropPrimaryKey(
-                name: "PK_IOExtenderBits",
-                table: "IOExtenderBits");
+                "PK_IOExtenderBits",
+                "IOExtenderBits");
 
             migrationBuilder.DropIndex(
-                name: "IX_IOExtenderBits_IOExtenderBusId",
-                table: "IOExtenderBits");
+                "IX_IOExtenderBits_IOExtenderBusId",
+                "IOExtenderBits");
 
             migrationBuilder.DropColumn(
-                name: "HardwareBoardId",
-                table: "IOExtenderBuses");
+                "HardwareBoardId",
+                "IOExtenderBuses");
 
             migrationBuilder.DropColumn(
-                name: "IOExtenderBusId",
-                table: "IOExtenderBits");
+                "IOExtenderBusId",
+                "IOExtenderBits");
 
             migrationBuilder.RenameTable(
-                name: "IOExtenderBits",
+                "IOExtenderBits",
                 newName: "IOExtenderBit");
 
             migrationBuilder.RenameIndex(
-                name: "IX_IOExtenderBits_HardwareOutputId",
+                "IX_IOExtenderBits_HardwareOutputId",
                 table: "IOExtenderBit",
                 newName: "IX_IOExtenderBit_HardwareOutputId");
 
             migrationBuilder.RenameIndex(
-                name: "IX_IOExtenderBits_HardwareInputId",
+                "IX_IOExtenderBits_HardwareInputId",
                 table: "IOExtenderBit",
                 newName: "IX_IOExtenderBit_HardwareInputId");
 
             migrationBuilder.AddColumn<int>(
-                name: "Bit0Id",
-                table: "IOExtenderBuses",
-                type: "INTEGER",
+                "Bit0Id",
+                "IOExtenderBuses",
+                "INTEGER",
                 nullable: true);
 
             migrationBuilder.AddColumn<int>(
-                name: "Bit10Id",
-                table: "IOExtenderBuses",
-                type: "INTEGER",
+                "Bit10Id",
+                "IOExtenderBuses",
+                "INTEGER",
                 nullable: true);
 
             migrationBuilder.AddColumn<int>(
-                name: "Bit11Id",
-                table: "IOExtenderBuses",
-                type: "INTEGER",
+                "Bit11Id",
+                "IOExtenderBuses",
+                "INTEGER",
                 nullable: true);
 
             migrationBuilder.AddColumn<int>(
-                name: "Bit12Id",
-                table: "IOExtenderBuses",
-                type: "INTEGER",
+                "Bit12Id",
+                "IOExtenderBuses",
+                "INTEGER",
                 nullable: true);
 
             migrationBuilder.AddColumn<int>(
-                name: "Bit13Id",
-                table: "IOExtenderBuses",
-                type: "INTEGER",
+                "Bit13Id",
+                "IOExtenderBuses",
+                "INTEGER",
                 nullable: true);
 
             migrationBuilder.AddColumn<int>(
-                name: "Bit14Id",
-                table: "IOExtenderBuses",
-                type: "INTEGER",
+                "Bit14Id",
+                "IOExtenderBuses",
+                "INTEGER",
                 nullable: true);
 
             migrationBuilder.AddColumn<int>(
-                name: "Bit15Id",
-                table: "IOExtenderBuses",
-                type: "INTEGER",
+                "Bit15Id",
+                "IOExtenderBuses",
+                "INTEGER",
                 nullable: true);
 
             migrationBuilder.AddColumn<int>(
-                name: "Bit1Id",
-                table: "IOExtenderBuses",
-                type: "INTEGER",
+                "Bit1Id",
+                "IOExtenderBuses",
+                "INTEGER",
                 nullable: true);
 
             migrationBuilder.AddColumn<int>(
-                name: "Bit2Id",
-                table: "IOExtenderBuses",
-                type: "INTEGER",
+                "Bit2Id",
+                "IOExtenderBuses",
+                "INTEGER",
                 nullable: true);
 
             migrationBuilder.AddColumn<int>(
-                name: "Bit3Id",
-                table: "IOExtenderBuses",
-                type: "INTEGER",
+                "Bit3Id",
+                "IOExtenderBuses",
+                "INTEGER",
                 nullable: true);
 
             migrationBuilder.AddColumn<int>(
-                name: "Bit4Id",
-                table: "IOExtenderBuses",
-                type: "INTEGER",
+                "Bit4Id",
+                "IOExtenderBuses",
+                "INTEGER",
                 nullable: true);
 
             migrationBuilder.AddColumn<int>(
-                name: "Bit5Id",
-                table: "IOExtenderBuses",
-                type: "INTEGER",
+                "Bit5Id",
+                "IOExtenderBuses",
+                "INTEGER",
                 nullable: true);
 
             migrationBuilder.AddColumn<int>(
-                name: "Bit6Id",
-                table: "IOExtenderBuses",
-                type: "INTEGER",
+                "Bit6Id",
+                "IOExtenderBuses",
+                "INTEGER",
                 nullable: true);
 
             migrationBuilder.AddColumn<int>(
-                name: "Bit7Id",
-                table: "IOExtenderBuses",
-                type: "INTEGER",
+                "Bit7Id",
+                "IOExtenderBuses",
+                "INTEGER",
                 nullable: true);
 
             migrationBuilder.AddColumn<int>(
-                name: "Bit8Id",
-                table: "IOExtenderBuses",
-                type: "INTEGER",
+                "Bit8Id",
+                "IOExtenderBuses",
+                "INTEGER",
                 nullable: true);
 
             migrationBuilder.AddColumn<int>(
-                name: "Bit9Id",
-                table: "IOExtenderBuses",
-                type: "INTEGER",
+                "Bit9Id",
+                "IOExtenderBuses",
+                "INTEGER",
                 nullable: true);
 
             migrationBuilder.AddColumn<int>(
-                name: "Bus1Id",
-                table: "HardwareBoards",
-                type: "INTEGER",
+                "Bus1Id",
+                "HardwareBoards",
+                "INTEGER",
                 nullable: true);
 
             migrationBuilder.AddColumn<int>(
-                name: "Bus2Id",
-                table: "HardwareBoards",
-                type: "INTEGER",
+                "Bus2Id",
+                "HardwareBoards",
+                "INTEGER",
                 nullable: true);
 
             migrationBuilder.AddColumn<int>(
-                name: "Bus3Id",
-                table: "HardwareBoards",
-                type: "INTEGER",
+                "Bus3Id",
+                "HardwareBoards",
+                "INTEGER",
                 nullable: true);
 
             migrationBuilder.AddColumn<int>(
-                name: "Bus4Id",
-                table: "HardwareBoards",
-                type: "INTEGER",
+                "Bus4Id",
+                "HardwareBoards",
+                "INTEGER",
                 nullable: true);
 
             migrationBuilder.AddColumn<int>(
-                name: "Bus5Id",
-                table: "HardwareBoards",
-                type: "INTEGER",
+                "Bus5Id",
+                "HardwareBoards",
+                "INTEGER",
                 nullable: true);
 
             migrationBuilder.AddColumn<int>(
-                name: "Bus6Id",
-                table: "HardwareBoards",
-                type: "INTEGER",
+                "Bus6Id",
+                "HardwareBoards",
+                "INTEGER",
                 nullable: true);
 
             migrationBuilder.AddColumn<int>(
-                name: "Bus7Id",
-                table: "HardwareBoards",
-                type: "INTEGER",
+                "Bus7Id",
+                "HardwareBoards",
+                "INTEGER",
                 nullable: true);
 
             migrationBuilder.AddColumn<int>(
-                name: "Bus8Id",
-                table: "HardwareBoards",
-                type: "INTEGER",
+                "Bus8Id",
+                "HardwareBoards",
+                "INTEGER",
                 nullable: true);
 
             migrationBuilder.AddPrimaryKey(
-                name: "PK_IOExtenderBit",
-                table: "IOExtenderBit",
-                column: "Id");
+                "PK_IOExtenderBit",
+                "IOExtenderBit",
+                "Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_IOExtenderBuses_Bit0Id",
-                table: "IOExtenderBuses",
-                column: "Bit0Id");
+                "IX_IOExtenderBuses_Bit0Id",
+                "IOExtenderBuses",
+                "Bit0Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_IOExtenderBuses_Bit10Id",
-                table: "IOExtenderBuses",
-                column: "Bit10Id");
+                "IX_IOExtenderBuses_Bit10Id",
+                "IOExtenderBuses",
+                "Bit10Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_IOExtenderBuses_Bit11Id",
-                table: "IOExtenderBuses",
-                column: "Bit11Id");
+                "IX_IOExtenderBuses_Bit11Id",
+                "IOExtenderBuses",
+                "Bit11Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_IOExtenderBuses_Bit12Id",
-                table: "IOExtenderBuses",
-                column: "Bit12Id");
+                "IX_IOExtenderBuses_Bit12Id",
+                "IOExtenderBuses",
+                "Bit12Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_IOExtenderBuses_Bit13Id",
-                table: "IOExtenderBuses",
-                column: "Bit13Id");
+                "IX_IOExtenderBuses_Bit13Id",
+                "IOExtenderBuses",
+                "Bit13Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_IOExtenderBuses_Bit14Id",
-                table: "IOExtenderBuses",
-                column: "Bit14Id");
+                "IX_IOExtenderBuses_Bit14Id",
+                "IOExtenderBuses",
+                "Bit14Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_IOExtenderBuses_Bit15Id",
-                table: "IOExtenderBuses",
-                column: "Bit15Id");
+                "IX_IOExtenderBuses_Bit15Id",
+                "IOExtenderBuses",
+                "Bit15Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_IOExtenderBuses_Bit1Id",
-                table: "IOExtenderBuses",
-                column: "Bit1Id");
+                "IX_IOExtenderBuses_Bit1Id",
+                "IOExtenderBuses",
+                "Bit1Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_IOExtenderBuses_Bit2Id",
-                table: "IOExtenderBuses",
-                column: "Bit2Id");
+                "IX_IOExtenderBuses_Bit2Id",
+                "IOExtenderBuses",
+                "Bit2Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_IOExtenderBuses_Bit3Id",
-                table: "IOExtenderBuses",
-                column: "Bit3Id");
+                "IX_IOExtenderBuses_Bit3Id",
+                "IOExtenderBuses",
+                "Bit3Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_IOExtenderBuses_Bit4Id",
-                table: "IOExtenderBuses",
-                column: "Bit4Id");
+                "IX_IOExtenderBuses_Bit4Id",
+                "IOExtenderBuses",
+                "Bit4Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_IOExtenderBuses_Bit5Id",
-                table: "IOExtenderBuses",
-                column: "Bit5Id");
+                "IX_IOExtenderBuses_Bit5Id",
+                "IOExtenderBuses",
+                "Bit5Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_IOExtenderBuses_Bit6Id",
-                table: "IOExtenderBuses",
-                column: "Bit6Id");
+                "IX_IOExtenderBuses_Bit6Id",
+                "IOExtenderBuses",
+                "Bit6Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_IOExtenderBuses_Bit7Id",
-                table: "IOExtenderBuses",
-                column: "Bit7Id");
+                "IX_IOExtenderBuses_Bit7Id",
+                "IOExtenderBuses",
+                "Bit7Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_IOExtenderBuses_Bit8Id",
-                table: "IOExtenderBuses",
-                column: "Bit8Id");
+                "IX_IOExtenderBuses_Bit8Id",
+                "IOExtenderBuses",
+                "Bit8Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_IOExtenderBuses_Bit9Id",
-                table: "IOExtenderBuses",
-                column: "Bit9Id");
+                "IX_IOExtenderBuses_Bit9Id",
+                "IOExtenderBuses",
+                "Bit9Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HardwareBoards_Bus1Id",
-                table: "HardwareBoards",
-                column: "Bus1Id");
+                "IX_HardwareBoards_Bus1Id",
+                "HardwareBoards",
+                "Bus1Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HardwareBoards_Bus2Id",
-                table: "HardwareBoards",
-                column: "Bus2Id");
+                "IX_HardwareBoards_Bus2Id",
+                "HardwareBoards",
+                "Bus2Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HardwareBoards_Bus3Id",
-                table: "HardwareBoards",
-                column: "Bus3Id");
+                "IX_HardwareBoards_Bus3Id",
+                "HardwareBoards",
+                "Bus3Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HardwareBoards_Bus4Id",
-                table: "HardwareBoards",
-                column: "Bus4Id");
+                "IX_HardwareBoards_Bus4Id",
+                "HardwareBoards",
+                "Bus4Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HardwareBoards_Bus5Id",
-                table: "HardwareBoards",
-                column: "Bus5Id");
+                "IX_HardwareBoards_Bus5Id",
+                "HardwareBoards",
+                "Bus5Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HardwareBoards_Bus6Id",
-                table: "HardwareBoards",
-                column: "Bus6Id");
+                "IX_HardwareBoards_Bus6Id",
+                "HardwareBoards",
+                "Bus6Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HardwareBoards_Bus7Id",
-                table: "HardwareBoards",
-                column: "Bus7Id");
+                "IX_HardwareBoards_Bus7Id",
+                "HardwareBoards",
+                "Bus7Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HardwareBoards_Bus8Id",
-                table: "HardwareBoards",
-                column: "Bus8Id");
+                "IX_HardwareBoards_Bus8Id",
+                "HardwareBoards",
+                "Bus8Id");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_HardwareBoards_IOExtenderBuses_Bus1Id",
-                table: "HardwareBoards",
-                column: "Bus1Id",
-                principalTable: "IOExtenderBuses",
+                "FK_HardwareBoards_IOExtenderBuses_Bus1Id",
+                "HardwareBoards",
+                "Bus1Id",
+                "IOExtenderBuses",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_HardwareBoards_IOExtenderBuses_Bus2Id",
-                table: "HardwareBoards",
-                column: "Bus2Id",
-                principalTable: "IOExtenderBuses",
+                "FK_HardwareBoards_IOExtenderBuses_Bus2Id",
+                "HardwareBoards",
+                "Bus2Id",
+                "IOExtenderBuses",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_HardwareBoards_IOExtenderBuses_Bus3Id",
-                table: "HardwareBoards",
-                column: "Bus3Id",
-                principalTable: "IOExtenderBuses",
+                "FK_HardwareBoards_IOExtenderBuses_Bus3Id",
+                "HardwareBoards",
+                "Bus3Id",
+                "IOExtenderBuses",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_HardwareBoards_IOExtenderBuses_Bus4Id",
-                table: "HardwareBoards",
-                column: "Bus4Id",
-                principalTable: "IOExtenderBuses",
+                "FK_HardwareBoards_IOExtenderBuses_Bus4Id",
+                "HardwareBoards",
+                "Bus4Id",
+                "IOExtenderBuses",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_HardwareBoards_IOExtenderBuses_Bus5Id",
-                table: "HardwareBoards",
-                column: "Bus5Id",
-                principalTable: "IOExtenderBuses",
+                "FK_HardwareBoards_IOExtenderBuses_Bus5Id",
+                "HardwareBoards",
+                "Bus5Id",
+                "IOExtenderBuses",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_HardwareBoards_IOExtenderBuses_Bus6Id",
-                table: "HardwareBoards",
-                column: "Bus6Id",
-                principalTable: "IOExtenderBuses",
+                "FK_HardwareBoards_IOExtenderBuses_Bus6Id",
+                "HardwareBoards",
+                "Bus6Id",
+                "IOExtenderBuses",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_HardwareBoards_IOExtenderBuses_Bus7Id",
-                table: "HardwareBoards",
-                column: "Bus7Id",
-                principalTable: "IOExtenderBuses",
+                "FK_HardwareBoards_IOExtenderBuses_Bus7Id",
+                "HardwareBoards",
+                "Bus7Id",
+                "IOExtenderBuses",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_HardwareBoards_IOExtenderBuses_Bus8Id",
-                table: "HardwareBoards",
-                column: "Bus8Id",
-                principalTable: "IOExtenderBuses",
+                "FK_HardwareBoards_IOExtenderBuses_Bus8Id",
+                "HardwareBoards",
+                "Bus8Id",
+                "IOExtenderBuses",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_IOExtenderBit_HardwareInputs_HardwareInputId",
-                table: "IOExtenderBit",
-                column: "HardwareInputId",
-                principalTable: "HardwareInputs",
+                "FK_IOExtenderBit_HardwareInputs_HardwareInputId",
+                "IOExtenderBit",
+                "HardwareInputId",
+                "HardwareInputs",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_IOExtenderBit_HardwareOutputs_HardwareOutputId",
-                table: "IOExtenderBit",
-                column: "HardwareOutputId",
-                principalTable: "HardwareOutputs",
+                "FK_IOExtenderBit_HardwareOutputs_HardwareOutputId",
+                "IOExtenderBit",
+                "HardwareOutputId",
+                "HardwareOutputs",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_IOExtenderBuses_IOExtenderBit_Bit0Id",
-                table: "IOExtenderBuses",
-                column: "Bit0Id",
-                principalTable: "IOExtenderBit",
+                "FK_IOExtenderBuses_IOExtenderBit_Bit0Id",
+                "IOExtenderBuses",
+                "Bit0Id",
+                "IOExtenderBit",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_IOExtenderBuses_IOExtenderBit_Bit10Id",
-                table: "IOExtenderBuses",
-                column: "Bit10Id",
-                principalTable: "IOExtenderBit",
+                "FK_IOExtenderBuses_IOExtenderBit_Bit10Id",
+                "IOExtenderBuses",
+                "Bit10Id",
+                "IOExtenderBit",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_IOExtenderBuses_IOExtenderBit_Bit11Id",
-                table: "IOExtenderBuses",
-                column: "Bit11Id",
-                principalTable: "IOExtenderBit",
+                "FK_IOExtenderBuses_IOExtenderBit_Bit11Id",
+                "IOExtenderBuses",
+                "Bit11Id",
+                "IOExtenderBit",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_IOExtenderBuses_IOExtenderBit_Bit12Id",
-                table: "IOExtenderBuses",
-                column: "Bit12Id",
-                principalTable: "IOExtenderBit",
+                "FK_IOExtenderBuses_IOExtenderBit_Bit12Id",
+                "IOExtenderBuses",
+                "Bit12Id",
+                "IOExtenderBit",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_IOExtenderBuses_IOExtenderBit_Bit13Id",
-                table: "IOExtenderBuses",
-                column: "Bit13Id",
-                principalTable: "IOExtenderBit",
+                "FK_IOExtenderBuses_IOExtenderBit_Bit13Id",
+                "IOExtenderBuses",
+                "Bit13Id",
+                "IOExtenderBit",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_IOExtenderBuses_IOExtenderBit_Bit14Id",
-                table: "IOExtenderBuses",
-                column: "Bit14Id",
-                principalTable: "IOExtenderBit",
+                "FK_IOExtenderBuses_IOExtenderBit_Bit14Id",
+                "IOExtenderBuses",
+                "Bit14Id",
+                "IOExtenderBit",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_IOExtenderBuses_IOExtenderBit_Bit15Id",
-                table: "IOExtenderBuses",
-                column: "Bit15Id",
-                principalTable: "IOExtenderBit",
+                "FK_IOExtenderBuses_IOExtenderBit_Bit15Id",
+                "IOExtenderBuses",
+                "Bit15Id",
+                "IOExtenderBit",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_IOExtenderBuses_IOExtenderBit_Bit1Id",
-                table: "IOExtenderBuses",
-                column: "Bit1Id",
-                principalTable: "IOExtenderBit",
+                "FK_IOExtenderBuses_IOExtenderBit_Bit1Id",
+                "IOExtenderBuses",
+                "Bit1Id",
+                "IOExtenderBit",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_IOExtenderBuses_IOExtenderBit_Bit2Id",
-                table: "IOExtenderBuses",
-                column: "Bit2Id",
-                principalTable: "IOExtenderBit",
+                "FK_IOExtenderBuses_IOExtenderBit_Bit2Id",
+                "IOExtenderBuses",
+                "Bit2Id",
+                "IOExtenderBit",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_IOExtenderBuses_IOExtenderBit_Bit3Id",
-                table: "IOExtenderBuses",
-                column: "Bit3Id",
-                principalTable: "IOExtenderBit",
+                "FK_IOExtenderBuses_IOExtenderBit_Bit3Id",
+                "IOExtenderBuses",
+                "Bit3Id",
+                "IOExtenderBit",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_IOExtenderBuses_IOExtenderBit_Bit4Id",
-                table: "IOExtenderBuses",
-                column: "Bit4Id",
-                principalTable: "IOExtenderBit",
+                "FK_IOExtenderBuses_IOExtenderBit_Bit4Id",
+                "IOExtenderBuses",
+                "Bit4Id",
+                "IOExtenderBit",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_IOExtenderBuses_IOExtenderBit_Bit5Id",
-                table: "IOExtenderBuses",
-                column: "Bit5Id",
-                principalTable: "IOExtenderBit",
+                "FK_IOExtenderBuses_IOExtenderBit_Bit5Id",
+                "IOExtenderBuses",
+                "Bit5Id",
+                "IOExtenderBit",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_IOExtenderBuses_IOExtenderBit_Bit6Id",
-                table: "IOExtenderBuses",
-                column: "Bit6Id",
-                principalTable: "IOExtenderBit",
+                "FK_IOExtenderBuses_IOExtenderBit_Bit6Id",
+                "IOExtenderBuses",
+                "Bit6Id",
+                "IOExtenderBit",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_IOExtenderBuses_IOExtenderBit_Bit7Id",
-                table: "IOExtenderBuses",
-                column: "Bit7Id",
-                principalTable: "IOExtenderBit",
+                "FK_IOExtenderBuses_IOExtenderBit_Bit7Id",
+                "IOExtenderBuses",
+                "Bit7Id",
+                "IOExtenderBit",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_IOExtenderBuses_IOExtenderBit_Bit8Id",
-                table: "IOExtenderBuses",
-                column: "Bit8Id",
-                principalTable: "IOExtenderBit",
+                "FK_IOExtenderBuses_IOExtenderBit_Bit8Id",
+                "IOExtenderBuses",
+                "Bit8Id",
+                "IOExtenderBit",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_IOExtenderBuses_IOExtenderBit_Bit9Id",
-                table: "IOExtenderBuses",
-                column: "Bit9Id",
-                principalTable: "IOExtenderBit",
+                "FK_IOExtenderBuses_IOExtenderBit_Bit9Id",
+                "IOExtenderBuses",
+                "Bit9Id",
+                "IOExtenderBit",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
         }

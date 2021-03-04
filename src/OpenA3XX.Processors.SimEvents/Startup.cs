@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using OpenA3XX.Core.Logging;
-using OpenA3XX.Core.Repositories;
 using OpenA3XX.Core.Sockets.Handlers;
 
 namespace OpenA3XX.Coordinator.SimulatorEventProcessor
@@ -21,10 +20,7 @@ namespace OpenA3XX.Coordinator.SimulatorEventProcessor
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
             var webSocketOptions = new WebSocketOptions
             {

@@ -8,37 +8,37 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "HardwarePanelTokens",
-                columns: table => new
+                "HardwarePanelTokens",
+                table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>("INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    DeviceToken = table.Column<string>(type: "TEXT", nullable: true),
-                    CreatedDateTime = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    DeviceIpAddress = table.Column<string>(type: "TEXT", nullable: true),
-                    HardwarePanelId = table.Column<int>(type: "INTEGER", nullable: true)
+                    DeviceToken = table.Column<string>("TEXT", nullable: true),
+                    CreatedDateTime = table.Column<DateTime>("TEXT", nullable: false),
+                    DeviceIpAddress = table.Column<string>("TEXT", nullable: true),
+                    HardwarePanelId = table.Column<int>("INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_HardwarePanelTokens", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_HardwarePanelTokens_HardwarePanels_HardwarePanelId",
-                        column: x => x.HardwarePanelId,
-                        principalTable: "HardwarePanels",
-                        principalColumn: "Id",
+                        "FK_HardwarePanelTokens_HardwarePanels_HardwarePanelId",
+                        x => x.HardwarePanelId,
+                        "HardwarePanels",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_HardwarePanelTokens_HardwarePanelId",
-                table: "HardwarePanelTokens",
-                column: "HardwarePanelId");
+                "IX_HardwarePanelTokens_HardwarePanelId",
+                "HardwarePanelTokens",
+                "HardwarePanelId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "HardwarePanelTokens");
+                "HardwarePanelTokens");
         }
     }
 }

@@ -7,9 +7,9 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<int>(
-                name: "HardwarePanelOwner",
-                table: "HardwarePanels",
-                type: "INTEGER",
+                "HardwarePanelOwner",
+                "HardwarePanels",
+                "INTEGER",
                 nullable: false,
                 defaultValue: 0);
         }
@@ -17,8 +17,8 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "HardwarePanelOwner",
-                table: "HardwarePanels");
+                "HardwarePanelOwner",
+                "HardwarePanels");
         }
     }
 }

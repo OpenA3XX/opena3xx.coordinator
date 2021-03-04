@@ -4,7 +4,7 @@ using OpenA3XX.Core.Configuration;
 
 namespace OpenA3XX.Core.DataContexts
 {
-    public class CoreDataContextFactory: IDesignTimeDbContextFactory<CoreDataContext>
+    public class CoreDataContextFactory : IDesignTimeDbContextFactory<CoreDataContext>
     {
         public CoreDataContext CreateDbContext(string[] args)
         {

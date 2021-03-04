@@ -7,16 +7,16 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<int>(
-                name: "HardwareBus",
-                table: "IOExtenderBuses",
-                type: "INTEGER",
+                "HardwareBus",
+                "IOExtenderBuses",
+                "INTEGER",
                 nullable: false,
                 defaultValue: 0);
 
             migrationBuilder.AddColumn<int>(
-                name: "HardwareBit",
-                table: "IOExtenderBits",
-                type: "INTEGER",
+                "HardwareBit",
+                "IOExtenderBits",
+                "INTEGER",
                 nullable: false,
                 defaultValue: 0);
         }
@@ -24,12 +24,12 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "HardwareBus",
-                table: "IOExtenderBuses");
+                "HardwareBus",
+                "IOExtenderBuses");
 
             migrationBuilder.DropColumn(
-                name: "HardwareBit",
-                table: "IOExtenderBits");
+                "HardwareBit",
+                "IOExtenderBits");
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using OpenA3XX.Core.Configuration;
@@ -36,24 +37,24 @@ namespace OpenA3XX.Processors.CockpitEvents
                 Name = "MCDU1",
                 Buses = new List<IOExtenderBus>
                 {
-                    new IOExtenderBus()
+                    new()
                     {
                         HardwareBus = HardwareBus.Bus0,
                         Bits = new List<IOExtenderBit>
                         {
-                            new IOExtenderBit()
+                            new()
                             {
                                 ExtenderBusBitType = ExtenderBusBitType.Input, HardwareInputId = 13
                             },
-                            new IOExtenderBit()
+                            new()
                             {
                                 ExtenderBusBitType = ExtenderBusBitType.Input, HardwareInputId = 14
                             },
-                            new IOExtenderBit()
+                            new()
                             {
                                 ExtenderBusBitType = ExtenderBusBitType.Input, HardwareInputId = 15
                             },
-                            new IOExtenderBit()
+                            new()
                             {
                                 ExtenderBusBitType = ExtenderBusBitType.Input, HardwareInputId = 16
                             }
@@ -62,7 +63,7 @@ namespace OpenA3XX.Processors.CockpitEvents
                 }
             };
 
-            var factory = new ConnectionFactory()
+            var factory = new ConnectionFactory
             {
                 UserName = "opena3xx",
                 Password = "opena3xx",
@@ -78,7 +79,7 @@ namespace OpenA3XX.Processors.CockpitEvents
             consumer.Received += (ch, ea) =>
             {
                 channel.BasicAck(ea.DeliveryTag, false);
-                var result = System.Text.Encoding.UTF8.GetString(ea.Body.ToArray());
+                var result = Encoding.UTF8.GetString(ea.Body.ToArray());
                 var hardwareSignalDto = JsonConvert.DeserializeObject<HardwareSignalDto>(result);
                 var hardwareBoardRepository =
                     new HardwareBoardRepository(new CoreDataContext(dbContextOptionsBuilder.Options));

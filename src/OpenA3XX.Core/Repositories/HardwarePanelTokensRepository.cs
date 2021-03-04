@@ -7,7 +7,6 @@ using OpenA3XX.Core.Repositories.Base;
 
 namespace OpenA3XX.Core.Repositories
 {
-    
     public class HardwarePanelTokensRepository : BaseRepository<HardwarePanelToken>, IHardwarePanelTokensRepository
     {
         public HardwarePanelTokensRepository(DbContext context) : base(context)

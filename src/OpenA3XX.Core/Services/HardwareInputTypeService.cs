@@ -1,21 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using OpenA3XX.Core.Dtos;
-using OpenA3XX.Core.Exceptions;
 using OpenA3XX.Core.Models;
 using OpenA3XX.Core.Repositories;
 
 namespace OpenA3XX.Core.Services
 {
-    public class HardwareInputTypeService: IHardwareInputTypeService
+    public class HardwareInputTypeService : IHardwareInputTypeService
     {
         private readonly IHttpContextAccessor _accessor;
-        private readonly IMapper _mapper;
         private readonly IHardwareInputTypesRepository _hardwareInputTypesRepository;
+        private readonly IMapper _mapper;
 
-        public HardwareInputTypeService(IHttpContextAccessor accessor, IHardwareInputTypesRepository hardwareInputTypesRepository, IMapper mapper)
+        public HardwareInputTypeService(IHttpContextAccessor accessor,
+            IHardwareInputTypesRepository hardwareInputTypesRepository, IMapper mapper)
         {
             _accessor = accessor;
             _hardwareInputTypesRepository = hardwareInputTypesRepository;
@@ -25,7 +24,8 @@ namespace OpenA3XX.Core.Services
         public IList<HardwareInputTypeDto> GetAll()
         {
             var hardwareInputTypes = _hardwareInputTypesRepository.GetAllHardwareInputTypes();
-            var hardwareInputTypesDtoList = _mapper.Map<IList<HardwareInputType>, IList<HardwareInputTypeDto>>(hardwareInputTypes);
+            var hardwareInputTypesDtoList =
+                _mapper.Map<IList<HardwareInputType>, IList<HardwareInputTypeDto>>(hardwareInputTypes);
 
             return hardwareInputTypesDtoList;
         }
@@ -39,18 +39,10 @@ namespace OpenA3XX.Core.Services
 
         public HardwareInputTypeDto Add(HardwareInputTypeDto hardwareInputTypeDto)
         {
-            try
-            {
-                var hardwareInputType = _mapper.Map<HardwareInputTypeDto, HardwareInputType>(hardwareInputTypeDto);
-                hardwareInputType = _hardwareInputTypesRepository.AddHardwareInputType(hardwareInputType);
-                hardwareInputTypeDto = _mapper.Map<HardwareInputType, HardwareInputTypeDto>(hardwareInputType);
-                return hardwareInputTypeDto;
-            }
-            catch (HardwareInputTypeExistsException e)
-            {
-                throw;
-            }
-            
+            var hardwareInputType = _mapper.Map<HardwareInputTypeDto, HardwareInputType>(hardwareInputTypeDto);
+            hardwareInputType = _hardwareInputTypesRepository.AddHardwareInputType(hardwareInputType);
+            hardwareInputTypeDto = _mapper.Map<HardwareInputType, HardwareInputTypeDto>(hardwareInputType);
+            return hardwareInputTypeDto;
         }
 
         public HardwareInputTypeDto Update(HardwareInputTypeDto hardwareInputTypeDto)

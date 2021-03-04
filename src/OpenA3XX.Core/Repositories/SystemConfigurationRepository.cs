@@ -16,5 +16,15 @@ namespace OpenA3XX.Core.Repositories
         {
             return GetAll().ToList();
         }
+
+        public void UpdateAllConfiguration(IList<SystemConfiguration> systemConfigurationList)
+        {
+            foreach (var configuration in systemConfigurationList)
+            {
+                var item = FindBy(c => c.Key == configuration.Key).First();
+                configuration.Id = item.Id;
+                Update(configuration, item.Id);
+            }
+        }
     }
 }

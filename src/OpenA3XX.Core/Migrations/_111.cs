@@ -7,27 +7,27 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_AircraftModels_Manufucturers_ManufacturerId",
-                table: "AircraftModels");
+                "FK_AircraftModels_Manufucturers_ManufacturerId",
+                "AircraftModels");
 
             migrationBuilder.DropPrimaryKey(
-                name: "PK_Manufucturers",
-                table: "Manufucturers");
+                "PK_Manufucturers",
+                "Manufucturers");
 
             migrationBuilder.RenameTable(
-                name: "Manufucturers",
+                "Manufucturers",
                 newName: "Manufacturers");
 
             migrationBuilder.AddPrimaryKey(
-                name: "PK_Manufacturers",
-                table: "Manufacturers",
-                column: "Id");
+                "PK_Manufacturers",
+                "Manufacturers",
+                "Id");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_AircraftModels_Manufacturers_ManufacturerId",
-                table: "AircraftModels",
-                column: "ManufacturerId",
-                principalTable: "Manufacturers",
+                "FK_AircraftModels_Manufacturers_ManufacturerId",
+                "AircraftModels",
+                "ManufacturerId",
+                "Manufacturers",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
         }
@@ -35,27 +35,27 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_AircraftModels_Manufacturers_ManufacturerId",
-                table: "AircraftModels");
+                "FK_AircraftModels_Manufacturers_ManufacturerId",
+                "AircraftModels");
 
             migrationBuilder.DropPrimaryKey(
-                name: "PK_Manufacturers",
-                table: "Manufacturers");
+                "PK_Manufacturers",
+                "Manufacturers");
 
             migrationBuilder.RenameTable(
-                name: "Manufacturers",
+                "Manufacturers",
                 newName: "Manufucturers");
 
             migrationBuilder.AddPrimaryKey(
-                name: "PK_Manufucturers",
-                table: "Manufucturers",
-                column: "Id");
+                "PK_Manufucturers",
+                "Manufucturers",
+                "Id");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_AircraftModels_Manufucturers_ManufacturerId",
-                table: "AircraftModels",
-                column: "ManufacturerId",
-                principalTable: "Manufucturers",
+                "FK_AircraftModels_Manufucturers_ManufacturerId",
+                "AircraftModels",
+                "ManufacturerId",
+                "Manufucturers",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
         }

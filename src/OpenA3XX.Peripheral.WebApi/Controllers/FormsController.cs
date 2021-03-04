@@ -1,11 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using OpenA3XX.Core.Forms;
-using OpenA3XX.Core.Repositories;
 using OpenA3XX.Core.Services;
 
 namespace OpenA3XX.Peripheral.WebApi.Controllers
@@ -14,8 +10,8 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
     [Route("forms")]
     public class FormsController : ControllerBase
     {
-        private readonly ILogger<FormsController> _logger;
         private readonly IFormService _formService;
+        private readonly ILogger<FormsController> _logger;
 
         public FormsController(ILogger<FormsController> logger, IFormService formService)
         {
@@ -33,9 +29,4 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
             return _formService.GetSettingsFormFields();
         }
     }
-
-    
-
-    
-
 }

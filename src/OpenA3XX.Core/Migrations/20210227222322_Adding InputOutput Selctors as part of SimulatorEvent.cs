@@ -7,46 +7,46 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_SimulatorEvents_HardwarePanels_HardwarePanelId",
-                table: "SimulatorEvents");
+                "FK_SimulatorEvents_HardwarePanels_HardwarePanelId",
+                "SimulatorEvents");
 
             migrationBuilder.DropTable(
-                name: "SimulatorEventLink");
+                "SimulatorEventLink");
 
             migrationBuilder.RenameColumn(
-                name: "HardwarePanelId",
-                table: "SimulatorEvents",
-                newName: "HardwareOutputSelectorId");
+                "HardwarePanelId",
+                "SimulatorEvents",
+                "HardwareOutputSelectorId");
 
             migrationBuilder.RenameIndex(
-                name: "IX_SimulatorEvents_HardwarePanelId",
+                "IX_SimulatorEvents_HardwarePanelId",
                 table: "SimulatorEvents",
                 newName: "IX_SimulatorEvents_HardwareOutputSelectorId");
 
             migrationBuilder.AddColumn<int>(
-                name: "HardwareInputSelectorId",
-                table: "SimulatorEvents",
-                type: "INTEGER",
+                "HardwareInputSelectorId",
+                "SimulatorEvents",
+                "INTEGER",
                 nullable: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_SimulatorEvents_HardwareInputSelectorId",
-                table: "SimulatorEvents",
-                column: "HardwareInputSelectorId");
+                "IX_SimulatorEvents_HardwareInputSelectorId",
+                "SimulatorEvents",
+                "HardwareInputSelectorId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_SimulatorEvents_HardwareInputSelectors_HardwareInputSelectorId",
-                table: "SimulatorEvents",
-                column: "HardwareInputSelectorId",
-                principalTable: "HardwareInputSelectors",
+                "FK_SimulatorEvents_HardwareInputSelectors_HardwareInputSelectorId",
+                "SimulatorEvents",
+                "HardwareInputSelectorId",
+                "HardwareInputSelectors",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_SimulatorEvents_HardwareOutputSelectors_HardwareOutputSelectorId",
-                table: "SimulatorEvents",
-                column: "HardwareOutputSelectorId",
-                principalTable: "HardwareOutputSelectors",
+                "FK_SimulatorEvents_HardwareOutputSelectors_HardwareOutputSelectorId",
+                "SimulatorEvents",
+                "HardwareOutputSelectorId",
+                "HardwareOutputSelectors",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
         }
@@ -54,84 +54,84 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_SimulatorEvents_HardwareInputSelectors_HardwareInputSelectorId",
-                table: "SimulatorEvents");
+                "FK_SimulatorEvents_HardwareInputSelectors_HardwareInputSelectorId",
+                "SimulatorEvents");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_SimulatorEvents_HardwareOutputSelectors_HardwareOutputSelectorId",
-                table: "SimulatorEvents");
+                "FK_SimulatorEvents_HardwareOutputSelectors_HardwareOutputSelectorId",
+                "SimulatorEvents");
 
             migrationBuilder.DropIndex(
-                name: "IX_SimulatorEvents_HardwareInputSelectorId",
-                table: "SimulatorEvents");
+                "IX_SimulatorEvents_HardwareInputSelectorId",
+                "SimulatorEvents");
 
             migrationBuilder.DropColumn(
-                name: "HardwareInputSelectorId",
-                table: "SimulatorEvents");
+                "HardwareInputSelectorId",
+                "SimulatorEvents");
 
             migrationBuilder.RenameColumn(
-                name: "HardwareOutputSelectorId",
-                table: "SimulatorEvents",
-                newName: "HardwarePanelId");
+                "HardwareOutputSelectorId",
+                "SimulatorEvents",
+                "HardwarePanelId");
 
             migrationBuilder.RenameIndex(
-                name: "IX_SimulatorEvents_HardwareOutputSelectorId",
+                "IX_SimulatorEvents_HardwareOutputSelectorId",
                 table: "SimulatorEvents",
                 newName: "IX_SimulatorEvents_HardwarePanelId");
 
             migrationBuilder.CreateTable(
-                name: "SimulatorEventLink",
-                columns: table => new
+                "SimulatorEventLink",
+                table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>("INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    HardwareInputSelectorId = table.Column<int>(type: "INTEGER", nullable: true),
-                    HardwareOutputSelectorId = table.Column<int>(type: "INTEGER", nullable: true),
-                    SimulatorEventId = table.Column<int>(type: "INTEGER", nullable: true)
+                    HardwareInputSelectorId = table.Column<int>("INTEGER", nullable: true),
+                    HardwareOutputSelectorId = table.Column<int>("INTEGER", nullable: true),
+                    SimulatorEventId = table.Column<int>("INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SimulatorEventLink", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SimulatorEventLink_HardwareInputSelectors_HardwareInputSelectorId",
-                        column: x => x.HardwareInputSelectorId,
-                        principalTable: "HardwareInputSelectors",
-                        principalColumn: "Id",
+                        "FK_SimulatorEventLink_HardwareInputSelectors_HardwareInputSelectorId",
+                        x => x.HardwareInputSelectorId,
+                        "HardwareInputSelectors",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_SimulatorEventLink_HardwareOutputSelectors_HardwareOutputSelectorId",
-                        column: x => x.HardwareOutputSelectorId,
-                        principalTable: "HardwareOutputSelectors",
-                        principalColumn: "Id",
+                        "FK_SimulatorEventLink_HardwareOutputSelectors_HardwareOutputSelectorId",
+                        x => x.HardwareOutputSelectorId,
+                        "HardwareOutputSelectors",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_SimulatorEventLink_SimulatorEvents_SimulatorEventId",
-                        column: x => x.SimulatorEventId,
-                        principalTable: "SimulatorEvents",
-                        principalColumn: "Id",
+                        "FK_SimulatorEventLink_SimulatorEvents_SimulatorEventId",
+                        x => x.SimulatorEventId,
+                        "SimulatorEvents",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_SimulatorEventLink_HardwareInputSelectorId",
-                table: "SimulatorEventLink",
-                column: "HardwareInputSelectorId");
+                "IX_SimulatorEventLink_HardwareInputSelectorId",
+                "SimulatorEventLink",
+                "HardwareInputSelectorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SimulatorEventLink_HardwareOutputSelectorId",
-                table: "SimulatorEventLink",
-                column: "HardwareOutputSelectorId");
+                "IX_SimulatorEventLink_HardwareOutputSelectorId",
+                "SimulatorEventLink",
+                "HardwareOutputSelectorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SimulatorEventLink_SimulatorEventId",
-                table: "SimulatorEventLink",
-                column: "SimulatorEventId");
+                "IX_SimulatorEventLink_SimulatorEventId",
+                "SimulatorEventLink",
+                "SimulatorEventId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_SimulatorEvents_HardwarePanels_HardwarePanelId",
-                table: "SimulatorEvents",
-                column: "HardwarePanelId",
-                principalTable: "HardwarePanels",
+                "FK_SimulatorEvents_HardwarePanels_HardwarePanelId",
+                "SimulatorEvents",
+                "HardwarePanelId",
+                "HardwarePanels",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
         }

@@ -12,5 +12,4 @@ namespace OpenA3XX.Core.Profiles
                 .ForMember(c => c.Name, m => m.MapFrom(c => c.HardwarePanel.Name));
         }
     }
-
 }

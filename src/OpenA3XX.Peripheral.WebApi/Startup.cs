@@ -16,13 +16,11 @@ using OpenA3XX.Core.Logging;
 using OpenA3XX.Core.Models;
 using OpenA3XX.Core.Repositories;
 using OpenA3XX.Core.Services;
-using Serilog;
 
 namespace OpenA3XX.Peripheral.WebApi
 {
     public class Startup
     {
-        
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -33,8 +31,11 @@ namespace OpenA3XX.Peripheral.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers().AddNewtonsoftJson(options => { options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore; });
-            
+            services.AddControllers().AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
@@ -54,7 +55,7 @@ namespace OpenA3XX.Peripheral.WebApi
                     }
                 });
             });
-            
+
 
             services.AddDbContext<CoreDataContext>(options =>
             {
@@ -69,7 +70,7 @@ namespace OpenA3XX.Peripheral.WebApi
             services.AddTransient<IHardwareInputTypesRepository, HardwareInputTypesRepository>();
             services.AddTransient<IHardwareOutputTypesRepository, HardwareOutputTypesRepository>();
             services.AddTransient<IHardwarePanelRepository, HardwarePanelRepository>();
-            
+
             services.AddTransient<ISimulatorEventRepository, SimulatorEventRepository>();
             services.AddTransient<ISimulatorEventService, SimulatorEventService>();
 
@@ -81,20 +82,16 @@ namespace OpenA3XX.Peripheral.WebApi
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddAutoMapper(Assembly.GetAssembly(typeof(HardwarePanelToken)));
-            
-            
-            
-            services.AddEasyCaching(option =>
-            {
-                option.UseInMemory("m1");
-            });
+
+
+            services.AddEasyCaching(option => { option.UseInMemory("m1"); });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseLoggingConfiguration(env);
-            
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

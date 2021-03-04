@@ -29,19 +29,13 @@ namespace OpenA3XX.Core.Logging
                     var logEntries = new Dictionary<string, object>();
 
                     if (context.Request.Headers.TryGetValue("Referer", out var referer))
-                    {
                         logEntries.Add("Referer", referer.ToString());
-                    }
 
                     if (context.Request.Headers.TryGetValue("User-Agent", out var agent))
-                    {
                         logEntries.Add("User-Agent", agent.ToString());
-                    }
 
                     if (context.Request.Headers.TryGetValue("Authorization", out var auth))
-                    {
                         logEntries.Add("Authorization", auth.ToString());
-                    }
 
                     logEntries.Add("IP Address", context.Connection.RemoteIpAddress.ToString());
                     logEntries.Add("Query", context.Request.Query);

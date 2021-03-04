@@ -7,44 +7,44 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "State",
-                table: "HardwareInputs");
+                "State",
+                "HardwareInputs");
 
             migrationBuilder.CreateTable(
-                name: "HardwareInputSelectors",
-                columns: table => new
+                "HardwareInputSelectors",
+                table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>("INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: true),
-                    HardwareInputId = table.Column<int>(type: "INTEGER", nullable: false)
+                    Name = table.Column<string>("TEXT", nullable: true),
+                    HardwareInputId = table.Column<int>("INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_HardwareInputSelectors", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_HardwareInputSelectors_HardwareInputs_HardwareInputId",
-                        column: x => x.HardwareInputId,
-                        principalTable: "HardwareInputs",
-                        principalColumn: "Id",
+                        "FK_HardwareInputSelectors_HardwareInputs_HardwareInputId",
+                        x => x.HardwareInputId,
+                        "HardwareInputs",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_HardwareInputSelectors_HardwareInputId",
-                table: "HardwareInputSelectors",
-                column: "HardwareInputId");
+                "IX_HardwareInputSelectors_HardwareInputId",
+                "HardwareInputSelectors",
+                "HardwareInputId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "HardwareInputSelectors");
+                "HardwareInputSelectors");
 
             migrationBuilder.AddColumn<int>(
-                name: "State",
-                table: "HardwareInputs",
-                type: "INTEGER",
+                "State",
+                "HardwareInputs",
+                "INTEGER",
                 nullable: true);
         }
     }

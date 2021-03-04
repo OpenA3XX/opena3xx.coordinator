@@ -12,7 +12,7 @@ namespace OpenA3XX.Core.Repositories
         public HardwareInputTypesRepository(DbContext context) : base(context)
         {
         }
-        
+
         public IList<HardwareInputType> GetAllHardwareInputTypes()
         {
             return GetAll().ToList();
@@ -26,10 +26,7 @@ namespace OpenA3XX.Core.Repositories
         public HardwareInputType AddHardwareInputType(HardwareInputType hardwareInputType)
         {
             var storedModel = Find(c => c.Name == hardwareInputType.Name);
-            if (storedModel == null)
-            {
-                return Add(hardwareInputType);
-            }
+            if (storedModel == null) return Add(hardwareInputType);
 
             throw new HardwareInputTypeExistsException(
                 $"Hardware Input Type with {hardwareInputType.Name} already exists");

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -17,13 +16,14 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
         private readonly IHardwareInputTypeService _hardwareInputTypeService;
         private readonly ILogger<HardwareInputTypesController> _logger;
 
-        public HardwareInputTypesController(ILogger<HardwareInputTypesController> logger, IHttpContextAccessor accessor, IHardwareInputTypeService hardwareInputTypeService)
+        public HardwareInputTypesController(ILogger<HardwareInputTypesController> logger, IHttpContextAccessor accessor,
+            IHardwareInputTypeService hardwareInputTypeService)
         {
             _logger = logger;
             _accessor = accessor;
             _hardwareInputTypeService = hardwareInputTypeService;
         }
-        
+
         [HttpGet]
         public IList<HardwareInputTypeDto> GetAll()
         {
@@ -31,17 +31,17 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
 
             return data;
         }
-        
+
         [HttpGet("{hardwareInputTypeId}")]
         public HardwareInputTypeDto GetById(int hardwareInputTypeId)
         {
             var data = _hardwareInputTypeService.GetBy(hardwareInputTypeId);
-    
+
             return data;
         }
 
         [HttpPost]
-        public IActionResult AddHardwareInputType([FromBody]HardwareInputTypeDto hardwareInputTypeDto)
+        public IActionResult AddHardwareInputType([FromBody] HardwareInputTypeDto hardwareInputTypeDto)
         {
             try
             {
@@ -50,12 +50,11 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
             }
             catch (HardwareInputTypeExistsException e)
             {
-                return BadRequest(new ErrorDto()
+                return BadRequest(new ErrorDto
                 {
                     ErrorMessage = e.Message
                 });
             }
-           
         }
 
         [HttpPatch]

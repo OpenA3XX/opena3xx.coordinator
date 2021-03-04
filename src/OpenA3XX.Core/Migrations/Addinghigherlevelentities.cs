@@ -7,220 +7,211 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "HardwareInputType",
-                columns: table => new
+                "HardwareInputType",
+                table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>("INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: true)
+                    Name = table.Column<string>("TEXT", nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_HardwareInputType", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_HardwareInputType", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "HardwareOutputType",
-                columns: table => new
+                "HardwareOutputType",
+                table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>("INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: true)
+                    Name = table.Column<string>("TEXT", nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_HardwareOutputType", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_HardwareOutputType", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "Manufucturers",
-                columns: table => new
+                "Manufucturers",
+                table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>("INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: true)
+                    Name = table.Column<string>("TEXT", nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Manufucturers", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Manufucturers", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "AircraftModels",
-                columns: table => new
+                "AircraftModels",
+                table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>("INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Model = table.Column<string>(type: "TEXT", nullable: true),
-                    ManufucturerId = table.Column<int>(type: "INTEGER", nullable: true)
+                    Model = table.Column<string>("TEXT", nullable: true),
+                    ManufucturerId = table.Column<int>("INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AircraftModels", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AircraftModels_Manufucturers_ManufucturerId",
-                        column: x => x.ManufucturerId,
-                        principalTable: "Manufucturers",
-                        principalColumn: "Id",
+                        "FK_AircraftModels_Manufucturers_ManufucturerId",
+                        x => x.ManufucturerId,
+                        "Manufucturers",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "HardwarePanels",
-                columns: table => new
+                "HardwarePanels",
+                table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>("INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: true),
-                    AircraftModelId = table.Column<int>(type: "INTEGER", nullable: true)
+                    Name = table.Column<string>("TEXT", nullable: true),
+                    AircraftModelId = table.Column<int>("INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_HardwarePanels", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_HardwarePanels_AircraftModels_AircraftModelId",
-                        column: x => x.AircraftModelId,
-                        principalTable: "AircraftModels",
-                        principalColumn: "Id",
+                        "FK_HardwarePanels_AircraftModels_AircraftModelId",
+                        x => x.AircraftModelId,
+                        "AircraftModels",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "HardwareComponents",
-                columns: table => new
+                "HardwareComponents",
+                table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>("INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    HardwarePanelId = table.Column<int>(type: "INTEGER", nullable: true),
-                    Name = table.Column<string>(type: "TEXT", nullable: true),
-                    InternalId = table.Column<string>(type: "TEXT", nullable: true)
+                    HardwarePanelId = table.Column<int>("INTEGER", nullable: true),
+                    Name = table.Column<string>("TEXT", nullable: true),
+                    InternalId = table.Column<string>("TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_HardwareComponents", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_HardwareComponents_HardwarePanels_HardwarePanelId",
-                        column: x => x.HardwarePanelId,
-                        principalTable: "HardwarePanels",
-                        principalColumn: "Id",
+                        "FK_HardwareComponents_HardwarePanels_HardwarePanelId",
+                        x => x.HardwarePanelId,
+                        "HardwarePanels",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "HardwareInputs",
-                columns: table => new
+                "HardwareInputs",
+                table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>("INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: true),
-                    HardwareInputTypeId = table.Column<int>(type: "INTEGER", nullable: true),
-                    HardwareComponentId = table.Column<int>(type: "INTEGER", nullable: true)
+                    Name = table.Column<string>("TEXT", nullable: true),
+                    HardwareInputTypeId = table.Column<int>("INTEGER", nullable: true),
+                    HardwareComponentId = table.Column<int>("INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_HardwareInputs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_HardwareInputs_HardwareComponents_HardwareComponentId",
-                        column: x => x.HardwareComponentId,
-                        principalTable: "HardwareComponents",
-                        principalColumn: "Id",
+                        "FK_HardwareInputs_HardwareComponents_HardwareComponentId",
+                        x => x.HardwareComponentId,
+                        "HardwareComponents",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_HardwareInputs_HardwareInputType_HardwareInputTypeId",
-                        column: x => x.HardwareInputTypeId,
-                        principalTable: "HardwareInputType",
-                        principalColumn: "Id",
+                        "FK_HardwareInputs_HardwareInputType_HardwareInputTypeId",
+                        x => x.HardwareInputTypeId,
+                        "HardwareInputType",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "HardwareOutputs",
-                columns: table => new
+                "HardwareOutputs",
+                table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>("INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: true),
-                    HardwareOutputTypeId = table.Column<int>(type: "INTEGER", nullable: true),
-                    HardwareComponentId = table.Column<int>(type: "INTEGER", nullable: true)
+                    Name = table.Column<string>("TEXT", nullable: true),
+                    HardwareOutputTypeId = table.Column<int>("INTEGER", nullable: true),
+                    HardwareComponentId = table.Column<int>("INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_HardwareOutputs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_HardwareOutputs_HardwareComponents_HardwareComponentId",
-                        column: x => x.HardwareComponentId,
-                        principalTable: "HardwareComponents",
-                        principalColumn: "Id",
+                        "FK_HardwareOutputs_HardwareComponents_HardwareComponentId",
+                        x => x.HardwareComponentId,
+                        "HardwareComponents",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_HardwareOutputs_HardwareOutputType_HardwareOutputTypeId",
-                        column: x => x.HardwareOutputTypeId,
-                        principalTable: "HardwareOutputType",
-                        principalColumn: "Id",
+                        "FK_HardwareOutputs_HardwareOutputType_HardwareOutputTypeId",
+                        x => x.HardwareOutputTypeId,
+                        "HardwareOutputType",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AircraftModels_ManufucturerId",
-                table: "AircraftModels",
-                column: "ManufucturerId");
+                "IX_AircraftModels_ManufucturerId",
+                "AircraftModels",
+                "ManufucturerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HardwareComponents_HardwarePanelId",
-                table: "HardwareComponents",
-                column: "HardwarePanelId");
+                "IX_HardwareComponents_HardwarePanelId",
+                "HardwareComponents",
+                "HardwarePanelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HardwareInputs_HardwareComponentId",
-                table: "HardwareInputs",
-                column: "HardwareComponentId");
+                "IX_HardwareInputs_HardwareComponentId",
+                "HardwareInputs",
+                "HardwareComponentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HardwareInputs_HardwareInputTypeId",
-                table: "HardwareInputs",
-                column: "HardwareInputTypeId");
+                "IX_HardwareInputs_HardwareInputTypeId",
+                "HardwareInputs",
+                "HardwareInputTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HardwareOutputs_HardwareComponentId",
-                table: "HardwareOutputs",
-                column: "HardwareComponentId");
+                "IX_HardwareOutputs_HardwareComponentId",
+                "HardwareOutputs",
+                "HardwareComponentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HardwareOutputs_HardwareOutputTypeId",
-                table: "HardwareOutputs",
-                column: "HardwareOutputTypeId");
+                "IX_HardwareOutputs_HardwareOutputTypeId",
+                "HardwareOutputs",
+                "HardwareOutputTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HardwarePanels_AircraftModelId",
-                table: "HardwarePanels",
-                column: "AircraftModelId");
+                "IX_HardwarePanels_AircraftModelId",
+                "HardwarePanels",
+                "AircraftModelId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "HardwareInputs");
+                "HardwareInputs");
 
             migrationBuilder.DropTable(
-                name: "HardwareOutputs");
+                "HardwareOutputs");
 
             migrationBuilder.DropTable(
-                name: "HardwareInputType");
+                "HardwareInputType");
 
             migrationBuilder.DropTable(
-                name: "HardwareComponents");
+                "HardwareComponents");
 
             migrationBuilder.DropTable(
-                name: "HardwareOutputType");
+                "HardwareOutputType");
 
             migrationBuilder.DropTable(
-                name: "HardwarePanels");
+                "HardwarePanels");
 
             migrationBuilder.DropTable(
-                name: "AircraftModels");
+                "AircraftModels");
 
             migrationBuilder.DropTable(
-                name: "Manufucturers");
+                "Manufucturers");
         }
     }
 }

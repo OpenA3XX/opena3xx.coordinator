@@ -7,24 +7,24 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_AircraftModels_Manufucturers_ManufucturerId",
-                table: "AircraftModels");
+                "FK_AircraftModels_Manufucturers_ManufucturerId",
+                "AircraftModels");
 
             migrationBuilder.RenameColumn(
-                name: "ManufucturerId",
-                table: "AircraftModels",
-                newName: "ManufacturerId");
+                "ManufucturerId",
+                "AircraftModels",
+                "ManufacturerId");
 
             migrationBuilder.RenameIndex(
-                name: "IX_AircraftModels_ManufucturerId",
+                "IX_AircraftModels_ManufucturerId",
                 table: "AircraftModels",
                 newName: "IX_AircraftModels_ManufacturerId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_AircraftModels_Manufucturers_ManufacturerId",
-                table: "AircraftModels",
-                column: "ManufacturerId",
-                principalTable: "Manufucturers",
+                "FK_AircraftModels_Manufucturers_ManufacturerId",
+                "AircraftModels",
+                "ManufacturerId",
+                "Manufucturers",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
         }
@@ -32,24 +32,24 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_AircraftModels_Manufucturers_ManufacturerId",
-                table: "AircraftModels");
+                "FK_AircraftModels_Manufucturers_ManufacturerId",
+                "AircraftModels");
 
             migrationBuilder.RenameColumn(
-                name: "ManufacturerId",
-                table: "AircraftModels",
-                newName: "ManufucturerId");
+                "ManufacturerId",
+                "AircraftModels",
+                "ManufucturerId");
 
             migrationBuilder.RenameIndex(
-                name: "IX_AircraftModels_ManufacturerId",
+                "IX_AircraftModels_ManufacturerId",
                 table: "AircraftModels",
                 newName: "IX_AircraftModels_ManufucturerId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_AircraftModels_Manufucturers_ManufucturerId",
-                table: "AircraftModels",
-                column: "ManufucturerId",
-                principalTable: "Manufucturers",
+                "FK_AircraftModels_Manufucturers_ManufucturerId",
+                "AircraftModels",
+                "ManufucturerId",
+                "Manufucturers",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
         }

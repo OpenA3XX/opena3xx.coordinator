@@ -6,5 +6,7 @@ namespace OpenA3XX.Core.Repositories
     public interface ISystemConfigurationRepository
     {
         IList<SystemConfiguration> GetAllConfiguration();
+
+        void UpdateAllConfiguration(IList<SystemConfiguration> systemConfigurationList);
     }
 }
