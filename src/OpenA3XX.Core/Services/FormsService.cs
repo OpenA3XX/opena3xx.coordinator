@@ -8,10 +8,67 @@ namespace OpenA3XX.Core.Services
     public class FormsService : IFormService
     {
         private readonly ISystemConfigurationRepository _systemConfigurationRepository;
+        private readonly ISimulatorEventService _simulatorEventService;
 
-        public FormsService(ISystemConfigurationRepository systemConfigurationRepository)
+        public FormsService(ISystemConfigurationRepository systemConfigurationRepository,
+            ISimulatorEventService simulatorEventService)
         {
             _systemConfigurationRepository = systemConfigurationRepository;
+            _simulatorEventService = simulatorEventService;
+        }
+
+        public IList<FieldConfig> GetSimLinkFormForHardwareInputSelectorId(int hardwareInputSelectorId)
+        {
+            var simulatorEvents = _simulatorEventService.GetAllSimulatorEvents();
+
+            var simLinkForm = new List<FieldConfig>
+            {
+                new()
+                {
+                    FieldType = FieldType.Select,
+                    Options = new List<KeyValuePair<string, string>>()
+                    {
+                        new ("1","SimConnect: Direct"),
+                        new ("2", "SimConnect: OpenA3XX WASM Gauge"),
+                        new ("3", "FSUIPC"),
+                        new ("4", "Websockets")
+                    },
+                    Validations = new List<FieldValidatorConfig>
+                    {
+                        new()
+                        {
+                            FieldValidationType = FieldValidationType.Required,
+                            Message = "Integration Type is Required"
+                        }
+                    },
+                    Label = "Integration Type",
+                    Name = "inputIntegrationType",
+                    Hint = "Select type of integration to the Simulator Software"
+                },
+                new()
+                {
+                    FieldType = FieldType.Select,
+                    Options = simulatorEvents.Select(c => new KeyValuePair<string,string>(c.Id.ToString(), $"{c.FriendlyName} - {c.EventCode}")),
+                    Label = "Simulator Event",
+                    Name = "simulatorEvent",
+                    Hint = "Select event to trigger to the Simulator Software",
+                    Validations = new List<FieldValidatorConfig>
+                    {
+                        new()
+                        {
+                            FieldValidationType = FieldValidationType.Required,
+                            Message = "Simulator Event is Required"
+                        }
+                    }
+                },
+                new()
+                {
+                    FieldType = FieldType.Button,
+                    Label = "Apply"
+                }
+            };
+
+            return simLinkForm;
         }
 
         public IList<FieldConfig> GetSettingsFormFields()

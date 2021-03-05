@@ -28,5 +28,11 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
         {
             return _formService.GetSettingsFormFields();
         }
+
+        [HttpGet("sim-link/input-selector/{hardwareInputSelectorId}")]
+        public IList<FieldConfig> SimLinkInputSelectorForm(int hardwareInputSelectorId)
+        {
+            return _formService.GetSimLinkFormForHardwareInputSelectorId(hardwareInputSelectorId);
+        }
     }
 }

@@ -55,7 +55,7 @@ namespace OpenA3XX.Core.Forms
         //------------------------------------------------------------------------
 
         [JsonProperty("options", NullValueHandling = NullValueHandling.Ignore)]
-        public IList<string> Options { get; set; }
+        public IEnumerable<KeyValuePair<string, string>> Options { get; set; }
 
         [JsonProperty("collections", NullValueHandling = NullValueHandling.Ignore)]
         public IList<object> Collections { get; set; }
