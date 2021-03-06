@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using OpenA3XX.Core.Repositories;
@@ -10,9 +11,9 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
     public class CoreController : ControllerBase
     {
         private readonly IHttpContextAccessor _accessor;
-        private readonly ILogger<HardwarePanelController> _logger;
+        private readonly ILogger<CoreController> _logger;
 
-        public CoreController(ILogger<HardwarePanelController> logger, IHttpContextAccessor accessor,
+        public CoreController(ILogger<CoreController> logger, IHttpContextAccessor accessor,
             IHardwarePanelTokensRepository hardwarePanelTokensRepository)
         {
             _logger = logger;
@@ -28,5 +29,6 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
         {
             return "Pong from OpenA3XX";
         }
+
     }
 }

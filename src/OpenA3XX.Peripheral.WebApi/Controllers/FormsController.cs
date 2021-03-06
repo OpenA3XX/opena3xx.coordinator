@@ -19,10 +19,6 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
             _formService = formService;
         }
 
-        /// <summary>
-        ///     Ping endpoint used for network discovery functionality in the hardware panels
-        /// </summary>
-        /// <returns></returns>
         [HttpGet("settings")]
         public IList<FieldConfig> SettingsForm()
         {
@@ -32,7 +28,14 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
         [HttpGet("sim-link/input-selector/{hardwareInputSelectorId}")]
         public IList<FieldConfig> SimLinkInputSelectorForm(int hardwareInputSelectorId)
         {
-            return _formService.GetSimLinkFormForHardwareInputSelectorId(hardwareInputSelectorId);
+            return _formService.GetSimLinkForHardwareInputSelectorIdForm(hardwareInputSelectorId);
         }
+
+        [HttpGet("hardware-board-link/input-selector/{hardwareInputSelectorId}")]
+        public IList<FieldConfig> HardwareBoardToHardwareInputSelectorForm(int hardwareInputSelectorId)
+        {
+            return _formService.GetHardwareInputSelectorToBoardForm(hardwareInputSelectorId);
+        }
+
     }
 }

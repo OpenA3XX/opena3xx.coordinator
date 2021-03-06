@@ -5,8 +5,10 @@ namespace OpenA3XX.Core.Services
 {
     public interface IFormService
     {
-        public IList<FieldConfig> GetSettingsFormFields();
+        IList<FieldConfig> GetHardwareInputSelectorToBoardForm(int hardwareInputSelectorId);
+        
+        IList<FieldConfig> GetSettingsFormFields();
 
-        public IList<FieldConfig> GetSimLinkFormForHardwareInputSelectorId(int hardwareInputSelectorId);
+        IList<FieldConfig> GetSimLinkForHardwareInputSelectorIdForm(int hardwareInputSelectorId);
     }
 }

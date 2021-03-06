@@ -9,15 +9,53 @@ namespace OpenA3XX.Core.Services
     {
         private readonly ISystemConfigurationRepository _systemConfigurationRepository;
         private readonly ISimulatorEventService _simulatorEventService;
+        private readonly IFlightIntegrationService _flightIntegrationService;
+        private readonly IHardwareBoardService _hardwareBoardService;
 
         public FormsService(ISystemConfigurationRepository systemConfigurationRepository,
-            ISimulatorEventService simulatorEventService)
+            ISimulatorEventService simulatorEventService,
+            IFlightIntegrationService flightIntegrationService,
+            IHardwareBoardService hardwareBoardService
+            )
         {
             _systemConfigurationRepository = systemConfigurationRepository;
             _simulatorEventService = simulatorEventService;
+            _flightIntegrationService = flightIntegrationService;
+            _hardwareBoardService = hardwareBoardService;
         }
 
-        public IList<FieldConfig> GetSimLinkFormForHardwareInputSelectorId(int hardwareInputSelectorId)
+        public IList<FieldConfig> GetHardwareInputSelectorToBoardForm(int hardwareInputSelectorId)
+        {
+            var form = new List<FieldConfig>
+            {
+                new()
+                {
+                    FieldType = FieldType.Select,
+                    Options = _hardwareBoardService.GetAllHardwareBoards().Select(c=> new KeyValuePair<string, string>(c.Id.ToString(), c.Name)),
+                    Validations = new List<FieldValidatorConfig>
+                    {
+                        new()
+                        {
+                            FieldValidationType = FieldValidationType.Required,
+                            Message = "Hardware Board is Required"
+                        }
+                    },
+                    Label = "Hardware Board Selection",
+                    Name = "hardwareBoardId",
+                    Hint = "Select Hardware Board that is responsible for such Hardware Input"
+                },
+                new()
+                {
+                    FieldType = FieldType.Button,
+                    Label = "Apply"
+                }
+                
+            };
+
+            return form;
+        }
+
+        public IList<FieldConfig> GetSimLinkForHardwareInputSelectorIdForm(int hardwareInputSelectorId)
         {
             var simulatorEvents = _simulatorEventService.GetAllSimulatorEvents();
 
@@ -26,13 +64,7 @@ namespace OpenA3XX.Core.Services
                 new()
                 {
                     FieldType = FieldType.Select,
-                    Options = new List<KeyValuePair<string, string>>()
-                    {
-                        new ("1","SimConnect: Direct"),
-                        new ("2", "SimConnect: OpenA3XX WASM Gauge"),
-                        new ("3", "FSUIPC"),
-                        new ("4", "Websockets")
-                    },
+                    Options = _flightIntegrationService.GetAllIntegrationTypes(),
                     Validations = new List<FieldValidatorConfig>
                     {
                         new()
