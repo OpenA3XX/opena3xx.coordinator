@@ -46,6 +46,38 @@ namespace OpenA3XX.Core.Services
                 },
                 new()
                 {
+                    FieldType = FieldType.Select,
+                    Options = _flightIntegrationService.GetAllHardwareExtenders(),
+                    Validations = new List<FieldValidatorConfig>
+                    {
+                        new()
+                        {
+                            FieldValidationType = FieldValidationType.Required,
+                            Message = "Hardware Board IO Extender is Required"
+                        }
+                    },
+                    Label = "Hardware Board IO Extender Bus Selection",
+                    Name = "hardwareBusExtenderId",
+                    Hint = "Select Hardware Board IO Extender Bus that is responsible for such Hardware Input"
+                },
+                new()
+                {
+                    FieldType = FieldType.Select,
+                    Options = _flightIntegrationService.GetAllHardwareExtenderInputOutput(),
+                    Validations = new List<FieldValidatorConfig>
+                    {
+                        new()
+                        {
+                            FieldValidationType = FieldValidationType.Required,
+                            Message = "Hardware Board IO Extender Bit is Required"
+                        }
+                    },
+                    Label = "Hardware Board IO Extender Bit Selection",
+                    Name = "hardwareBusExtenderBitId",
+                    Hint = "SelectHardware Board IO Extender Bit that is responsible for such Hardware Input"
+                },
+                new()
+                {
                     FieldType = FieldType.Button,
                     Label = "Apply"
                 }

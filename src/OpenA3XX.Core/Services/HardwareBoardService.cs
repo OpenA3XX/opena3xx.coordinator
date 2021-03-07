@@ -23,5 +23,6 @@ namespace OpenA3XX.Core.Services
             var hardwareBoardDtoList = _mapper.Map<IList<HardwareBoard>, IList<HardwareBoardDto>>(hardwareBoards);
             return hardwareBoardDtoList;
         }
+        
     }
 }
