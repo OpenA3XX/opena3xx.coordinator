@@ -36,6 +36,5 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
         {
             return _formService.GetHardwareInputSelectorToBoardForm(hardwareInputSelectorId);
         }
-
     }
 }

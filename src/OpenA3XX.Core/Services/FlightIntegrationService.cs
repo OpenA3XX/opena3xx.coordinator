@@ -6,7 +6,7 @@ namespace OpenA3XX.Core.Services
     {
         public IList<KeyValuePair<string, string>> GetAllIntegrationTypes()
         {
-            var integrationTypes = new List<KeyValuePair<string, string>>()
+            var integrationTypes = new List<KeyValuePair<string, string>>
             {
                 new("1", "SimConnect: Direct"),
                 new("2", "SimConnect: OpenA3XX WASM Gauge"),
@@ -21,9 +21,7 @@ namespace OpenA3XX.Core.Services
         {
             var list = new List<KeyValuePair<string, string>>();
             for (var bus = 0; bus <= 7; bus++)
-            {
                 list.Add(new KeyValuePair<string, string>(bus.ToString(), $"Extender {bus}"));
-            }
 
             return list;
         }
@@ -32,9 +30,7 @@ namespace OpenA3XX.Core.Services
         {
             var list = new List<KeyValuePair<string, string>>();
             for (var bit = 0; bit <= 15; bit++)
-            {
                 list.Add(new KeyValuePair<string, string>(bit.ToString(), $"Bit {bit}"));
-            }
 
             return list;
         }

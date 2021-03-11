@@ -7,16 +7,16 @@ namespace OpenA3XX.Core.Services
 {
     public class FormsService : IFormService
     {
-        private readonly ISystemConfigurationRepository _systemConfigurationRepository;
-        private readonly ISimulatorEventService _simulatorEventService;
         private readonly IFlightIntegrationService _flightIntegrationService;
         private readonly IHardwareBoardService _hardwareBoardService;
+        private readonly ISimulatorEventService _simulatorEventService;
+        private readonly ISystemConfigurationRepository _systemConfigurationRepository;
 
         public FormsService(ISystemConfigurationRepository systemConfigurationRepository,
             ISimulatorEventService simulatorEventService,
             IFlightIntegrationService flightIntegrationService,
             IHardwareBoardService hardwareBoardService
-            )
+        )
         {
             _systemConfigurationRepository = systemConfigurationRepository;
             _simulatorEventService = simulatorEventService;
@@ -31,7 +31,8 @@ namespace OpenA3XX.Core.Services
                 new()
                 {
                     FieldType = FieldType.Select,
-                    Options = _hardwareBoardService.GetAllHardwareBoards().Select(c=> new KeyValuePair<string, string>(c.Id.ToString(), c.Name)),
+                    Options = _hardwareBoardService.GetAllHardwareBoards()
+                        .Select(c => new KeyValuePair<string, string>(c.Id.ToString(), c.Name)),
                     Validations = new List<FieldValidatorConfig>
                     {
                         new()
@@ -81,7 +82,6 @@ namespace OpenA3XX.Core.Services
                     FieldType = FieldType.Button,
                     Label = "Apply"
                 }
-                
             };
 
             return form;
@@ -112,7 +112,8 @@ namespace OpenA3XX.Core.Services
                 new()
                 {
                     FieldType = FieldType.Select,
-                    Options = simulatorEvents.Select(c => new KeyValuePair<string,string>(c.Id.ToString(), $"{c.FriendlyName} - {c.EventCode}")),
+                    Options = simulatorEvents.Select(c =>
+                        new KeyValuePair<string, string>(c.Id.ToString(), $"{c.FriendlyName} - {c.EventCode}")),
                     Label = "Simulator Event",
                     Name = "simulatorEvent",
                     Hint = "Select event to trigger to the Simulator Software",

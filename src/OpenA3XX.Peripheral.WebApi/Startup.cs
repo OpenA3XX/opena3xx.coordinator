@@ -68,6 +68,7 @@ namespace OpenA3XX.Peripheral.WebApi
             services.AddTransient<ISystemConfigurationRepository, SystemConfigurationRepository>();
             services.AddTransient<IHardwarePanelTokensRepository, HardwarePanelTokensRepository>();
             services.AddTransient<IHardwareInputTypesRepository, HardwareInputTypesRepository>();
+            services.AddTransient<IHardwareInputSelectorRepository, HardwareInputSelectorRepository>();
             services.AddTransient<IHardwareOutputTypesRepository, HardwareOutputTypesRepository>();
             services.AddTransient<IHardwarePanelRepository, HardwarePanelRepository>();
             services.AddTransient<IHardwareBoardRepository, HardwareBoardRepository>();
@@ -78,10 +79,13 @@ namespace OpenA3XX.Peripheral.WebApi
             services.AddTransient<IHardwarePanelService, HardwarePanelService>();
             services.AddTransient<IHardwareBoardService, HardwareBoardService>();
             services.AddTransient<IHardwareInputTypeService, HardwareInputTypeService>();
+            services.AddTransient<IHardwareInputSelectorService, HardwareInputSelectorService>();
             services.AddTransient<IHardwareOutputTypeService, HardwareOutputTypeService>();
 
             services.AddTransient<IFormService, FormsService>();
             services.AddTransient<IFlightIntegrationService, FlightIntegrationService>();
+
+            services.AddTransient<ISimulatorEventingService, SimulatorEventingService>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddAutoMapper(Assembly.GetAssembly(typeof(HardwarePanelToken)));

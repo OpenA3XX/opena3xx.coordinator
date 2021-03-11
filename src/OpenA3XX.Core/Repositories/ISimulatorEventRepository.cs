@@ -8,5 +8,9 @@ namespace OpenA3XX.Core.Repositories
         SimulatorEvent AddSimulatorEvent(SimulatorEvent simulatorEvent);
 
         IList<SimulatorEvent> GetAllSimulatorEvents();
+
+        SimulatorEvent GetSimulatorEventBy(int simulatorEventId);
+
+        IList<SimulatorEvent> GetAllSimulatorEventsByIntegrationType(int integrationTypeId);
     }
 }

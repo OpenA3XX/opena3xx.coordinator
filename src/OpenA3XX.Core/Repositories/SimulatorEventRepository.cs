@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using OpenA3XX.Core.Models;
@@ -20,6 +21,17 @@ namespace OpenA3XX.Core.Repositories
         public IList<SimulatorEvent> GetAllSimulatorEvents()
         {
             return GetAll().ToList();
+        }
+
+        public SimulatorEvent GetSimulatorEventBy(int simulatorEventId)
+        {
+            return Get(simulatorEventId);
+        }
+
+        public IList<SimulatorEvent> GetAllSimulatorEventsByIntegrationType(int integrationTypeId)
+        {
+            var integrationType = Enum.Parse<SimulatorEventSdkType>(integrationTypeId.ToString());
+            return FindAll(c => c.SimulatorEventSdkType == integrationType).OrderBy(c => c.FriendlyName).ToList();
         }
     }
 }

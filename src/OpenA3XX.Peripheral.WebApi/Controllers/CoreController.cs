@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using OpenA3XX.Core.Repositories;
@@ -29,6 +28,5 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
         {
             return "Pong from OpenA3XX";
         }
-
     }
 }

@@ -6,7 +6,7 @@ using OpenA3XX.Core.Repositories;
 
 namespace OpenA3XX.Core.Services
 {
-    public class HardwareBoardService: IHardwareBoardService
+    public class HardwareBoardService : IHardwareBoardService
     {
         private readonly IHardwareBoardRepository _hardwareBoardRepository;
         private readonly IMapper _mapper;
@@ -23,6 +23,5 @@ namespace OpenA3XX.Core.Services
             var hardwareBoardDtoList = _mapper.Map<IList<HardwareBoard>, IList<HardwareBoardDto>>(hardwareBoards);
             return hardwareBoardDtoList;
         }
-        
     }
 }
