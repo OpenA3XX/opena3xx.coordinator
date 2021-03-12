@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenA3XX.Processors.Cockpit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenA3XX.Peripheral.WebApi", "src\OpenA3XX.Peripheral.WebApi\OpenA3XX.Peripheral.WebApi.csproj", "{31A65E6E-9105-4E4A-B24D-2134505E4339}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenA3XX.Eventing.Msfs", "src\OpenA3XX.Eventing.Msfs\OpenA3XX.Eventing.Msfs.csproj", "{2C7E1E8D-FBDE-4F4D-98CA-D3D1C7CB9D56}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{31A65E6E-9105-4E4A-B24D-2134505E4339}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31A65E6E-9105-4E4A-B24D-2134505E4339}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31A65E6E-9105-4E4A-B24D-2134505E4339}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C7E1E8D-FBDE-4F4D-98CA-D3D1C7CB9D56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C7E1E8D-FBDE-4F4D-98CA-D3D1C7CB9D56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C7E1E8D-FBDE-4F4D-98CA-D3D1C7CB9D56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C7E1E8D-FBDE-4F4D-98CA-D3D1C7CB9D56}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C3AD9237-FBC4-43F7-8BFD-72C8C49C89FB} = {0F369FE2-0D8E-4D6A-A23B-F92EF1AFD9AF}
