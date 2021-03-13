@@ -27,7 +27,7 @@ namespace OpenA3XX.Core.Services
 
         public void SendSimulatorTestEvent(SimulatorEventDto simulatorEventDto)
         {
-            var payload = Encoding.UTF8.GetBytes(simulatorEventDto.EventCode);
+            var payload = Encoding.UTF8.GetBytes(simulatorEventDto.EventName);
 
             _channel.BasicPublish("",
                 "simulator_test_events",

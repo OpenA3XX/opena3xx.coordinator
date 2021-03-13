@@ -53,7 +53,7 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
             return new SimulatorEventDto();
         }
 
-        [HttpPut("simulator-event/test/{simulatorEventId}")]
+        [HttpPut("test/{simulatorEventId}")]
         public void TestSimulatorEvent(int simulatorEventId)
         {
             var simulatorEventDto = _simulatorEventService.GetSimulatorEventDetails(simulatorEventId);

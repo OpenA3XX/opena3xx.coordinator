@@ -37,9 +37,43 @@
         <Reference Include="Microsoft.FlightSimulator.SimConnect, Version=11.0.62651.3, Culture=neutral, PublicKeyToken=baf445ffb3a06b5c">
           <HintPath>Microsoft.FlightSimulator.SimConnect.dll</HintPath>
         </Reference>
+        <Reference Include="mscorlib" />
+        <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+          <HintPath>..\..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
+        <Reference Include="RabbitMQ.Client, Version=6.0.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce">
+          <HintPath>..\..\packages\RabbitMQ.Client.6.2.1\lib\net461\RabbitMQ.Client.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
         <Reference Include="System" />
+        <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51">
+          <HintPath>..\..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
         <Reference Include="System.Core" />
         <Reference Include="System.Data" />
+        <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51">
+          <HintPath>..\..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
+        <Reference Include="System.Numerics" />
+        <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+          <HintPath>..\..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
+        <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+          <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
+        <Reference Include="System.Threading.Channels, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51">
+          <HintPath>..\..\packages\System.Threading.Channels.4.7.1\lib\net461\System.Threading.Channels.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
+        <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51">
+          <HintPath>..\..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
@@ -68,6 +102,9 @@
       <Content Include="SimConnect.dll">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
+    </ItemGroup>
+    <ItemGroup>
+      <None Include="packages.config" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

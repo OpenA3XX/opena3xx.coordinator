@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Text;
+using Newtonsoft.Json;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 
 namespace Opena3XX.Eventing.Msfs
 {
@@ -23,14 +27,43 @@ namespace Opena3XX.Eventing.Msfs
                     return;
                 }
 
+                var factory = new ConnectionFactory
+                {
+                    UserName = "opena3xx",
+                    Password = "opena3xx",
+                    VirtualHost = "/",
+                    HostName = "192.168.50.22",
+                    ClientProvidedName = "app:opena3xx.eventing.msfs component:simulator_test_events"
+                };
+                
                 _fsConnect.SetText("OpenA3XX Sim Connector: Connected", 5);
 
-                while (true)
-                {
-                    var calculatorCode = Console.ReadLine();
-                    _fsConnect.SetEventId(calculatorCode);
+                var conn = factory.CreateConnection();
+                var channel = conn.CreateModel();
 
-                }
+                channel.QueueDeclare("simulator_test_events", false, false, false, null);
+                var consumer = new EventingBasicConsumer(channel);
+                consumer.Received += (ch, ea) =>
+                {
+                    channel.BasicAck(ea.DeliveryTag, false);
+                    var calculatorCode = Encoding.UTF8.GetString(ea.Body.ToArray());
+                    _fsConnect.SetEventId(calculatorCode);
+                };
+
+                var consumerTag = channel.BasicConsume("simulator_test_events", false, consumer);
+
+                Console.ReadKey();
+                Console.WriteLine("Disconnecting from Flight Simulator");
+                _fsConnect.SetText("Test Console disconnecting", 1);
+                _fsConnect.Disconnect();
+                _fsConnect.Dispose();
+                _fsConnect = null;
+                
+                channel.Dispose();
+                conn.Dispose();
+
+                Console.WriteLine("Done");
+                
             }
             catch (Exception e)
             {
