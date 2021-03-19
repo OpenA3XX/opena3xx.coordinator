@@ -25,5 +25,12 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
             var data = _hardwareBoardService.GetAllHardwareBoards();
             return data;
         }
+
+        [HttpPost("add")]
+        public HardwareBoardDto RegisterHardwareBoard([FromBody] HardwareBoardDto hardwareBoardDto)
+        {
+            var data = _hardwareBoardService.SaveHardwareBoard(hardwareBoardDto);
+            return data;
+        }
     }
 }

@@ -44,5 +44,10 @@ namespace OpenA3XX.Core.Repositories
                 .ThenInclude(c => c.HardwareOutputType)
                 .First();
         }
+
+        public HardwareBoard SaveHardwareBoard(HardwareBoard hardwareBoard)
+        {
+            return Add(hardwareBoard);
+        }
     }
 }

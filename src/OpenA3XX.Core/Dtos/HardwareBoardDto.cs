@@ -10,4 +10,5 @@
 
         public int TotalInputOutputs => HardwareBusExtendersCount * 16;
     }
+
 }
