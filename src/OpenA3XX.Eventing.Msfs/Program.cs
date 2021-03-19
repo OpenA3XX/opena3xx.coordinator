@@ -54,7 +54,7 @@ namespace Opena3XX.Eventing.Msfs
 
                 Console.ReadKey();
                 Console.WriteLine("Disconnecting from Flight Simulator");
-                _fsConnect.SetText("Test Console disconnecting", 1);
+                _fsConnect.SetText("OpenA3XX Sim Connector: Disconnected", 1);
                 _fsConnect.Disconnect();
                 _fsConnect.Dispose();
                 _fsConnect = null;

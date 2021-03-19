@@ -33,6 +33,11 @@ namespace OpenA3XX.Core.Services
                 "simulator_test_events",
                 null,
                 payload);
+            
+            _channel.Close();
+            _channel.Dispose();
+            
+            
         }
     }
 }
