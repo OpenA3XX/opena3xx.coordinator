@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Linq;
+using AutoMapper;
 using OpenA3XX.Core.Dtos;
 using OpenA3XX.Core.Models;
 
@@ -8,7 +9,9 @@ namespace OpenA3XX.Core.Profiles
     {
         public HardwareBoardProfile()
         {
-            CreateMap<HardwareBoard, HardwareBoardDto>();
+            CreateMap<HardwareBoard, HardwareBoardDto>()
+                .ForMember(c => c.HardwareBusExtendersCount,
+                    m => m.MapFrom(c => c.Buses.Count));
         }
     }
 }
