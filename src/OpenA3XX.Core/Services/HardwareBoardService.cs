@@ -54,5 +54,12 @@ namespace OpenA3XX.Core.Services
             var savedHardwareBoard = _hardwareBoardRepository.SaveHardwareBoard(hardwareBoard);
             return _mapper.Map<HardwareBoard, HardwareBoardDto>(savedHardwareBoard);
         }
+
+        public HardwareBoardDetailsDto GetHardwareBoard(int id)
+        {
+            var hardwareBoard = _hardwareBoardRepository.GetByHardwareBoard(id);
+            var hardwareBoardDto = _mapper.Map<HardwareBoard, HardwareBoardDetailsDto>(hardwareBoard);
+            return hardwareBoardDto;
+        }
     }
 }

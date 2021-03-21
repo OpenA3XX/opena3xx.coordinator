@@ -26,11 +26,19 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
             return data;
         }
 
+        [HttpGet("{id}")]
+        public HardwareBoardDetailsDto GetHardwareBoardDetails(int id)
+        {
+            var data = _hardwareBoardService.GetHardwareBoard(id);
+            return data;
+        }
+        
         [HttpPost("add")]
         public HardwareBoardDto RegisterHardwareBoard([FromBody] HardwareBoardDto hardwareBoardDto)
         {
             var data = _hardwareBoardService.SaveHardwareBoard(hardwareBoardDto);
             return data;
         }
+        
     }
 }

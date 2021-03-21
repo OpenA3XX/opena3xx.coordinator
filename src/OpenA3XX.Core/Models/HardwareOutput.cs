@@ -11,5 +11,9 @@ namespace OpenA3XX.Core.Models
         public virtual HardwareOutputType HardwareOutputType { get; set; }
 
         public IList<HardwareOutputSelector> HardwareOutputSelectorList { get; set; }
+        
+        public int HardwarePanelId { get; set; }
+
+        public virtual HardwarePanel HardwarePanel { get; set; }
     }
 }

@@ -9,7 +9,8 @@ namespace OpenA3XX.Core.Repositories
 
         IList<HardwareBoard> GetAllHardwareBoards();
 
-        HardwareBoard GetByHardwarePanel(int id);
+        HardwareBoard GetByHardwareBoard(int id);
+
 
         HardwareBoard SaveHardwareBoard(HardwareBoard hardwareBoard);
     }

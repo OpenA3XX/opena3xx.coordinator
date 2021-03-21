@@ -8,5 +8,7 @@ namespace OpenA3XX.Core.Services
         IList<HardwareBoardDto> GetAllHardwareBoards();
 
         HardwareBoardDto SaveHardwareBoard(HardwareBoardDto hardwareBoardDto);
+
+        HardwareBoardDetailsDto GetHardwareBoard(int id);
     }
 }

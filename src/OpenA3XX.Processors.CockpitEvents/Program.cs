@@ -32,6 +32,7 @@ namespace OpenA3XX.Processors.CockpitEvents
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                 });
 */
+/*
             var hardwareBoard = new HardwareBoard
             {
                 Name = "MCDU1",
@@ -62,7 +63,7 @@ namespace OpenA3XX.Processors.CockpitEvents
                     }
                 }
             };
-
+*/
             var factory = new ConnectionFactory
             {
                 UserName = "opena3xx",
@@ -83,7 +84,7 @@ namespace OpenA3XX.Processors.CockpitEvents
                 var hardwareSignalDto = JsonConvert.DeserializeObject<HardwareSignalDto>(result);
                 var hardwareBoardRepository =
                     new HardwareBoardRepository(new CoreDataContext(dbContextOptionsBuilder.Options));
-                var response = hardwareBoardRepository.GetByHardwarePanel(hardwareSignalDto.HardwareBoardId);
+                var response = hardwareBoardRepository.GetByHardwareBoard(hardwareSignalDto.HardwareBoardId);
             };
 
             var consumerTag = channel.BasicConsume("hardware_events", false, consumer);
