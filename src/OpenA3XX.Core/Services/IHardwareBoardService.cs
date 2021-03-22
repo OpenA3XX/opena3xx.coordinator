@@ -10,5 +10,7 @@ namespace OpenA3XX.Core.Services
         HardwareBoardDto SaveHardwareBoard(HardwareBoardDto hardwareBoardDto);
 
         HardwareBoardDetailsDto GetHardwareBoard(int id);
+
+        HardwareBoardDetailsDto LinkExtenderBitToHardwareInputSelector(LinkExtenderBitToHardwareInputSelectorDto linkExtenderBitToHardwareInputSelectorDto);
     }
 }

@@ -73,5 +73,11 @@ namespace OpenA3XX.Core.Repositories
         {
             return Add(hardwareBoard);
         }
+
+        public HardwareBoard UpdateHardwareBoard(HardwareBoard hardwareBoard)
+        {
+            return Update(hardwareBoard, hardwareBoard.Id);
+        }
+        
     }
 }

@@ -13,5 +13,7 @@ namespace OpenA3XX.Core.Repositories
 
 
         HardwareBoard SaveHardwareBoard(HardwareBoard hardwareBoard);
+
+        HardwareBoard UpdateHardwareBoard(HardwareBoard hardwareBoard);
     }
 }

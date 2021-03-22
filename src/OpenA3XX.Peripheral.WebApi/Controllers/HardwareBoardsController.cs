@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using OpenA3XX.Core.Dtos;
+using OpenA3XX.Core.Models;
 using OpenA3XX.Core.Services;
 
 namespace OpenA3XX.Peripheral.WebApi.Controllers
@@ -22,15 +23,15 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
         [HttpGet("all")]
         public IList<HardwareBoardDto> GetAllHardwareBoards()
         {
-            var data = _hardwareBoardService.GetAllHardwareBoards();
-            return data;
+            var hardwareBoardDtos = _hardwareBoardService.GetAllHardwareBoards();
+            return hardwareBoardDtos;
         }
 
         [HttpGet("{id}")]
         public HardwareBoardDetailsDto GetHardwareBoardDetails(int id)
         {
-            var data = _hardwareBoardService.GetHardwareBoard(id);
-            return data;
+            var hardwareBoardDetailsDto = _hardwareBoardService.GetHardwareBoard(id);
+            return hardwareBoardDetailsDto;
         }
         
         [HttpPost("add")]
@@ -39,6 +40,14 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
             var data = _hardwareBoardService.SaveHardwareBoard(hardwareBoardDto);
             return data;
         }
+
+        [HttpPost("link/hardware-input-selector")]
+        public HardwareBoardDetailsDto LinkExtenderBitToHardwareInputSelector([FromBody] LinkExtenderBitToHardwareInputSelectorDto linkExtenderBitToHardwareInputSelectorDto)
+        {
+            var hardwareBoardDetailsDto = _hardwareBoardService.LinkExtenderBitToHardwareInputSelector(linkExtenderBitToHardwareInputSelectorDto);
+            return hardwareBoardDetailsDto;
+        }
         
     }
+
 }

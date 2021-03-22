@@ -75,7 +75,7 @@ namespace OpenA3XX.Core.Services
                     },
                     Label = "Hardware Board IO Extender Bit Selection",
                     Name = "hardwareBusExtenderBitId",
-                    Hint = "SelectHardware Board IO Extender Bit that is responsible for such Hardware Input"
+                    Hint = "Select Hardware Board IO Extender Bit that is responsible for such Hardware Input"
                 },
                 new()
                 {

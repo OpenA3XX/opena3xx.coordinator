@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using OpenA3XX.Core.Dtos;
 using OpenA3XX.Core.Models;
@@ -47,7 +48,7 @@ namespace OpenA3XX.Core.Services
                         HardwareBit = (HardwareBit) j
                     });
                 }
-                
+
                 hardwareBoard.Buses.Add(extenderBus);
             }
 
@@ -58,8 +59,21 @@ namespace OpenA3XX.Core.Services
         public HardwareBoardDetailsDto GetHardwareBoard(int id)
         {
             var hardwareBoard = _hardwareBoardRepository.GetByHardwareBoard(id);
-            var hardwareBoardDto = _mapper.Map<HardwareBoard, HardwareBoardDetailsDto>(hardwareBoard);
-            return hardwareBoardDto;
+            var hardwareBoardDetailsDto = _mapper.Map<HardwareBoard, HardwareBoardDetailsDto>(hardwareBoard);
+            return hardwareBoardDetailsDto;
+        }
+
+        public HardwareBoardDetailsDto LinkExtenderBitToHardwareInputSelector(
+            LinkExtenderBitToHardwareInputSelectorDto linkExtenderBitToHardwareInputSelectorDto)
+        {
+            var hardwareBoard = _hardwareBoardRepository.GetByHardwareBoard(linkExtenderBitToHardwareInputSelectorDto.HardwareBoardId);
+            hardwareBoard.Buses
+                .First(c => c.Id == linkExtenderBitToHardwareInputSelectorDto.HardwareExtenderBusId).Bits
+                .First(c => c.Id == linkExtenderBitToHardwareInputSelectorDto.HardwareExtenderBusBitId)
+                .HardwareInputSelectorId = linkExtenderBitToHardwareInputSelectorDto.HardwareInputSelectorId;
+
+            _hardwareBoardRepository.UpdateHardwareBoard(hardwareBoard);
+            return GetHardwareBoard(hardwareBoard.Id);
         }
     }
 }
