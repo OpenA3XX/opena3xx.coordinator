@@ -25,5 +25,6 @@ namespace OpenA3XX.Core.Services
                 _mapper.Map<HardwareInputSelector, HardwareInputSelectorDto>(hardwareInputSelector);
             return hardwareInputSelectorDto;
         }
+        
     }
 }

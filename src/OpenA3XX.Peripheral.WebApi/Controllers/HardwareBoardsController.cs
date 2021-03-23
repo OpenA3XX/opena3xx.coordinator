@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using OpenA3XX.Core.Dtos;
-using OpenA3XX.Core.Models;
 using OpenA3XX.Core.Services;
 
 namespace OpenA3XX.Peripheral.WebApi.Controllers
@@ -13,11 +13,13 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
     {
         private readonly ILogger<HardwareBoardsController> _logger;
         private readonly IHardwareBoardService _hardwareBoardService;
+        private readonly IHardwareInputSelectorService _hardwareInputSelectorService;
 
-        public HardwareBoardsController(ILogger<HardwareBoardsController> logger, IHardwareBoardService hardwareBoardService)
+        public HardwareBoardsController(ILogger<HardwareBoardsController> logger, IHardwareBoardService hardwareBoardService, IHardwareInputSelectorService hardwareInputSelectorService)
         {
             _logger = logger;
             _hardwareBoardService = hardwareBoardService;
+            _hardwareInputSelectorService = hardwareInputSelectorService;
         }
 
         [HttpGet("all")]
@@ -27,10 +29,10 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
             return hardwareBoardDtos;
         }
 
-        [HttpGet("{id}")]
-        public HardwareBoardDetailsDto GetHardwareBoardDetails(int id)
+        [HttpGet("{hardwareBoardId}")]
+        public HardwareBoardDetailsDto GetHardwareBoardDetails(int hardwareBoardId)
         {
-            var hardwareBoardDetailsDto = _hardwareBoardService.GetHardwareBoard(id);
+            var hardwareBoardDetailsDto = _hardwareBoardService.GetHardwareBoard(hardwareBoardId);
             return hardwareBoardDetailsDto;
         }
         
@@ -42,12 +44,18 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
         }
 
         [HttpPost("link/hardware-input-selector")]
-        public HardwareBoardDetailsDto LinkExtenderBitToHardwareInputSelector([FromBody] LinkExtenderBitToHardwareInputSelectorDto linkExtenderBitToHardwareInputSelectorDto)
+        public HardwareBoardDetailsDto LinkExtenderBitToHardwareInputSelector([FromBody] MapExtenderBitToHardwareInputSelectorDto linkExtenderBitToHardwareInputSelectorDto)
         {
             var hardwareBoardDetailsDto = _hardwareBoardService.LinkExtenderBitToHardwareInputSelector(linkExtenderBitToHardwareInputSelectorDto);
             return hardwareBoardDetailsDto;
         }
-        
+
+        [HttpGet("hardware-input-selector/{hardwareInputSelectorId}")]
+        public MapExtenderBitToHardwareInputSelectorDto GetHardwareBoardAssociationForHardwareInputSelector(int hardwareInputSelectorId)
+        {
+            var linkExtenderBitToHardwareInputSelectorDto = _hardwareBoardService.GetHardwareBoardAssociationForHardwareInputSelector(hardwareInputSelectorId);
+            return linkExtenderBitToHardwareInputSelectorDto;
+        }
     }
 
 }

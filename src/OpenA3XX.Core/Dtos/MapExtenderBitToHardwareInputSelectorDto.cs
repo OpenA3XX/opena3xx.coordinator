@@ -1,6 +1,6 @@
 ﻿namespace OpenA3XX.Core.Dtos
 {
-    public class LinkExtenderBitToHardwareInputSelectorDto
+    public class MapExtenderBitToHardwareInputSelectorDto
     {
         public int HardwareInputSelectorId { get; set; }
         

@@ -11,4 +11,5 @@ namespace OpenA3XX.Core.Dtos
         public IList<IOExtenderBitDto> IOExtenderBusBits { get; set; }
         
     }
+    
 }

@@ -64,9 +64,29 @@ namespace OpenA3XX.Core.Services
         }
 
         public HardwareBoardDetailsDto LinkExtenderBitToHardwareInputSelector(
-            LinkExtenderBitToHardwareInputSelectorDto linkExtenderBitToHardwareInputSelectorDto)
+            MapExtenderBitToHardwareInputSelectorDto linkExtenderBitToHardwareInputSelectorDto)
         {
-            var hardwareBoard = _hardwareBoardRepository.GetByHardwareBoard(linkExtenderBitToHardwareInputSelectorDto.HardwareBoardId);
+            try
+            {
+                //--- Remove old map
+                var currentLink = GetHardwareBoardAssociationForHardwareInputSelector(linkExtenderBitToHardwareInputSelectorDto
+                    .HardwareInputSelectorId);
+
+                var currentBoard = _hardwareBoardRepository.GetByHardwareBoard(currentLink.HardwareBoardId);
+                currentBoard.Buses
+                    .First(c => c.Id == currentLink.HardwareExtenderBusId).Bits.First(x => x.Id == currentLink.HardwareExtenderBusBitId)
+                    .HardwareInputSelector = null;
+                _hardwareBoardRepository.UpdateHardwareBoard(currentBoard);
+            }
+            catch (Exception ex)
+            {
+                // ignored
+            }
+
+            //--- Update to new map
+            
+            var hardwareBoard =
+                _hardwareBoardRepository.GetByHardwareBoard(linkExtenderBitToHardwareInputSelectorDto.HardwareBoardId);
             hardwareBoard.Buses
                 .First(c => c.Id == linkExtenderBitToHardwareInputSelectorDto.HardwareExtenderBusId).Bits
                 .First(c => c.Id == linkExtenderBitToHardwareInputSelectorDto.HardwareExtenderBusBitId)
@@ -74,6 +94,33 @@ namespace OpenA3XX.Core.Services
 
             _hardwareBoardRepository.UpdateHardwareBoard(hardwareBoard);
             return GetHardwareBoard(hardwareBoard.Id);
+        }
+
+        public MapExtenderBitToHardwareInputSelectorDto GetHardwareBoardAssociationForHardwareInputSelector(
+            int hardwareInputSelectorId)
+        {
+            var linkExtenderBitToHardwareInputSelectorDto = new MapExtenderBitToHardwareInputSelectorDto();
+
+
+            foreach (var board in _hardwareBoardRepository.GetAllHardwareBoards())
+            {
+                foreach (var bus in board.Buses)
+                {
+                    foreach (var bit in bus.Bits)
+                    {
+                        if (bit.HardwareInputSelector == null) continue;
+                        if (bit.HardwareInputSelector.Id != hardwareInputSelectorId) continue;
+                        linkExtenderBitToHardwareInputSelectorDto.HardwareBoardId = board.Id;
+                        linkExtenderBitToHardwareInputSelectorDto.HardwareExtenderBusId = bus.Id;
+                        linkExtenderBitToHardwareInputSelectorDto.HardwareExtenderBusBitId = bit.Id;
+                        linkExtenderBitToHardwareInputSelectorDto.HardwareInputSelectorId = hardwareInputSelectorId;
+                        return linkExtenderBitToHardwareInputSelectorDto;
+
+                    }
+                }
+            }
+
+            return linkExtenderBitToHardwareInputSelectorDto;
         }
     }
 }
