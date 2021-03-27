@@ -21,6 +21,12 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
             _hardwarePanelService = hardwarePanelTokensService;
         }
 
+        [HttpPost("add")]
+        public HardwarePanelDto AddHardwarePanel(HardwarePanelDto hardwarePanelDto)
+        {
+            return _hardwarePanelService.AddHardwarePanel(hardwarePanelDto);
+        }
+
         [HttpGet("overview/all")]
         public IList<HardwarePanelOverviewDto> GetAllHardwarePanels()
         {

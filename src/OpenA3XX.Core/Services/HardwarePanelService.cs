@@ -85,5 +85,12 @@ namespace OpenA3XX.Core.Services
             var hardwarePanelDto = _mapper.Map<HardwarePanel, HardwarePanelDto>(hardwarePanel);
             return hardwarePanelDto;
         }
+
+        public HardwarePanelDto AddHardwarePanel(HardwarePanelDto hardwarePanelDto)
+        {
+            var hardwarePanel = _mapper.Map<HardwarePanelDto, HardwarePanel>(hardwarePanelDto);
+            hardwarePanel = _hardwarePanelRepository.AddHardwarePanel(hardwarePanel);
+            return _mapper.Map<HardwarePanel, HardwarePanelDto>(hardwarePanel);
+        }
     }
 }

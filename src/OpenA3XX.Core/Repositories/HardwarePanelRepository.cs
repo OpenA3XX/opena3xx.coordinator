@@ -12,6 +12,11 @@ namespace OpenA3XX.Core.Repositories
         {
         }
 
+        public HardwarePanel AddHardwarePanel(HardwarePanel hardwarePanel)
+        {
+            return Add(hardwarePanel);
+        }
+
         public IList<HardwarePanel> GetAllHardwarePanels()
         {
             return GetAll().Include(c => c.AircraftModel).ThenInclude(c => c.Manufacturer).ToList();

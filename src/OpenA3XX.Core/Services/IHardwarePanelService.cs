@@ -21,5 +21,7 @@ namespace OpenA3XX.Core.Services
         IList<HardwarePanelOverviewDto> GetAllHardwarePanels();
 
         HardwarePanelDto GetHardwarePanelDetails(int id);
+
+        HardwarePanelDto AddHardwarePanel(HardwarePanelDto hardwarePanelDto);
     }
 }
