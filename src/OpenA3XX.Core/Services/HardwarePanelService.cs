@@ -13,14 +13,17 @@ namespace OpenA3XX.Core.Services
         private readonly IHttpContextAccessor _accessor;
         private readonly IHardwarePanelRepository _hardwarePanelRepository;
         private readonly IHardwarePanelTokensRepository _hardwarePanelTokensRepository;
+        private readonly IAircraftModelRepository _aircraftModelRepository;
         private readonly IMapper _mapper;
 
         public HardwarePanelService(IHttpContextAccessor accessor,
             IHardwarePanelTokensRepository hardwarePanelTokensRepository,
+            IAircraftModelRepository aircraftModelRepository,
             IHardwarePanelRepository hardwarePanelRepository, IMapper mapper)
         {
             _accessor = accessor;
             _hardwarePanelTokensRepository = hardwarePanelTokensRepository;
+            _aircraftModelRepository = aircraftModelRepository;
             _hardwarePanelRepository = hardwarePanelRepository;
             _mapper = mapper;
         }
@@ -86,9 +89,16 @@ namespace OpenA3XX.Core.Services
             return hardwarePanelDto;
         }
 
-        public HardwarePanelDto AddHardwarePanel(HardwarePanelDto hardwarePanelDto)
+        public HardwarePanelDto AddHardwarePanel(AddHardwarePanelDto hardwarePanelDto)
         {
-            var hardwarePanel = _mapper.Map<HardwarePanelDto, HardwarePanel>(hardwarePanelDto);
+            var hardwarePanel = new HardwarePanel
+            {
+                Name = hardwarePanelDto.HardwarePanelName,
+                AircraftModel = _aircraftModelRepository.GetById(hardwarePanelDto.AircraftModel),
+                CockpitArea = (CockpitArea) hardwarePanelDto.CockpitArea,
+                HardwarePanelOwner = (HardwarePanelOwner) hardwarePanelDto.HardwarePanelOwner
+            };
+
             hardwarePanel = _hardwarePanelRepository.AddHardwarePanel(hardwarePanel);
             return _mapper.Map<HardwarePanel, HardwarePanelDto>(hardwarePanel);
         }

@@ -11,6 +11,7 @@ namespace OpenA3XX.Core.Models
         public virtual IList<HardwareInput> HardwareInput { get; set; }
         public virtual IList<HardwareOutput> HardwareOutput { get; set; }
 
+        public int AircraftModelId { get; set; }
         public virtual AircraftModel AircraftModel { get; set; }
 
         public virtual CockpitArea CockpitArea { get; set; }

@@ -47,5 +47,16 @@ namespace OpenA3XX.Core.DataContexts
         {
             options.UseSqlite(CoordinatorConfiguration.GetDatabasesFolderPath(OpenA3XXDatabase.Core));
         }
+        
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Manufacturer>()
+                .HasIndex(p => new { p.Id })
+                .IsUnique(false);
+            
+            modelBuilder.Entity<AircraftModel>()
+                .HasIndex(p => new { p.Id })
+                .IsUnique(false);
+        }
     }
 }

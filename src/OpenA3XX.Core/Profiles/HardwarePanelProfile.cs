@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using AutoMapper;
 using OpenA3XX.Core.Dtos;
 using OpenA3XX.Core.Models;
@@ -28,6 +29,24 @@ namespace OpenA3XX.Core.Profiles
                     m => m.MapFrom(c => c.HardwareOutput.Sum(c => c.HardwareOutputSelectorList.Count)))
                 .ForMember(c => c.TotalInputsDiscrete,
                     m => m.MapFrom(c => c.HardwareInput.Sum(c => c.HardwareInputSelectorList.Count)));
+
+            /*
+            CreateMap<HardwarePanel, AddHardwarePanelDto>()
+                .ForMember(c => c.AircraftModel, m => m.MapFrom(c => c.AircraftModel.Id))
+                .ForMember(c => c.AircraftManufacturer, m => m.MapFrom(c => c.AircraftModel.Manufacturer.Id))
+                .ForMember(c => c.CockpitArea, m => m.MapFrom(c => c.CockpitArea))
+                .ForMember(c => c.HardwarePanelName, m => m.MapFrom(c => c.Name))
+                .ForMember(c => c.HardwarePanelOwner, m => m.MapFrom(c => c.HardwarePanelOwner));*/
+
+            CreateMap<AddHardwarePanelDto, HardwarePanel>()
+                .ForPath(c => c.AircraftModel.Id, m => m.MapFrom(c => c.AircraftModel))
+                .ForMember(c => c.AircraftModelId, m => m.MapFrom(c => c.AircraftModel))
+                .ForMember(c => c.CockpitArea, m => m.MapFrom(c => c.CockpitArea))
+                .ForMember(c => c.Name, m => m.MapFrom(c => c.HardwarePanelName))
+                .ForMember(c => c.HardwarePanelOwner, m => m.MapFrom(c => c.HardwarePanelOwner));
+
+
+
         }
     }
 }

@@ -22,7 +22,7 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
         }
 
         [HttpPost("add")]
-        public HardwarePanelDto AddHardwarePanel(HardwarePanelDto hardwarePanelDto)
+        public HardwarePanelDto AddHardwarePanel(AddHardwarePanelDto hardwarePanelDto)
         {
             return _hardwarePanelService.AddHardwarePanel(hardwarePanelDto);
         }

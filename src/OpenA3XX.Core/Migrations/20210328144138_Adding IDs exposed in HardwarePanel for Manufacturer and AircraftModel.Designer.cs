@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OpenA3XX.Core.DataContexts;
 
 namespace OpenA3XX.Coordinator.TestHarness.Migrations
 {
     [DbContext(typeof(CoreDataContext))]
-    partial class HardwareDataContextModelSnapshot : ModelSnapshot
+    [Migration("20210328144138_Adding IDs exposed in HardwarePanel for Manufacturer and AircraftModel")]
+    partial class AddingIDsexposedinHardwarePanelforManufacturerandAircraftModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,8 +31,6 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Id");
 
                     b.HasIndex("ManufacturerId");
 

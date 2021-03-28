@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OpenA3XX.Core.DataContexts;
 
 namespace OpenA3XX.Coordinator.TestHarness.Migrations
 {
     [DbContext(typeof(CoreDataContext))]
-    partial class HardwareDataContextModelSnapshot : ModelSnapshot
+    [Migration("20210328142748_Remove Unique Index Manufaturer #1")]
+    partial class RemoveUniqueIndexManufaturer1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,15 +24,13 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ManufacturerId")
+                    b.Property<int?>("ManufacturerId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Model")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Id");
 
                     b.HasIndex("ManufacturerId");
 
@@ -176,7 +176,7 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("AircraftModelId")
+                    b.Property<int?>("AircraftModelId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("CockpitArea")
@@ -340,9 +340,7 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
                 {
                     b.HasOne("OpenA3XX.Core.Models.Manufacturer", "Manufacturer")
                         .WithMany("AircraftModels")
-                        .HasForeignKey("ManufacturerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ManufacturerId");
 
                     b.Navigation("Manufacturer");
                 });
@@ -413,9 +411,7 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
                 {
                     b.HasOne("OpenA3XX.Core.Models.AircraftModel", "AircraftModel")
                         .WithMany("HardwarePanels")
-                        .HasForeignKey("AircraftModelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AircraftModelId");
 
                     b.Navigation("AircraftModel");
                 });

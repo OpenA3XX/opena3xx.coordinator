@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OpenA3XX.Core.DataContexts;
 
 namespace OpenA3XX.Coordinator.TestHarness.Migrations
 {
     [DbContext(typeof(CoreDataContext))]
-    partial class HardwareDataContextModelSnapshot : ModelSnapshot
+    [Migration("20210328145340_Remove Unique Index Aircraft Model #1")]
+    partial class RemoveUniqueIndexAircraftModel1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
