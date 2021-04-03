@@ -248,6 +248,40 @@ namespace OpenA3XX.Core.Services
                 },
                 new()
                 {
+                    FieldType = FieldType.Input,
+                    InputFieldType = InputFieldType.Text,
+                    Label = "Keep Alive Queue Name",
+                    Name = "opena3xx-amqp-keepalive-queue-name",
+                    Hint = "RabbitMQ Keep Alive Queue Name",
+                    Value = configuration.First(c => c.Key == "opena3xx-amqp-keepalive-queue-name").Value,
+                    Validations = new List<FieldValidatorConfig>
+                    {
+                        new()
+                        {
+                            FieldValidationType = FieldValidationType.Required,
+                            Message = "RabbitMQ Keep Alive Queue Name is Required"
+                        }
+                    }
+                },
+                new()
+                {
+                    FieldType = FieldType.Input,
+                    InputFieldType = InputFieldType.Text,
+                    Label = "Hardware Input Selectors Events Queue Name",
+                    Name = "opena3xx-amqp-hardware-input-selector-events-queue-name",
+                    Hint = "RabbitMQ Hardware Input Selectors Events Queue Name",
+                    Value = configuration.First(c => c.Key == "opena3xx-amqp-hardware-input-selector-events-queue-name").Value,
+                    Validations = new List<FieldValidatorConfig>
+                    {
+                        new()
+                        {
+                            FieldValidationType = FieldValidationType.Required,
+                            Message = "RabbitMQ Hardware Input Selectors Events Queue Name is Required"
+                        }
+                    }
+                },
+                new()
+                {
                     FieldType = FieldType.Heading,
                     Label = "SEQ Configuration"
                 },
