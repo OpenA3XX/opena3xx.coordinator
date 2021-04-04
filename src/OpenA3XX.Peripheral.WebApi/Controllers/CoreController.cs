@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 using OpenA3XX.Core.Repositories;
+using OpenA3XX.Peripheral.WebApi.Hubs;
 
 namespace OpenA3XX.Peripheral.WebApi.Controllers
 {
@@ -27,6 +30,28 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
         public string Ping()
         {
             return "Pong from OpenA3XX";
+        }
+    }
+    
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ChatController : ControllerBase
+    {
+        private readonly IHubContext<ChatHub> hubContext;
+
+        public ChatController(IHubContext<ChatHub> hubContext)
+        {
+            this.hubContext = hubContext;
+        }
+
+        [HttpPost]
+        public async Task SendMessage(ChatMessage message)
+        {
+            //additional business logic 
+
+            await this.hubContext.Clients.All.SendAsync("messageReceivedFromApi", message);
+
+            //additional business logic 
         }
     }
 }

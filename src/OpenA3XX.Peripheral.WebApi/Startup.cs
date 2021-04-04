@@ -16,6 +16,7 @@ using OpenA3XX.Core.Logging;
 using OpenA3XX.Core.Models;
 using OpenA3XX.Core.Repositories;
 using OpenA3XX.Core.Services;
+using OpenA3XX.Peripheral.WebApi.Hubs;
 
 namespace OpenA3XX.Peripheral.WebApi
 {
@@ -36,6 +37,8 @@ namespace OpenA3XX.Peripheral.WebApi
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
 
+            services.AddSignalR();
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
@@ -91,8 +94,10 @@ namespace OpenA3XX.Peripheral.WebApi
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddAutoMapper(Assembly.GetAssembly(typeof(HardwarePanelToken)));
 
-
+            services.AddHostedService<ConsumeRabbitMqHostedService>();
+            
             services.AddEasyCaching(option => { option.UseInMemory("m1"); });
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -112,8 +117,15 @@ namespace OpenA3XX.Peripheral.WebApi
             app.UseRouting();
 
             app.UseAuthorization();
-            app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseCors(builder => builder.WithOrigins(
+                "http://localhost").AllowAnyHeader().AllowAnyMethod().SetIsOriginAllowed(_ => true).AllowCredentials());
+            
+            
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapHub<ChatHub>("/signalr");
+            });
         }
     }
 }
