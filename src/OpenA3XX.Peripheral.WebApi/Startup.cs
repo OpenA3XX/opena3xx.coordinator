@@ -96,7 +96,10 @@ namespace OpenA3XX.Peripheral.WebApi
 
             services.AddHostedService<ConsumeRabbitMqHostedService>();
             
-            services.AddEasyCaching(option => { option.UseInMemory("m1"); });
+            services.AddEasyCaching(option =>
+            {
+                option.UseInMemory("m1");
+            });
             
         }
 
@@ -118,13 +121,16 @@ namespace OpenA3XX.Peripheral.WebApi
 
             app.UseAuthorization();
             app.UseCors(builder => builder.WithOrigins(
-                "http://localhost").AllowAnyHeader().AllowAnyMethod().SetIsOriginAllowed(_ => true).AllowCredentials());
+                "http://localhost").AllowAnyHeader()
+                .AllowAnyMethod()
+                .SetIsOriginAllowed(_ => true)
+                .AllowCredentials());
             
             
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHub<ChatHub>("/signalr");
+                endpoints.MapHub<RealtimeHub>("/signalr");
             });
         }
     }
