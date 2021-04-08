@@ -26,7 +26,13 @@ namespace OpenA3XX.Core.Profiles
                     c => c.HardwareInputSelectorFullName,
                     m => m.MapFrom(c => $"{c.HardwareInputSelector.HardwareInput.HardwarePanel.Name} → {c.HardwareInputSelector.HardwareInput.Name} → {c.HardwareInputSelector.Name}"))
                 .ForMember(c => c.HardwareOutputSelectorFullName,
-                    m => m.MapFrom(c => $"{c.HardwareOutputSelector.HardwareOutput.HardwarePanel.Name} → {c.HardwareOutputSelector.HardwareOutput.Name} → {c.HardwareOutputSelector.Name}"));
+                    m => m.MapFrom(c => $"{c.HardwareOutputSelector.HardwareOutput.HardwarePanel.Name} → {c.HardwareOutputSelector.HardwareOutput.Name} → {c.HardwareOutputSelector.Name}"))
+                .ForMember(c => c.Name, m => m.MapFrom(c => c.HardwareBit.ToString())).ForMember(
+                    c => c.HardwareInputSelectorId,
+                    m => m.MapFrom(c => c.HardwareInputSelectorId))
+                .ForMember(c => c.HardwareOutputSelectorId,
+                    m => m.MapFrom(c => c.HardwareOutputSelectorId));
+
 
             CreateMap<IOExtenderBus, IOExtenderBusDto>()
                 .ForMember(c => c.Id, m => m.MapFrom(c => c.Id))

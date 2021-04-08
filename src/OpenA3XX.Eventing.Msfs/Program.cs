@@ -3,9 +3,42 @@ using System.Text;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using RestSharp;
 
 namespace Opena3XX.Eventing.Msfs
 {
+    public class MessageResponse
+    {
+        public int input_selector_id { get; set; }
+        
+    }
+    public class HardwareInputSelectorDto
+    {
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+
+        public SimulatorEventDto SimulatorEventDto { get; set; }
+    }
+    
+    public class SimulatorEventDto
+    {
+        public int Id { get; set; }
+
+        public string FriendlyName { get; set; }
+
+        public string EventName { get; set; }
+
+        public string SimulatorEventTypeName { get; set; }
+
+        public string SimulatorSoftwareName { get; set; }
+
+        public string SimulatorEventSdkTypeName { get; set; }
+
+        public string EventCode { get; set; }
+    }
+    
+    
     internal static class Program
     {
         private static FsConnect _fsConnect;
@@ -40,7 +73,7 @@ namespace Opena3XX.Eventing.Msfs
 
                 var conn = factory.CreateConnection();
                 var channel = conn.CreateModel();
-
+                /*
                 channel.QueueDeclare("simulator_test_events", false, false, false, null);
                 var consumer = new EventingBasicConsumer(channel);
                 consumer.Received += (ch, ea) =>
@@ -51,7 +84,25 @@ namespace Opena3XX.Eventing.Msfs
                 };
 
                 var consumerTag = channel.BasicConsume("simulator_test_events", false, consumer);
+                */
+                
+                var consumer = new EventingBasicConsumer(channel);
+                
+                consumer.Received += (ch, ea) =>
+                {
+                    channel.BasicAck(ea.DeliveryTag, false);
+                    
+                    var message = Encoding.UTF8.GetString(ea.Body.ToArray());
+                    var messageObj = JsonConvert.DeserializeObject<MessageResponse>(message);
+                    
+                    var client = new RestClient("http://192.168.50.22:5000");
+                    var dto = client.Get<HardwareInputSelectorDto>(new RestRequest($"hardware-input-selectors/{messageObj.input_selector_id}", Method.GET)).Data;
+                    Console.WriteLine(dto.SimulatorEventDto.EventCode.Split('#')[0]);
+                    _fsConnect.SetEventId(dto.SimulatorEventDto.EventCode.Split('#')[0]);
+                };
 
+                var consumerTag = channel.BasicConsume("processor-msfs", false, consumer);
+                
                 Console.ReadKey();
                 Console.WriteLine("Disconnecting from Flight Simulator");
                 _fsConnect.SetText("OpenA3XX Sim Connector: Disconnected", 1);

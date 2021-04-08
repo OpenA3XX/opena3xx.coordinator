@@ -67,28 +67,36 @@ namespace OpenA3XX.Peripheral.WebApi.Hubs
             //**************************************************************************************************************************
             // create keep alive channel  
             _keepAliveEventsChannel = _connection.CreateModel();
-            var keepAliveConfiguration =configuration["opena3xx-amqp-keepalive-exchange-bindings-configuration"];
+            var keepAliveConfiguration = configuration["opena3xx-amqp-keepalive-exchange-bindings-configuration"];
             _keepAliveExchangeConfig = new MessagingExchangeConfiguration(keepAliveConfiguration);
-            _keepAliveEventsChannel.ExchangeDeclare(_keepAliveExchangeConfig.ExchangeName,"fanout", false, false,null);
+            _keepAliveEventsChannel.ExchangeDeclare(_keepAliveExchangeConfig.ExchangeName, "fanout", false, false,
+                null);
             foreach (var (queueName, signalrMethodName) in _keepAliveExchangeConfig.QueueSocketBindingConfiguration)
             {
-                _keepAliveEventsChannel.QueueDeclare(queueName, false, false, false, null);
+                _keepAliveEventsChannel.QueueDeclare(queueName, false, false, false, new Dictionary<string, object> {{"x-message-ttl", 10000}});
                 _keepAliveEventsChannel.QueueBind(queueName, _keepAliveExchangeConfig.ExchangeName, "*", null);
             }
+
             _keepAliveEventsChannel.BasicQos(0, 1, false);
-            
+
             //**************************************************************************************************************************
-            
+
             // create hardware input selector channel 
             _hardwareInputSelectorsEventsChannel = _connection.CreateModel();
-            var hardwareInputSelectorsEventsConfiguration =configuration["opena3xx-amqp-hardware-input-selectors-exchange-bindings-configuration"];
-            _hardwareInputSelectorsEventsConfig = new MessagingExchangeConfiguration(hardwareInputSelectorsEventsConfiguration);
-            _hardwareInputSelectorsEventsChannel.ExchangeDeclare(_hardwareInputSelectorsEventsConfig.ExchangeName,"fanout", false, false,null);
-            foreach (var (queueName, signalrMethodName) in _hardwareInputSelectorsEventsConfig.QueueSocketBindingConfiguration)
+            var hardwareInputSelectorsEventsConfiguration =
+                configuration["opena3xx-amqp-hardware-input-selectors-exchange-bindings-configuration"];
+            _hardwareInputSelectorsEventsConfig =
+                new MessagingExchangeConfiguration(hardwareInputSelectorsEventsConfiguration);
+            _hardwareInputSelectorsEventsChannel.ExchangeDeclare(_hardwareInputSelectorsEventsConfig.ExchangeName,
+                "fanout", false, false, null);
+            foreach (var (queueName, signalrMethodName) in _hardwareInputSelectorsEventsConfig
+                .QueueSocketBindingConfiguration)
             {
-                _hardwareInputSelectorsEventsChannel.QueueDeclare(queueName, false, false, false, null);
-                _hardwareInputSelectorsEventsChannel.QueueBind(queueName, _hardwareInputSelectorsEventsConfig.ExchangeName, "*", null);
+                _hardwareInputSelectorsEventsChannel.QueueDeclare(queueName, false, false, false, new Dictionary<string, object> {{"x-message-ttl", 10000}});
+                _hardwareInputSelectorsEventsChannel.QueueBind(queueName,
+                    _hardwareInputSelectorsEventsConfig.ExchangeName, "*", null);
             }
+
             _hardwareInputSelectorsEventsChannel.BasicQos(0, 1, false);
             //**************************************************************************************************************************
 
@@ -120,7 +128,7 @@ namespace OpenA3XX.Peripheral.WebApi.Hubs
             _keepAliveEventsChannel.BasicConsume("admin.keepalive", false, keepAliveBasicConsumer);
 
             //**************************************************************************************************************************
-            
+
             var hardwareEventingBasicConsumer = new EventingBasicConsumer(_hardwareInputSelectorsEventsChannel);
             hardwareEventingBasicConsumer.Received += (ch, ea) =>
             {
@@ -131,13 +139,14 @@ namespace OpenA3XX.Peripheral.WebApi.Hubs
                 HandleHardwareEventMessage(content);
                 _hardwareInputSelectorsEventsChannel.BasicAck(ea.DeliveryTag, false);
             };
-            
+
             hardwareEventingBasicConsumer.Shutdown += OnConsumerShutdown;
             hardwareEventingBasicConsumer.Registered += OnConsumerRegistered;
             hardwareEventingBasicConsumer.Unregistered += OnConsumerUnregistered;
             hardwareEventingBasicConsumer.ConsumerCancelled += OnConsumerConsumerCancelled;
 
-            _hardwareInputSelectorsEventsChannel.BasicConsume("admin.hardware-input-selectors", false, hardwareEventingBasicConsumer);
+            _hardwareInputSelectorsEventsChannel.BasicConsume("admin.hardware-input-selectors", false,
+                hardwareEventingBasicConsumer);
             return Task.CompletedTask;
         }
 
@@ -150,7 +159,6 @@ namespace OpenA3XX.Peripheral.WebApi.Hubs
                     _hubContext.Clients.All.SendAsync(c.Item2, content);
                 }
             }
-            
         }
 
         private void HandleKeepAliveMessage(string content)
@@ -193,6 +201,3 @@ namespace OpenA3XX.Peripheral.WebApi.Hubs
         }
     }
 }
-
-
-
