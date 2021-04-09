@@ -14,5 +14,7 @@ namespace OpenA3XX.Core.Services
         IList<KeyValuePair<int, string>> GetAllIntegrationTypes();
 
         void SaveSimulatorEventLinking(int simulatorEventId, int hardwareInputId, int hardwareInputSelectorId);
+
+        void SaveSimulatorEventLinkingByEventCode(string eventCode, int hardwareInputId, int hardwareInputSelectorId);
     }
 }

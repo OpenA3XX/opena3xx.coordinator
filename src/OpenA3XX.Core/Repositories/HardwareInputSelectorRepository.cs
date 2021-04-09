@@ -24,6 +24,8 @@ namespace OpenA3XX.Core.Repositories
             return FindBy(c => c.Id == hardwareInputSelectorId)
                 .Include(c => c.SimulatorEvent).First();
         }
+        
+        
 
         public HardwareInputSelector UpdateHardwareInputSelector(HardwareInputSelector hardwareInputSelector)
         {

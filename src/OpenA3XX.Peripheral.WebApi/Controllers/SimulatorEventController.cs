@@ -52,6 +52,15 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
 
             return new SimulatorEventDto();
         }
+        
+        [HttpPost("link/hardware-input-selector/by-event-code/{hardwareInputSelectorId}/{eventCode}")]
+        public SimulatorEventDto LinkSimulatorEventToInputSelectorByEventCode(int hardwareInputSelectorId, string eventCode)
+        {
+            _simulatorEventService.SaveSimulatorEventLinkingByEventCode(eventCode, 0, hardwareInputSelectorId);
+
+            return new SimulatorEventDto();
+        }
+        
 
         [HttpPut("test/{simulatorEventId}")]
         public void TestSimulatorEvent(int simulatorEventId)
