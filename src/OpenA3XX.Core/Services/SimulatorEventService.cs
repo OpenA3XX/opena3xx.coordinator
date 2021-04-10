@@ -62,7 +62,7 @@ namespace OpenA3XX.Core.Services
         
         public void SaveSimulatorEventLinkingByEventCode(string eventCode, int hardwareInputId, int hardwareInputSelectorId)
         {
-            var simulatorEvent = _simulatorEventRepository.GetSimulatorEventByEventCode(eventCode);
+            var simulatorEvent = _simulatorEventRepository.GetSimulatorEventByEventCode(eventCode.Split(" => ")[1]);
             var hardwareInputSelector =_hardwareInputSelectorRepository.GetHardwareInputSelectorBy(hardwareInputSelectorId);
             hardwareInputSelector.SimulatorEvent = simulatorEvent;
             _hardwareInputSelectorRepository.UpdateHardwareInputSelector(hardwareInputSelector);

@@ -11,5 +11,6 @@ namespace OpenA3XX.Core.Dtos
         public string HardwareInputType { get; set; }
 
         public IList<HardwareInputSelectorDto> HardwareInputSelectors { get; set; }
+        
     }
 }

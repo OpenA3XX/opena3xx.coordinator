@@ -12,6 +12,7 @@ namespace OpenA3XX.Core.Services
     {
         private readonly IHttpContextAccessor _accessor;
         private readonly IHardwarePanelRepository _hardwarePanelRepository;
+        private readonly IHardwareBoardRepository _hardwareBoardRepository;
         private readonly IHardwarePanelTokensRepository _hardwarePanelTokensRepository;
         private readonly IAircraftModelRepository _aircraftModelRepository;
         private readonly IMapper _mapper;
@@ -19,12 +20,15 @@ namespace OpenA3XX.Core.Services
         public HardwarePanelService(IHttpContextAccessor accessor,
             IHardwarePanelTokensRepository hardwarePanelTokensRepository,
             IAircraftModelRepository aircraftModelRepository,
-            IHardwarePanelRepository hardwarePanelRepository, IMapper mapper)
+            IHardwarePanelRepository hardwarePanelRepository,
+            IHardwareBoardRepository hardwareBoardRepository,
+            IMapper mapper)
         {
             _accessor = accessor;
             _hardwarePanelTokensRepository = hardwarePanelTokensRepository;
             _aircraftModelRepository = aircraftModelRepository;
             _hardwarePanelRepository = hardwarePanelRepository;
+            _hardwareBoardRepository = hardwareBoardRepository;
             _mapper = mapper;
         }
 
@@ -86,6 +90,29 @@ namespace OpenA3XX.Core.Services
         {
             var hardwarePanel = _hardwarePanelRepository.GetHardwarePanelDetails(id);
             var hardwarePanelDto = _mapper.Map<HardwarePanel, HardwarePanelDto>(hardwarePanel);
+
+            
+            var hardwareBoards = _hardwareBoardRepository.GetAllHardwareBoards();
+            foreach (var hardwareInput in hardwarePanelDto.HardwareInputs)
+            {
+                foreach (var hardwareInputSelector in hardwareInput.HardwareInputSelectors)
+                {
+                    foreach (var hardwareBoard in hardwareBoards)
+                    {
+                        foreach (var bus in hardwareBoard.Buses)
+                        {
+                            foreach (var bit in bus.Bits)
+                            {
+                                if (bit.HardwareInputSelector != null && bit.HardwareInputSelector.Id == hardwareInputSelector.Id)
+                                {
+                                    hardwareInputSelector.IsHardwareInputSelectorMappedWithHardware = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
             return hardwarePanelDto;
         }
 
