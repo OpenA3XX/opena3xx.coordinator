@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using OpenA3XX.Core.Logging;
+using OpenA3XX.Core.Repositories;
 using OpenA3XX.Core.Sockets.Handlers;
 
 namespace OpenA3XX.Coordinator.SimulatorEventProcessor
@@ -38,8 +39,8 @@ namespace OpenA3XX.Coordinator.SimulatorEventProcessor
                     {
                         var socket = await context.WebSockets.AcceptWebSocketAsync();
                         var simEventingHandler = app.ApplicationServices.GetService<ISimEventingHandler>();
-                        //var simulatorEventsRepository = app.ApplicationServices.GetService<ISimulatorEventsRepository>();
-                        //if (simEventingHandler != null) await simEventingHandler.Handle(simulatorEventsRepository, socket);
+                        var simulatorEventsRepository = app.ApplicationServices.GetService<ISimulatorEventRepository>();
+                        if (simEventingHandler != null) await simEventingHandler.Handle(simulatorEventsRepository, socket);
                     }
                     else
                     {

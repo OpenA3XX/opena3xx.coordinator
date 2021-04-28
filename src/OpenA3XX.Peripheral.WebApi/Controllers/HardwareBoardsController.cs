@@ -49,12 +49,27 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
             var hardwareBoardDetailsDto = _hardwareBoardService.LinkExtenderBitToHardwareInputSelector(linkExtenderBitToHardwareInputSelectorDto);
             return hardwareBoardDetailsDto;
         }
+        
+        [HttpPost("link/hardware-output-selector")]
+        public HardwareBoardDetailsDto LinkExtenderBitToHardwareOutputSelector([FromBody] MapExtenderBitToHardwareOutputSelectorDto linkExtenderBitToHardwareOutputSelectorDto)
+        {
+            var hardwareBoardDetailsDto = _hardwareBoardService.LinkExtenderBitToHardwareOutputSelector(linkExtenderBitToHardwareOutputSelectorDto);
+            return hardwareBoardDetailsDto;
+        }
+        
 
         [HttpGet("hardware-input-selector/{hardwareInputSelectorId}")]
         public MapExtenderBitToHardwareInputSelectorDto GetHardwareBoardAssociationForHardwareInputSelector(int hardwareInputSelectorId)
         {
             var linkExtenderBitToHardwareInputSelectorDto = _hardwareBoardService.GetHardwareBoardAssociationForHardwareInputSelector(hardwareInputSelectorId);
             return linkExtenderBitToHardwareInputSelectorDto;
+        }
+        
+        [HttpGet("hardware-output-selector/{hardwareOutputSelectorId}")]
+        public MapExtenderBitToHardwareOutputSelectorDto GetHardwareBoardAssociationForHardwareOutputSelector(int hardwareOutputSelectorId)
+        {
+            var linkExtenderBitToHardwareOutputSelectorDto = _hardwareBoardService.GetHardwareBoardAssociationForHardwareOutputSelector(hardwareOutputSelectorId);
+            return linkExtenderBitToHardwareOutputSelectorDto;
         }
     }
 

@@ -72,6 +72,7 @@ namespace OpenA3XX.Peripheral.WebApi
             services.AddTransient<IHardwarePanelTokensRepository, HardwarePanelTokensRepository>();
             services.AddTransient<IHardwareInputTypesRepository, HardwareInputTypesRepository>();
             services.AddTransient<IHardwareInputSelectorRepository, HardwareInputSelectorRepository>();
+            services.AddTransient<IHardwareOutputSelectorRepository, HardwareOutputSelectorRepository>();
             services.AddTransient<IHardwareOutputTypesRepository, HardwareOutputTypesRepository>();
             services.AddTransient<IHardwarePanelRepository, HardwarePanelRepository>();
             services.AddTransient<IHardwareBoardRepository, HardwareBoardRepository>();
@@ -84,6 +85,7 @@ namespace OpenA3XX.Peripheral.WebApi
             services.AddTransient<IHardwareBoardService, HardwareBoardService>();
             services.AddTransient<IHardwareInputTypeService, HardwareInputTypeService>();
             services.AddTransient<IHardwareInputSelectorService, HardwareInputSelectorService>();
+            services.AddTransient<IHardwareOutputSelectorService, HardwareOutputSelectorService>();
             services.AddTransient<IHardwareOutputTypeService, HardwareOutputTypeService>();
 
             services.AddTransient<IFormService, FormsService>();

@@ -95,6 +95,40 @@ namespace OpenA3XX.Core.Services
             _hardwareBoardRepository.UpdateHardwareBoard(hardwareBoard);
             return GetHardwareBoard(hardwareBoard.Id);
         }
+        
+        public HardwareBoardDetailsDto LinkExtenderBitToHardwareOutputSelector(
+            MapExtenderBitToHardwareOutputSelectorDto linkExtenderBitToHardwareOutputSelectorDto)
+        {
+            try
+            {
+                //--- Remove old map
+                var currentLink = GetHardwareBoardAssociationForHardwareOutputSelector(linkExtenderBitToHardwareOutputSelectorDto
+                    .HardwareOutputSelectorId);
+
+                var currentBoard = _hardwareBoardRepository.GetByHardwareBoard(currentLink.HardwareBoardId);
+                currentBoard.Buses
+                    .First(c => c.Id == currentLink.HardwareExtenderBusId).Bits.First(x => x.Id == currentLink.HardwareExtenderBusBitId)
+                    .HardwareOutputSelector = null;
+                _hardwareBoardRepository.UpdateHardwareBoard(currentBoard);
+            }
+            catch (Exception ex)
+            {
+                // ignored
+            }
+
+            //--- Update to new map
+            
+            var hardwareBoard =
+                _hardwareBoardRepository.GetByHardwareBoard(linkExtenderBitToHardwareOutputSelectorDto.HardwareBoardId);
+            hardwareBoard.Buses
+                .First(c => c.Id == linkExtenderBitToHardwareOutputSelectorDto.HardwareExtenderBusId).Bits
+                .First(c => c.Id == linkExtenderBitToHardwareOutputSelectorDto.HardwareExtenderBusBitId)
+                .HardwareInputSelectorId = linkExtenderBitToHardwareOutputSelectorDto.HardwareOutputSelectorId;
+
+            _hardwareBoardRepository.UpdateHardwareBoard(hardwareBoard);
+            return GetHardwareBoard(hardwareBoard.Id);
+        }
+        
 
         public MapExtenderBitToHardwareInputSelectorDto GetHardwareBoardAssociationForHardwareInputSelector(
             int hardwareInputSelectorId)
@@ -122,5 +156,33 @@ namespace OpenA3XX.Core.Services
 
             return linkExtenderBitToHardwareInputSelectorDto;
         }
+        
+        public MapExtenderBitToHardwareOutputSelectorDto GetHardwareBoardAssociationForHardwareOutputSelector(
+            int hardwareOutputSelectorId)
+        {
+            var linkExtenderBitToHardwareOutputSelectorDto = new MapExtenderBitToHardwareOutputSelectorDto();
+
+
+            foreach (var board in _hardwareBoardRepository.GetAllHardwareBoards())
+            {
+                foreach (var bus in board.Buses)
+                {
+                    foreach (var bit in bus.Bits)
+                    {
+                        if (bit.HardwareInputSelector == null) continue;
+                        if (bit.HardwareInputSelector.Id != hardwareOutputSelectorId) continue;
+                        linkExtenderBitToHardwareOutputSelectorDto.HardwareBoardId = board.Id;
+                        linkExtenderBitToHardwareOutputSelectorDto.HardwareExtenderBusId = bus.Id;
+                        linkExtenderBitToHardwareOutputSelectorDto.HardwareExtenderBusBitId = bit.Id;
+                        linkExtenderBitToHardwareOutputSelectorDto.HardwareOutputSelectorId = hardwareOutputSelectorId;
+                        return linkExtenderBitToHardwareOutputSelectorDto;
+
+                    }
+                }
+            }
+
+            return linkExtenderBitToHardwareOutputSelectorDto;
+        }
+        
     }
 }

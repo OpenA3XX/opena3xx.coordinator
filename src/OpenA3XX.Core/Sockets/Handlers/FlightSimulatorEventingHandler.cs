@@ -1,9 +1,19 @@
-﻿namespace OpenA3XX.Core.Sockets.Handlers
+﻿using System;
+using System.Collections.Generic;
+using System.Net.WebSockets;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+using OpenA3XX.Core.Eventing;
+using OpenA3XX.Core.Repositories;
+
+namespace OpenA3XX.Core.Sockets.Handlers
 {
     public class FlightSimulatorEventingHandler : ISimEventingHandler
     {
-        /*
-        public async Task Handle(ISimulatorEventsRepository simulatorEventsRepository, WebSocket webSocket)
+        
+        public async Task Handle(ISimulatorEventRepository simulatorEventsRepository, WebSocket webSocket)
         {
             while (webSocket.State == WebSocketState.Open)
             {
@@ -24,10 +34,7 @@
                     {
                         var data = JsonConvert.DeserializeObject<FlightSimulatorEvent>(bufferAsString);
 
-                        var allEvents = simulatorEventsRepository.GetAll();
-                        
-                        
-                        
+                        //var allEvents = simulatorEventsRepository.GetAll();
                         
                         /*
                         var factory = new ConnectionFactory {HostName = "localhost"};
@@ -41,12 +48,12 @@
                         }**\
 
 
-                        Log.Information("{@data}", data);
+                        Log.Information("{@data}", data);*/
                     }
                 }
             }
 
             await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
-        }*/
+        }
     }
 }

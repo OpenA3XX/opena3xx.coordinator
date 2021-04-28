@@ -12,8 +12,13 @@ namespace OpenA3XX.Core.Services
         HardwareBoardDetailsDto GetHardwareBoard(int id);
 
         HardwareBoardDetailsDto LinkExtenderBitToHardwareInputSelector(MapExtenderBitToHardwareInputSelectorDto linkExtenderBitToHardwareInputSelectorDto);
+        
+        HardwareBoardDetailsDto LinkExtenderBitToHardwareOutputSelector(MapExtenderBitToHardwareOutputSelectorDto linkExtenderBitToHardwareOutputSelectorDto);
 
         MapExtenderBitToHardwareInputSelectorDto GetHardwareBoardAssociationForHardwareInputSelector(
             int hardwareInputSelectorId);
+        
+        MapExtenderBitToHardwareOutputSelectorDto GetHardwareBoardAssociationForHardwareOutputSelector(
+            int hardwareOutputSelectorId);
     }
 }
