@@ -123,7 +123,7 @@ namespace OpenA3XX.Core.Services
             hardwareBoard.Buses
                 .First(c => c.Id == linkExtenderBitToHardwareOutputSelectorDto.HardwareExtenderBusId).Bits
                 .First(c => c.Id == linkExtenderBitToHardwareOutputSelectorDto.HardwareExtenderBusBitId)
-                .HardwareInputSelectorId = linkExtenderBitToHardwareOutputSelectorDto.HardwareOutputSelectorId;
+                .HardwareOutputSelectorId = linkExtenderBitToHardwareOutputSelectorDto.HardwareOutputSelectorId;
 
             _hardwareBoardRepository.UpdateHardwareBoard(hardwareBoard);
             return GetHardwareBoard(hardwareBoard.Id);
@@ -169,8 +169,8 @@ namespace OpenA3XX.Core.Services
                 {
                     foreach (var bit in bus.Bits)
                     {
-                        if (bit.HardwareInputSelector == null) continue;
-                        if (bit.HardwareInputSelector.Id != hardwareOutputSelectorId) continue;
+                        if (bit.HardwareOutputSelector == null) continue;
+                        if (bit.HardwareOutputSelector.Id != hardwareOutputSelectorId) continue;
                         linkExtenderBitToHardwareOutputSelectorDto.HardwareBoardId = board.Id;
                         linkExtenderBitToHardwareOutputSelectorDto.HardwareExtenderBusId = bus.Id;
                         linkExtenderBitToHardwareOutputSelectorDto.HardwareExtenderBusBitId = bit.Id;
