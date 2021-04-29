@@ -1,0 +1,17 @@
+version: 2
+updates:
+- package-ecosystem: nuget
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "04:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: Serilog.Sinks.Seq
+    versions:
+    - 5.0.0
+    - 5.0.1
+  - dependency-name: Swashbuckle.AspNetCore
+    versions:
+    - 6.1.1
+    - 6.1.2
