@@ -6,7 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="AutoMapper" Version="10.1.1" />
+        <PackageReference Include="AutoMapper" Version="11.0.1" />
         <PackageReference Include="EasyCaching.InMemory" Version="1.4.1" />
         <PackageReference Include="Humanizer.Core" Version="2.13.14" />
         <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
