@@ -31,7 +31,6 @@ namespace OpenA3XX.Core.Repositories
         public SimulatorEvent GetSimulatorEventByEventCode(string eventCode)
         {
             return Find(c => c.EventCode.Contains(eventCode));
-            return Find(c => c.EventCode == eventCode);
         }
 
         public IList<SimulatorEvent> GetAllSimulatorEventsByIntegrationType(int integrationTypeId)

@@ -1,7 +1,7 @@
 ﻿using Serilog;
 using Serilog.Core;
 using Serilog.Events;
-using Serilog.Formatting.Compact;
+using Serilog.Sinks.Seq;
 using Serilog.Sinks.SystemConsole.Themes;
 
 namespace OpenA3XX.Core.Logging
@@ -25,7 +25,7 @@ namespace OpenA3XX.Core.Logging
                 .Enrich.WithCorrelationId()
                 .Enrich.WithAssemblyInformationalVersion()
                 .Enrich.WithEnvironment("ASPNETCORE_ENVIRONMENT")
-                .WriteTo.Console(new RenderedCompactJsonFormatter())
+                .WriteTo.Console(new SeqCompactJsonFormatter())
                 .CreateLogger();
         }
 

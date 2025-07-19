@@ -54,7 +54,7 @@ namespace OpenA3XX.Peripheral.WebApi
                     {
                         Name = "David Bonnici",
                         Email = "davidbonnici1984@gmail.com",
-                        Url = new Uri("https://opena3xx.dev")
+                        Url = new Uri("https://docs.opena3xx.dev")
                     }
                 });
             });
@@ -94,7 +94,7 @@ namespace OpenA3XX.Peripheral.WebApi
             services.AddTransient<ISimulatorEventingService, SimulatorEventingService>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddAutoMapper(Assembly.GetAssembly(typeof(HardwarePanelToken)));
+            //services.AddAutoMapper();
 
             services.AddHostedService<ConsumeRabbitMqHostedService>();
             

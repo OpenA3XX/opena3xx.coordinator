@@ -72,14 +72,14 @@ namespace OpenA3XX.Processors.CockpitEvents
                 HostName = "192.168.50.22",
                 ClientProvidedName = "app:opena3xx.processors component:cockpitevents"
             };
-            var conn = factory.CreateConnection();
-            var channel = conn.CreateModel();
+            var conn = factory.CreateConnectionAsync().Result;
+            var channel = conn.CreateChannelAsync().Result;
 
-            channel.QueueDeclare("hardware_events", false, false, false, null);
-            var consumer = new EventingBasicConsumer(channel);
-            consumer.Received += (ch, ea) =>
+            channel.QueueDeclareAsync("hardware_events", false, false, false, null);
+            var consumer = new AsyncEventingBasicConsumer(channel);
+            consumer.ReceivedAsync += async (ch, ea) =>
             {
-                channel.BasicAck(ea.DeliveryTag, false);
+                await channel.BasicAckAsync(ea.DeliveryTag, false);
                 var result = Encoding.UTF8.GetString(ea.Body.ToArray());
                 var hardwareSignalDto = JsonConvert.DeserializeObject<HardwareSignalDto>(result);
                 var hardwareBoardRepository =
@@ -87,7 +87,8 @@ namespace OpenA3XX.Processors.CockpitEvents
                 var response = hardwareBoardRepository.GetByHardwareBoard(hardwareSignalDto.HardwareBoardId);
             };
 
-            var consumerTag = channel.BasicConsume("hardware_events", false, consumer);
+
+            var consumerTag = channel.BasicConsumeAsync("hardware_events", false, consumer);
 
 
             Console.ReadLine();

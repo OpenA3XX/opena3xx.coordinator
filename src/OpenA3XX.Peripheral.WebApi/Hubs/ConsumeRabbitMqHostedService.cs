@@ -20,8 +20,8 @@ namespace OpenA3XX.Peripheral.WebApi.Hubs
         private readonly IHubContext<RealtimeHub> _hubContext;
         private readonly IServiceProvider _serviceProvider;
         private IConnection _connection;
-        private IModel _hardwareInputSelectorsEventsChannel;
-        private IModel _keepAliveEventsChannel;
+        private IChannel _hardwareInputSelectorsEventsChannel;
+        private IChannel _keepAliveEventsChannel;
         private Dictionary<string, string> _systemConfiguration;
 
         private MessagingExchangeConfiguration _hardwareInputSelectorsEventsConfig;
@@ -62,45 +62,45 @@ namespace OpenA3XX.Peripheral.WebApi.Hubs
             };
 
             // create connection  
-            _connection = factory.CreateConnection();
+            _connection = factory.CreateConnectionAsync().Result;
 
             //**************************************************************************************************************************
             // create keep alive channel  
-            _keepAliveEventsChannel = _connection.CreateModel();
+            _keepAliveEventsChannel = _connection.CreateChannelAsync().Result;
             var keepAliveConfiguration = configuration["opena3xx-amqp-keepalive-exchange-bindings-configuration"];
             _keepAliveExchangeConfig = new MessagingExchangeConfiguration(keepAliveConfiguration);
-            _keepAliveEventsChannel.ExchangeDeclare(_keepAliveExchangeConfig.ExchangeName, "fanout", false, false,
+            _keepAliveEventsChannel.ExchangeDeclareAsync(_keepAliveExchangeConfig.ExchangeName, "fanout", false, false,
                 null);
             foreach (var (queueName, signalrMethodName) in _keepAliveExchangeConfig.QueueSocketBindingConfiguration)
             {
-                _keepAliveEventsChannel.QueueDeclare(queueName, false, false, false, new Dictionary<string, object> {{"x-message-ttl", 10000}});
-                _keepAliveEventsChannel.QueueBind(queueName, _keepAliveExchangeConfig.ExchangeName, "*", null);
+                _keepAliveEventsChannel.QueueDeclareAsync(queueName, false, false, false, new Dictionary<string, object> {{"x-message-ttl", 10000}});
+                _keepAliveEventsChannel.QueueBindAsync(queueName, _keepAliveExchangeConfig.ExchangeName, "*", null);
             }
 
-            _keepAliveEventsChannel.BasicQos(0, 1, false);
+            _keepAliveEventsChannel.BasicQosAsync(0, 1, false);
 
             //**************************************************************************************************************************
 
             // create hardware input selector channel 
-            _hardwareInputSelectorsEventsChannel = _connection.CreateModel();
+            _hardwareInputSelectorsEventsChannel = _connection.CreateChannelAsync().Result;
             var hardwareInputSelectorsEventsConfiguration =
                 configuration["opena3xx-amqp-hardware-input-selectors-exchange-bindings-configuration"];
             _hardwareInputSelectorsEventsConfig =
                 new MessagingExchangeConfiguration(hardwareInputSelectorsEventsConfiguration);
-            _hardwareInputSelectorsEventsChannel.ExchangeDeclare(_hardwareInputSelectorsEventsConfig.ExchangeName,
+            _hardwareInputSelectorsEventsChannel.ExchangeDeclareAsync(_hardwareInputSelectorsEventsConfig.ExchangeName,
                 "fanout", false, false, null);
             foreach (var (queueName, signalrMethodName) in _hardwareInputSelectorsEventsConfig
                 .QueueSocketBindingConfiguration)
             {
-                _hardwareInputSelectorsEventsChannel.QueueDeclare(queueName, false, false, false, new Dictionary<string, object> {{"x-message-ttl", 10000}});
-                _hardwareInputSelectorsEventsChannel.QueueBind(queueName,
+                _hardwareInputSelectorsEventsChannel.QueueDeclareAsync(queueName, false, false, false, new Dictionary<string, object> {{"x-message-ttl", 10000}});
+                _hardwareInputSelectorsEventsChannel.QueueBindAsync(queueName,
                     _hardwareInputSelectorsEventsConfig.ExchangeName, "*", null);
             }
 
-            _hardwareInputSelectorsEventsChannel.BasicQos(0, 1, false);
+            _hardwareInputSelectorsEventsChannel.BasicQosAsync(0, 1, false);
             //**************************************************************************************************************************
 
-            _connection.ConnectionShutdown += RabbitMQ_ConnectionShutdown;
+            _connection.ConnectionShutdownAsync += RabbitMQ_ConnectionShutdown;
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -109,43 +109,43 @@ namespace OpenA3XX.Peripheral.WebApi.Hubs
 
             //**************************************************************************************************************************
 
-            var keepAliveBasicConsumer = new EventingBasicConsumer(_keepAliveEventsChannel);
-            keepAliveBasicConsumer.Received += (ch, ea) =>
+            var keepAliveBasicConsumer = new AsyncEventingBasicConsumer(_keepAliveEventsChannel);
+            keepAliveBasicConsumer.ReceivedAsync += async (ch, ea) =>
             {
                 // received message  
                 var content = Encoding.UTF8.GetString(ea.Body.ToArray());
 
                 // handle the received message  
                 HandleKeepAliveMessage(content);
-                _keepAliveEventsChannel.BasicAck(ea.DeliveryTag, false);
+                await _keepAliveEventsChannel.BasicAckAsync(ea.DeliveryTag, false);
             };
 
-            keepAliveBasicConsumer.Shutdown += OnConsumerShutdown;
-            keepAliveBasicConsumer.Registered += OnConsumerRegistered;
-            keepAliveBasicConsumer.Unregistered += OnConsumerUnregistered;
-            keepAliveBasicConsumer.ConsumerCancelled += OnConsumerConsumerCancelled;
+            keepAliveBasicConsumer.ShutdownAsync += OnConsumerShutdown;
+            keepAliveBasicConsumer.RegisteredAsync += OnConsumerRegistered;
+            keepAliveBasicConsumer.UnregisteredAsync += OnConsumerUnregistered;
+            //keepAliveBasicConsumer.ConsumerCancelled += OnConsumerConsumerCancelled;
 
-            _keepAliveEventsChannel.BasicConsume("admin.keepalive", false, keepAliveBasicConsumer);
+            _keepAliveEventsChannel.BasicConsumeAsync("admin.keepalive", false, keepAliveBasicConsumer);
 
             //**************************************************************************************************************************
 
-            var hardwareEventingBasicConsumer = new EventingBasicConsumer(_hardwareInputSelectorsEventsChannel);
-            hardwareEventingBasicConsumer.Received += (ch, ea) =>
+            var hardwareEventingBasicConsumer = new AsyncEventingBasicConsumer(_hardwareInputSelectorsEventsChannel);
+            hardwareEventingBasicConsumer.ReceivedAsync += async (ch, ea) =>
             {
                 // received message  
                 var content = Encoding.UTF8.GetString(ea.Body.ToArray());
 
                 // handle the received message  
                 HandleHardwareEventMessage(content);
-                _hardwareInputSelectorsEventsChannel.BasicAck(ea.DeliveryTag, false);
+                await _hardwareInputSelectorsEventsChannel.BasicAckAsync(ea.DeliveryTag, false);
             };
 
-            hardwareEventingBasicConsumer.Shutdown += OnConsumerShutdown;
-            hardwareEventingBasicConsumer.Registered += OnConsumerRegistered;
-            hardwareEventingBasicConsumer.Unregistered += OnConsumerUnregistered;
-            hardwareEventingBasicConsumer.ConsumerCancelled += OnConsumerConsumerCancelled;
+            hardwareEventingBasicConsumer.ShutdownAsync += OnConsumerShutdown;
+            hardwareEventingBasicConsumer.RegisteredAsync += OnConsumerRegistered;
+            hardwareEventingBasicConsumer.UnregisteredAsync += OnConsumerUnregistered;
+            //hardwareEventingBasicConsumer.ConsumerCancelled += OnConsumerConsumerCancelled;
 
-            _hardwareInputSelectorsEventsChannel.BasicConsume("admin.hardware-input-selectors", false,
+            _hardwareInputSelectorsEventsChannel.BasicConsumeAsync("admin.hardware-input-selectors", false,
                 hardwareEventingBasicConsumer);
             return Task.CompletedTask;
         }
@@ -172,31 +172,36 @@ namespace OpenA3XX.Peripheral.WebApi.Hubs
             }
         }
 
-        private static void OnConsumerConsumerCancelled(object sender, ConsumerEventArgs e)
+        private static Task OnConsumerConsumerCancelled(object sender, ConsumerEventArgs e)
         {
+            return Task.CompletedTask;
         }
 
-        private static void OnConsumerUnregistered(object sender, ConsumerEventArgs e)
+        private static Task OnConsumerUnregistered(object sender, ConsumerEventArgs e)
         {
+            return Task.CompletedTask;
         }
 
-        private static void OnConsumerRegistered(object sender, ConsumerEventArgs e)
+        private static Task OnConsumerRegistered(object sender, ConsumerEventArgs e)
         {
+            return Task.CompletedTask;
         }
 
-        private static void OnConsumerShutdown(object sender, ShutdownEventArgs e)
+        private static Task OnConsumerShutdown(object sender, ShutdownEventArgs e)
         {
+            return Task.CompletedTask;
         }
 
-        private static void RabbitMQ_ConnectionShutdown(object sender, ShutdownEventArgs e)
+        private static Task RabbitMQ_ConnectionShutdown(object sender, ShutdownEventArgs e)
         {
+            return Task.CompletedTask;
         }
 
         public override void Dispose()
         {
-            _hardwareInputSelectorsEventsChannel.Close();
-            _keepAliveEventsChannel.Close();
-            _connection.Close();
+            _hardwareInputSelectorsEventsChannel.CloseAsync();
+            _keepAliveEventsChannel.CloseAsync();
+            _connection.CloseAsync();
             base.Dispose();
         }
     }
