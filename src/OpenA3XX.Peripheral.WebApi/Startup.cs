@@ -94,7 +94,16 @@ namespace OpenA3XX.Peripheral.WebApi
             services.AddTransient<ISimulatorEventingService, SimulatorEventingService>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            //services.AddAutoMapper();
+            // Add AutoMapper - This is the key fix!
+            // Add AutoMapper - Using explicit configuration to avoid ambiguity
+            var mapperConfig = new MapperConfiguration(cfg =>
+            {
+                cfg.AddMaps(typeof(OpenA3XX.Core.Profiles.HardwarePanelProfile).Assembly);
+            });
+            services.AddSingleton(mapperConfig);
+            services.AddSingleton<IMapper>(provider => new Mapper(mapperConfig));
+
+
 
             services.AddHostedService<ConsumeRabbitMqHostedService>();
             
