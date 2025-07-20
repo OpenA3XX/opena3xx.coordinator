@@ -22,8 +22,8 @@ namespace OpenA3XX.Core.Services
             
             var factory = new ConnectionFactory
             {
-                UserName = configuration["RabbitMQ:Username"] ?? "guest",
-                Password = configuration["RabbitMQ:Password"] ?? "guest",
+                UserName = configuration["RabbitMQ:Username"] ?? "opena3xx",
+                Password = configuration["RabbitMQ:Password"] ?? "opena3xx",
                 VirtualHost = configuration["RabbitMQ:VirtualHost"] ?? "/",
                 HostName = configuration["RabbitMQ:HostName"] ?? "localhost",
                 ClientProvidedName = "app:opena3xx.peripheral.webapi"
