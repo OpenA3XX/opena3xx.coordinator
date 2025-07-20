@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -43,8 +44,11 @@ namespace Opena3XX.Eventing.Msfs
     {
         private static FsConnect _fsConnect;
 
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
+            IConnection conn = null;
+            IChannel channel = null;
+            
             try
             {
                 _fsConnect = new FsConnect();
@@ -71,48 +75,31 @@ namespace Opena3XX.Eventing.Msfs
                 
                 _fsConnect.SetText("OpenA3XX Sim Connector: Connected", 5);
 
-                var conn = factory.CreateConnection();
-                var channel = conn.CreateModel();
-                /*
-                channel.QueueDeclare("simulator_test_events", false, false, false, null);
-                var consumer = new EventingBasicConsumer(channel);
-                consumer.Received += (ch, ea) =>
-                {
-                    channel.BasicAck(ea.DeliveryTag, false);
-                    var calculatorCode = Encoding.UTF8.GetString(ea.Body.ToArray());
-                    _fsConnect.SetEventId(calculatorCode);
-                };
-
-                var consumerTag = channel.BasicConsume("simulator_test_events", false, consumer);
-                */
+                conn = await factory.CreateConnectionAsync();
+                channel = await conn.CreateChannelAsync();
                 
-                var consumer = new EventingBasicConsumer(channel);
+                var consumer = new AsyncEventingBasicConsumer(channel);
                 
-                consumer.Received += (ch, ea) =>
+                consumer.ReceivedAsync += async (ch, ea) =>
                 {
-                    channel.BasicAck(ea.DeliveryTag, false);
+                    await channel.BasicAckAsync(ea.DeliveryTag, false);
                     
                     var message = Encoding.UTF8.GetString(ea.Body.ToArray());
                     var messageObj = JsonConvert.DeserializeObject<MessageResponse>(message);
                     
                     var client = new RestClient("http://192.168.50.22:5000");
-                    var dto = client.Get<HardwareInputSelectorDto>(new RestRequest($"hardware-input-selectors/{messageObj.input_selector_id}", Method.GET)).Data;
+                    var dto = client.Get<HardwareInputSelectorDto>(new RestRequest($"hardware-input-selectors/{messageObj.input_selector_id}"));
                     Console.WriteLine(dto.SimulatorEventDto.EventCode.Split('#')[0]);
                     _fsConnect.SetEventId(dto.SimulatorEventDto.EventCode.Split('#')[0]);
                 };
 
-                var consumerTag = channel.BasicConsume("processor-msfs", false, consumer);
+                var consumerTag = await channel.BasicConsumeAsync("processor-msfs", false, consumer);
                 
                 Console.ReadKey();
                 Console.WriteLine("Disconnecting from Flight Simulator");
                 _fsConnect.SetText("OpenA3XX Sim Connector: Disconnected", 1);
                 _fsConnect.Disconnect();
-                _fsConnect.Dispose();
-                _fsConnect = null;
                 
-                channel.Dispose();
-                conn.Dispose();
-
                 Console.WriteLine("Done");
                 
             }
@@ -120,8 +107,17 @@ namespace Opena3XX.Eventing.Msfs
             {
                 Console.WriteLine("An error occurred: " + e);
             }
+            finally
+            {
+                // Proper cleanup
+                _fsConnect?.Dispose();
+                _fsConnect = null;
+                
+                if (channel != null)
+                    await channel.CloseAsync();
+                if (conn != null)
+                    await conn.CloseAsync();
+            }
         }
-        
-        
     }
 }

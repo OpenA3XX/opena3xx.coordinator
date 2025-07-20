@@ -1,97 +1,118 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
-using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
-using OpenA3XX.Core.Configuration;
-using OpenA3XX.Core.DataContexts;
-using OpenA3XX.Core.Dtos;
-using OpenA3XX.Core.Models;
-using OpenA3XX.Core.Repositories;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using RestSharp;
 
-namespace OpenA3XX.Processors.CockpitEvents
+namespace Opena3XX.Eventing.Msfs
 {
-    internal class Program
+    public class MessageResponse
     {
-        private static void Main(string[] args)
+        public int input_selector_id { get; set; }
+        
+    }
+    public class HardwareInputSelectorDto
+    {
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+
+        public SimulatorEventDto SimulatorEventDto { get; set; }
+    }
+    
+    public class SimulatorEventDto
+    {
+        public int Id { get; set; }
+
+        public string FriendlyName { get; set; }
+
+        public string EventName { get; set; }
+
+        public string SimulatorEventTypeName { get; set; }
+
+        public string SimulatorSoftwareName { get; set; }
+
+        public string SimulatorEventSdkTypeName { get; set; }
+
+        public string EventCode { get; set; }
+    }
+    
+    
+    internal static class Program
+    {
+        private static FsConnect _fsConnect;
+
+        public static async Task Main(string[] args)
         {
-            var dbContextOptionsBuilder = new DbContextOptionsBuilder<CoreDataContext>();
-            dbContextOptionsBuilder.UseSqlite(
-                CoordinatorConfiguration.GetDatabasesFolderPath(OpenA3XXDatabase.Core));
-/*
-            var repo = new ManufacturerRepository(new CoreDataContext(dbContextOptionsBuilder.Options));
-
-            var data = repo.GetAllManufacturers();
-
-
-            var adata = JsonConvert.SerializeObject(data, Formatting.None,
-                new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                });
-*/
-/*
-            var hardwareBoard = new HardwareBoard
+            try
             {
-                Name = "MCDU1",
-                Buses = new List<IOExtenderBus>
+                _fsConnect = new FsConnect();
+
+                try
                 {
-                    new()
-                    {
-                        HardwareBus = HardwareBus.Bus0,
-                        Bits = new List<IOExtenderBit>
-                        {
-                            new()
-                            {
-                                ExtenderBusBitType = ExtenderBusBitType.Input, HardwareInputId = 13
-                            },
-                            new()
-                            {
-                                ExtenderBusBitType = ExtenderBusBitType.Input, HardwareInputId = 14
-                            },
-                            new()
-                            {
-                                ExtenderBusBitType = ExtenderBusBitType.Input, HardwareInputId = 15
-                            },
-                            new()
-                            {
-                                ExtenderBusBitType = ExtenderBusBitType.Input, HardwareInputId = 16
-                            }
-                        }
-                    }
+                    Console.WriteLine($"Connecting to Flight Simulator on 127.0.0.1:500");
+                    _fsConnect.Connect("FsConnectTestConsole", "127.0.0.1" , 500, SimConnectProtocol.Ipv4);
                 }
-            };
-*/
-            var factory = new ConnectionFactory
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return;
+                }
+
+                var factory = new ConnectionFactory
+                {
+                    UserName = "opena3xx",
+                    Password = "opena3xx",
+                    VirtualHost = "/",
+                    HostName = "192.168.50.22",
+                    ClientProvidedName = "app:opena3xx.eventing.msfs component:simulator_test_events"
+                };
+                
+                _fsConnect.SetText("OpenA3XX Sim Connector: Connected", 5);
+
+                var conn = await factory.CreateConnectionAsync();
+                var channel = await conn.CreateChannelAsync();
+                
+                var consumer = new AsyncEventingBasicConsumer(channel);
+                
+                consumer.ReceivedAsync += async (ch, ea) =>
+                {
+                    await channel.BasicAckAsync(ea.DeliveryTag, false);
+                    
+                    var message = Encoding.UTF8.GetString(ea.Body.ToArray());
+                    var messageObj = JsonConvert.DeserializeObject<MessageResponse>(message);
+                    
+                    var client = new RestClient("http://192.168.50.22:5000");
+                    var request = new RestRequest($"hardware-input-selectors/{messageObj.input_selector_id}", Method.Get);
+                    var response = await client.ExecuteAsync<HardwareInputSelectorDto>(request);
+                    var dto = response.Data;
+                    
+                    var eventCode = dto.SimulatorEventDto.EventCode.Split('#')[0];
+                    Console.WriteLine(eventCode);
+                    _fsConnect.SetEventId(eventCode);
+                };
+
+                await channel.BasicConsumeAsync("processor-msfs", false, consumer);
+                
+                Console.ReadKey();
+                Console.WriteLine("Disconnecting from Flight Simulator");
+                _fsConnect.SetText("OpenA3XX Sim Connector: Disconnected", 1);
+                _fsConnect.Disconnect();
+                _fsConnect.Dispose();
+                _fsConnect = null;
+                
+                await channel.CloseAsync();
+                await conn.CloseAsync();
+
+                Console.WriteLine("Done");
+                
+            }
+            catch (Exception e)
             {
-                UserName = "opena3xx",
-                Password = "opena3xx",
-                VirtualHost = "/",
-                HostName = "192.168.50.22",
-                ClientProvidedName = "app:opena3xx.processors component:cockpitevents"
-            };
-            var conn = factory.CreateConnectionAsync().Result;
-            var channel = conn.CreateChannelAsync().Result;
-
-            channel.QueueDeclareAsync("hardware_events", false, false, false, null);
-            var consumer = new AsyncEventingBasicConsumer(channel);
-            consumer.ReceivedAsync += async (ch, ea) =>
-            {
-                await channel.BasicAckAsync(ea.DeliveryTag, false);
-                var result = Encoding.UTF8.GetString(ea.Body.ToArray());
-                var hardwareSignalDto = JsonConvert.DeserializeObject<HardwareSignalDto>(result);
-                var hardwareBoardRepository =
-                    new HardwareBoardRepository(new CoreDataContext(dbContextOptionsBuilder.Options));
-                var response = hardwareBoardRepository.GetByHardwareBoard(hardwareSignalDto.HardwareBoardId);
-            };
-
-
-            var consumerTag = channel.BasicConsumeAsync("hardware_events", false, consumer);
-
-
-            Console.ReadLine();
+                Console.WriteLine("An error occurred: " + e);
+            }
         }
     }
 }
