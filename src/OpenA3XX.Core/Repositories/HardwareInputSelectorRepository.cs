@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using OpenA3XX.Core.Models;
 using OpenA3XX.Core.Repositories.Base;
+using OpenA3XX.Core.Repositories.Extensions;
 
 namespace OpenA3XX.Core.Repositories
 {
@@ -21,8 +22,9 @@ namespace OpenA3XX.Core.Repositories
 
         public HardwareInputSelector GetHardwareInputSelectorBy(int hardwareInputSelectorId)
         {
-            return FindBy(c => c.Id == hardwareInputSelectorId)
-                .Include(c => c.SimulatorEvent).First();
+            return FindBy(selector => selector.Id == hardwareInputSelectorId)
+                .IncludeSimulatorEvent()
+                .First();
         }
         
         

@@ -13,47 +13,95 @@ namespace OpenA3XX.Core.Sockets.Handlers
     public class FlightSimulatorEventingHandler : ISimEventingHandler
     {
         
-        public async Task Handle(ISimulatorEventRepository simulatorEventsRepository, WebSocket webSocket)
+        public async Task Handle(ISimulatorEventRepository simulatorEventsRepository, WebSocket webSocket, CancellationToken cancellationToken = default)
         {
-            while (webSocket.State == WebSocketState.Open)
+            const int bufferSize = 1024 * 4;
+            
+            try
             {
-                var buffer = new byte[1024 * 4];
-                WebSocketReceiveResult socketResponse;
-                var package = new List<byte>();
-                do
+                while (webSocket.State == WebSocketState.Open && !cancellationToken.IsCancellationRequested)
                 {
-                    socketResponse =
-                        await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-                    package.AddRange(new ArraySegment<byte>(buffer, 0, socketResponse.Count));
-                } while (!socketResponse.EndOfMessage);
-
-                var bufferAsString = Encoding.ASCII.GetString(package.ToArray());
-                if (!string.IsNullOrEmpty(bufferAsString))
-                {
-                    if (!bufferAsString.Contains("handshake") && !bufferAsString.Contains("interaction"))
+                    var buffer = new byte[bufferSize];
+                    WebSocketReceiveResult socketResponse;
+                    var package = new List<byte>();
+                    
+                    do
                     {
-                        var data = JsonConvert.DeserializeObject<FlightSimulatorEvent>(bufferAsString);
+                        socketResponse = await webSocket.ReceiveAsync(
+                            new ArraySegment<byte>(buffer), 
+                            cancellationToken);
+                        package.AddRange(new ArraySegment<byte>(buffer, 0, socketResponse.Count));
+                    } while (!socketResponse.EndOfMessage && !cancellationToken.IsCancellationRequested);
 
-                        //var allEvents = simulatorEventsRepository.GetAll();
-                        
-                        /*
-                        var factory = new ConnectionFactory {HostName = "localhost"};
-                        using (var connection = factory.CreateConnection())
-                        using (var channel = connection.CreateModel())
-                        {
-                            channel.ExchangeDeclare(exchange: "simulator_events_exchange", type: ExchangeType.Fanout);
+                    if (socketResponse.MessageType == WebSocketMessageType.Close)
+                    {
+                        break;
+                    }
 
-                            var body = Encoding.UTF8.GetBytes(bufferAsString);
-                            channel.BasicPublish("simulator_events_exchange", "", null, body);
-                        }**\
-
-
-                        Log.Information("{@data}", data);*/
+                    var bufferAsString = Encoding.UTF8.GetString(package.ToArray());
+                    if (!string.IsNullOrEmpty(bufferAsString))
+                    {
+                        await ProcessMessage(bufferAsString, simulatorEventsRepository);
                     }
                 }
             }
+            catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+            {
+                // Expected cancellation - no need to log as error
+            }
+            catch (WebSocketException ex) when (ex.WebSocketErrorCode == WebSocketError.ConnectionClosedPrematurely)
+            {
+                // Connection closed by client - normal scenario
+            }
+            finally
+            {
+                if (webSocket.State == WebSocketState.Open)
+                {
+                    try
+                    {
+                        await webSocket.CloseAsync(
+                            WebSocketCloseStatus.NormalClosure, 
+                            "Handler completed", 
+                            CancellationToken.None);
+                    }
+                    catch (WebSocketException)
+                    {
+                        // Connection already closed - ignore
+                    }
+                }
+            }
+        }
 
-            await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
+        /// <summary>
+        /// Processes a received WebSocket message
+        /// </summary>
+        /// <param name="message">The message content</param>
+        /// <param name="simulatorEventsRepository">The simulator events repository</param>
+        private async Task ProcessMessage(string message, ISimulatorEventRepository simulatorEventsRepository)
+        {
+            try
+            {
+                if (message.Contains("handshake") || message.Contains("interaction"))
+                {
+                    return; // Skip handshake and interaction messages
+                }
+
+                var data = JsonConvert.DeserializeObject<FlightSimulatorEvent>(message);
+                if (data != null)
+                {
+                    // Process the flight simulator event
+                    // TODO: Implement event processing logic
+                    await Task.CompletedTask; // Placeholder for async processing
+                }
+            }
+            catch (JsonException)
+            {
+                // Invalid JSON - ignore
+            }
+            catch (Exception)
+            {
+                // Log other exceptions if needed but don't crash the handler
+            }
         }
     }
 }

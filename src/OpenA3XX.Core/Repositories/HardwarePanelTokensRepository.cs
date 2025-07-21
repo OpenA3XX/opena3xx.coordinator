@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using OpenA3XX.Core.Models;
 using OpenA3XX.Core.Repositories.Base;
+using OpenA3XX.Core.Repositories.Extensions;
 
 namespace OpenA3XX.Core.Repositories
 {
@@ -15,18 +16,22 @@ namespace OpenA3XX.Core.Repositories
 
         public HardwarePanelToken GetByHardwarePanelToken(Guid hardwarePanelToken)
         {
-            return FindBy(c => c.DeviceToken == hardwarePanelToken.ToString()).Include(c => c.HardwarePanel).First();
+            return FindBy(token => token.DeviceToken == hardwarePanelToken.ToString())
+                .IncludeHardwarePanel()
+                .First();
         }
 
         public HardwarePanelToken GetByHardwarePanelId(int id)
         {
-            return FindBy(c => c.Id == id).Include(c => c.HardwarePanel).First();
+            return FindBy(token => token.Id == id)
+                .IncludeHardwarePanel()
+                .First();
         }
 
         public IList<HardwarePanelToken> GetAllHardwarePanelTokens()
         {
             return GetAll()
-                .Include(c => c.HardwarePanel)
+                .IncludeHardwarePanel()
                 .ToList();
         }
 

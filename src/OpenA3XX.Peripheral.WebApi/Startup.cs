@@ -1,27 +1,25 @@
-using System;
-using System.Reflection;
-using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using OpenA3XX.Core.Configuration;
-using OpenA3XX.Core.DataContexts;
 using OpenA3XX.Core.Logging;
-using OpenA3XX.Core.Models;
-using OpenA3XX.Core.Repositories;
-using OpenA3XX.Core.Services;
+using OpenA3XX.Peripheral.WebApi.Extensions;
 using OpenA3XX.Peripheral.WebApi.Hubs;
+using OpenA3XX.Peripheral.WebApi.Middleware;
 
 namespace OpenA3XX.Peripheral.WebApi
 {
+    /// <summary>
+    /// Startup configuration for the OpenA3XX Peripheral WebApi application.
+    /// </summary>
     public class Startup
     {
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -29,120 +27,76 @@ namespace OpenA3XX.Peripheral.WebApi
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// Configures services for dependency injection.
+        /// This method gets called by the runtime to add services to the container.
+        /// </summary>
+        /// <param name="services">The service collection to configure</param>
         public void ConfigureServices(IServiceCollection services)
         {
+            // Configure controllers and JSON serialization
             services.AddControllers().AddNewtonsoftJson(options =>
             {
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
 
+            // Add SignalR for real-time communication
             services.AddSignalR();
             
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Title = "OpenA3XX.Peripheral.WebApi", Version = "v1",
-                    Description =
-                        "OpenA3XX Peripheral API to integrate Hardware Panel Cockpits with OpenA3XX Coordinator",
-                    License = new OpenApiLicense
-                    {
-                        Url = new Uri("https://www.gnu.org/licenses/gpl-3.0.en.html")
-                    },
-                    Contact = new OpenApiContact
-                    {
-                        Name = "David Bonnici",
-                        Email = "davidbonnici1984@gmail.com",
-                        Url = new Uri("https://docs.opena3xx.dev")
-                    }
-                });
-            });
-
-
-            services.AddDbContext<CoreDataContext>(options =>
-            {
-                options.UseSqlite(CoordinatorConfiguration.GetDatabasesFolderPath(OpenA3XXDatabase.Core));
-            });
-
-            // DI Configuration
-            services.AddScoped<DbContext, CoreDataContext>();
-
-            services.AddTransient<ISystemConfigurationRepository, SystemConfigurationRepository>();
-            services.AddTransient<IHardwarePanelTokensRepository, HardwarePanelTokensRepository>();
-            services.AddTransient<IHardwareInputTypesRepository, HardwareInputTypesRepository>();
-            services.AddTransient<IHardwareInputSelectorRepository, HardwareInputSelectorRepository>();
-            services.AddTransient<IHardwareOutputSelectorRepository, HardwareOutputSelectorRepository>();
-            services.AddTransient<IHardwareOutputTypesRepository, HardwareOutputTypesRepository>();
-            services.AddTransient<IHardwarePanelRepository, HardwarePanelRepository>();
-            services.AddTransient<IHardwareBoardRepository, HardwareBoardRepository>();
-            services.AddTransient<IAircraftModelRepository, AircraftModelRepository>();
-
-            services.AddTransient<ISimulatorEventRepository, SimulatorEventRepository>();
-            services.AddTransient<ISimulatorEventService, SimulatorEventService>();
-
-            services.AddTransient<IHardwarePanelService, HardwarePanelService>();
-            services.AddTransient<IHardwareBoardService, HardwareBoardService>();
-            services.AddTransient<IHardwareInputTypeService, HardwareInputTypeService>();
-            services.AddTransient<IHardwareInputSelectorService, HardwareInputSelectorService>();
-            services.AddTransient<IHardwareOutputSelectorService, HardwareOutputSelectorService>();
-            services.AddTransient<IHardwareOutputTypeService, HardwareOutputTypeService>();
-
-            services.AddTransient<IFormService, FormsService>();
-            services.AddTransient<IFlightIntegrationService, FlightIntegrationService>();
-
-            services.AddTransient<ISimulatorEventingService, SimulatorEventingService>();
-
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            // Add AutoMapper - This is the key fix!
-            // Add AutoMapper - Using explicit configuration to avoid ambiguity
-            var mapperConfig = new MapperConfiguration(cfg =>
-            {
-                cfg.AddMaps(typeof(OpenA3XX.Core.Profiles.HardwarePanelProfile).Assembly);
-            });
-            services.AddSingleton(mapperConfig);
-            services.AddSingleton<IMapper>(provider => new Mapper(mapperConfig));
-
-
-
-            services.AddHostedService<ConsumeRabbitMqHostedService>();
-            
-            services.AddEasyCaching(option =>
-            {
-                option.UseInMemory("m1");
-            });
-            
+            // Configure all OpenA3XX services using extension methods
+            services.AddOpenA3XXServices(Configuration);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        /// <summary>
+        /// Configures the HTTP request pipeline.
+        /// This method gets called by the runtime to configure the HTTP request pipeline.
+        /// </summary>
+        /// <param name="app">The application builder</param>
+        /// <param name="env">The web host environment</param>
+        /// <param name="logger">The logger instance</param>
+        /// <param name="openA3XXOptions">OpenA3XX configuration options</param>
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger, IOptions<OpenA3XXOptions> openA3XXOptions)
         {
+            logger.LogInformation("Configuring OpenA3XX WebApi pipeline");
+            
+            // Configure global exception handling (must be first)
+            app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
+            
+            // Configure logging middleware
             app.UseLoggingConfiguration(env);
 
+            // Configure development-specific middleware
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "OpenA3XX.Peripheral.WebApi v1"));
+                logger.LogInformation("Development environment detected - Swagger UI enabled");
             }
 
-            //app.UseHttpsRedirection();
-
+            // Configure routing and CORS
             app.UseRouting();
-
             app.UseAuthorization();
-            app.UseCors(builder => builder.WithOrigins(
-                "http://localhost").AllowAnyHeader()
+            
+            // Configure CORS with configuration-based origins
+            var corsOrigins = openA3XXOptions.Value.Api.AllowedCorsOrigins.ToArray();
+            app.UseCors(builder => builder
+                .WithOrigins(corsOrigins)
+                .AllowAnyHeader()
                 .AllowAnyMethod()
                 .SetIsOriginAllowed(_ => true)
                 .AllowCredentials());
             
+            logger.LogInformation("CORS configured with origins: {Origins}", string.Join(", ", corsOrigins));
             
+            // Configure endpoints
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
                 endpoints.MapHub<RealtimeHub>("/signalr");
             });
+            
+            logger.LogInformation("OpenA3XX WebApi pipeline configuration completed");
         }
     }
 }

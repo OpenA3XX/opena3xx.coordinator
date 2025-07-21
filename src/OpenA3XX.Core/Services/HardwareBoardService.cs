@@ -78,7 +78,7 @@ namespace OpenA3XX.Core.Services
                     .HardwareInputSelector = null;
                 _hardwareBoardRepository.UpdateHardwareBoard(currentBoard);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // ignored
             }
@@ -111,7 +111,7 @@ namespace OpenA3XX.Core.Services
                     .HardwareOutputSelector = null;
                 _hardwareBoardRepository.UpdateHardwareBoard(currentBoard);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // ignored
             }
