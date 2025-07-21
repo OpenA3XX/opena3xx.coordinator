@@ -43,10 +43,8 @@ namespace OpenA3XX.Core.DataContexts
         public DbSet<SimulatorEvent> SimulatorEvents { get; set; }
 
 
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-        {
-            options.UseSqlite(CoordinatorConfiguration.GetDatabasesFolderPath(OpenA3XXDatabase.Core));
-        }
+        // OnConfiguring removed - using service configuration from ServiceCollectionExtensions.AddDatabaseServices()
+        // This allows proper use of the configured database path from appsettings.json
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

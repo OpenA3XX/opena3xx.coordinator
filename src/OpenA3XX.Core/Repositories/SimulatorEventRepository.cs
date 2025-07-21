@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using OpenA3XX.Core.Models;
 using OpenA3XX.Core.Repositories.Base;
 
@@ -9,7 +10,7 @@ namespace OpenA3XX.Core.Repositories
 {
     public class SimulatorEventRepository : BaseRepository<SimulatorEvent>, ISimulatorEventRepository
     {
-        public SimulatorEventRepository(DbContext context) : base(context)
+        public SimulatorEventRepository(DbContext context, ILogger<BaseRepository<SimulatorEvent>> logger) : base(context, logger)
         {
         }
 

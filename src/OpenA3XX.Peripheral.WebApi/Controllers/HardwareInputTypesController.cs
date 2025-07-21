@@ -5,6 +5,13 @@ using Microsoft.Extensions.Logging;
 using OpenA3XX.Core.Dtos;
 using OpenA3XX.Core.Exceptions;
 using OpenA3XX.Core.Services;
+using System;
+using System.Linq;
+using Microsoft.Extensions.Options;
+using Microsoft.Extensions.DependencyInjection;
+using OpenA3XX.Core.Configuration;
+using System.IO;
+using Microsoft.EntityFrameworkCore;
 
 namespace OpenA3XX.Peripheral.WebApi.Controllers
 {
@@ -46,9 +53,13 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDto))]
         public IList<HardwareInputTypeDto> GetAll()
         {
-            _logger.LogDebug("Retrieving all hardware input types");
+            _logger.LogInformation("API Request: Getting all hardware input types from {ClientIP}", 
+                _accessor.HttpContext?.Connection?.RemoteIpAddress);
+                
             var data = _hardwareInputTypeService.GetAll();
-            _logger.LogDebug("Retrieved {Count} hardware input types", data.Count);
+            
+            _logger.LogInformation("API Response: Returning {Count} hardware input types", data.Count);
+            
             return data;
         }
 
@@ -140,6 +151,148 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
             _logger.LogInformation("Successfully updated hardware input type with ID: {Id}", hardwareInputTypeDto.Id);
             
             return hardwareInputTypeDto;
+        }
+
+        [HttpPost("debug/seed-test-data")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public IActionResult SeedTestData()
+        {
+            _logger.LogInformation("DEBUG: Seeding test hardware input types");
+            
+            try
+            {
+                // Create some test data
+                var testInputTypes = new[]
+                {
+                    new HardwareInputTypeDto { Name = "Push Button" },
+                    new HardwareInputTypeDto { Name = "Toggle Switch" },
+                    new HardwareInputTypeDto { Name = "Rotary Encoder" }
+                };
+                
+                foreach (var inputType in testInputTypes)
+                {
+                    try
+                    {
+                        var result = _hardwareInputTypeService.Add(inputType);
+                        _logger.LogInformation("Created test input type: {Name} with ID: {Id}", result.Name, result.Id);
+                    }
+                                         catch (HardwareInputTypeExistsException)
+                     {
+                         _logger.LogInformation("Test input type already exists: {Name}", inputType.Name);
+                     }
+                }
+                
+                return Ok(new { message = "Test data seeded successfully", count = testInputTypes.Length });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to seed test data");
+                return StatusCode(500, new { error = ex.Message });
+            }
+        }
+
+        [HttpGet("debug/database-test")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public IActionResult TestDatabaseConnection()
+        {
+            _logger.LogInformation("DEBUG: Testing direct database access");
+            
+            try
+            {
+                // Get the service and test direct access
+                var data = _hardwareInputTypeService.GetAll();
+                
+                _logger.LogInformation("DEBUG: Service returned {Count} items", data.Count);
+                
+                return Ok(new 
+                { 
+                    message = "Database test completed", 
+                    count = data.Count,
+                    items = data.Select(x => new { x.Id, x.Name }).ToArray()
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "DEBUG: Database test failed");
+                return StatusCode(500, new { error = ex.Message, stackTrace = ex.StackTrace });
+            }
+        }
+
+        [HttpGet("debug/connection-info")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public IActionResult GetConnectionInfo()
+        {
+            _logger.LogInformation("DEBUG: Getting database connection information");
+            
+            try
+            {
+                // Get configuration using the registered options
+                var openA3XXOptions = HttpContext.RequestServices.GetRequiredService<IOptions<OpenA3XXOptions>>();
+                var configPath = openA3XXOptions?.Value?.Database?.Path;
+                
+                // Get actual connection string
+                var connectionString = CoordinatorConfiguration.GetDatabasesFolderPath(OpenA3XXDatabase.Core, configPath);
+                
+                // Extract database file path from connection string
+                var dbFilePath = connectionString.Replace("Data Source=", "");
+                
+                // Check if file exists
+                var fileExists = System.IO.File.Exists(dbFilePath);
+                var fileSize = fileExists ? new FileInfo(dbFilePath).Length : 0;
+                
+                _logger.LogInformation("DEBUG: ConfigPath='{ConfigPath}', ConnectionString='{ConnectionString}', FileExists={FileExists}, FileSize={FileSize}", 
+                    configPath, connectionString, fileExists, fileSize);
+                
+                return Ok(new 
+                { 
+                    configPath = configPath ?? "NULL",
+                    connectionString = connectionString,
+                    databaseFilePath = dbFilePath,
+                    fileExists = fileExists,
+                    fileSizeBytes = fileSize,
+                    environment = Environment.GetEnvironmentVariable("OPENA3XX_DATABASE_PATH") ?? "NULL"
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "DEBUG: Failed to get connection info");
+                return StatusCode(500, new { error = ex.Message });
+            }
+        }
+
+        [HttpGet("debug/raw-sql-test")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public IActionResult TestRawSql()
+        {
+            _logger.LogInformation("DEBUG: Testing raw SQL execution");
+            
+            try
+            {
+                // Get DbContext directly
+                var dbContext = HttpContext.RequestServices.GetRequiredService<DbContext>();
+                
+                // Test raw SQL query
+                var countResult = dbContext.Database.SqlQueryRaw<int>("SELECT COUNT(*) FROM HardwareInputType").ToArray();
+                var count = countResult.FirstOrDefault();
+                
+                var nameResults = dbContext.Database.SqlQueryRaw<string>("SELECT Name FROM HardwareInputType LIMIT 3").ToArray();
+                
+                _logger.LogInformation("DEBUG: Raw SQL - Count: {Count}, Names: {Names}", 
+                    count, string.Join(", ", nameResults));
+                
+                return Ok(new 
+                { 
+                    message = "Raw SQL test completed",
+                    rawCount = count,
+                    rawNames = nameResults,
+                    dbContextType = dbContext.GetType().Name
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "DEBUG: Raw SQL test failed");
+                return StatusCode(500, new { error = ex.Message, stackTrace = ex.StackTrace });
+            }
         }
     }
 }

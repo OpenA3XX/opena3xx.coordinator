@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using OpenA3XX.Core.Models;
 using OpenA3XX.Core.Repositories.Base;
 using OpenA3XX.Core.Repositories.Extensions;
@@ -16,7 +17,8 @@ namespace OpenA3XX.Core.Repositories
         /// Initializes a new instance of the HardwareBoardRepository
         /// </summary>
         /// <param name="context">The database context</param>
-        public HardwareBoardRepository(DbContext context) : base(context)
+        /// <param name="logger">The logger instance</param>
+        public HardwareBoardRepository(DbContext context, ILogger<BaseRepository<HardwareBoard>> logger) : base(context, logger)
         {
         }
 
@@ -50,9 +52,22 @@ namespace OpenA3XX.Core.Repositories
         /// <returns>The hardware board with full includes</returns>
         public HardwareBoard GetByHardwareBoard(int id)
         {
-            return FindBy(board => board.Id == id)
+            Logger.LogInformation("Getting hardware board by ID: {HardwareBoardId}", id);
+            
+            var result = FindBy(board => board.Id == id)
                 .IncludeFullHierarchy()
-                .First();
+                .FirstOrDefault();
+                
+            if (result == null)
+            {
+                Logger.LogWarning("Hardware board with ID {HardwareBoardId} not found", id);
+            }
+            else
+            {
+                Logger.LogInformation("Successfully retrieved hardware board with ID {HardwareBoardId}", id);
+            }
+            
+            return result;
         }
 
         /// <summary>

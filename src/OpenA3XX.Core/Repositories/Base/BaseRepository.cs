@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace OpenA3XX.Core.Repositories.Base
 {
@@ -18,14 +20,21 @@ namespace OpenA3XX.Core.Repositories.Base
         /// The database context for this repository
         /// </summary>
         protected readonly DbContext Context;
+        
+        /// <summary>
+        /// Logger for database operations
+        /// </summary>
+        protected readonly ILogger<BaseRepository<T>> Logger;
 
         /// <summary>
         /// Initializes a new instance of the BaseRepository
         /// </summary>
         /// <param name="context">The database context</param>
-        protected BaseRepository(DbContext context)
+        /// <param name="logger">The logger instance</param>
+        protected BaseRepository(DbContext context, ILogger<BaseRepository<T>> logger)
         {
             Context = context ?? throw new ArgumentNullException(nameof(context));
+            Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         /// <summary>
@@ -34,7 +43,29 @@ namespace OpenA3XX.Core.Repositories.Base
         /// <returns>IQueryable of entities</returns>
         public virtual IQueryable<T> GetAll()
         {
-            return Context.Set<T>();
+            var stopwatch = Stopwatch.StartNew();
+            var entityType = typeof(T).Name;
+            
+            Logger.LogInformation("Database Read Operation Started - Entity: {EntityType}, Operation: {Operation}",
+                entityType, "GetAll");
+
+            try
+            {
+                var result = Context.Set<T>();
+                stopwatch.Stop();
+                
+                Logger.LogInformation("Database Read Operation Completed - Entity: {EntityType}, Operation: {Operation}, Duration: {Duration}ms",
+                    entityType, "GetAll", stopwatch.ElapsedMilliseconds);
+                
+                return result;
+            }
+            catch (Exception ex)
+            {
+                stopwatch.Stop();
+                Logger.LogError(ex, "Database Read Operation Failed - Entity: {EntityType}, Operation: {Operation}, Duration: {Duration}ms",
+                    entityType, "GetAll", stopwatch.ElapsedMilliseconds);
+                throw;
+            }
         }
 
         /// <summary>
@@ -43,7 +74,29 @@ namespace OpenA3XX.Core.Repositories.Base
         /// <returns>Collection of all entities</returns>
         public virtual async Task<ICollection<T>> GetAllAsync()
         {
-            return await Context.Set<T>().ToListAsync();
+            var stopwatch = Stopwatch.StartNew();
+            var entityType = typeof(T).Name;
+            
+            Logger.LogInformation("Database Read Operation Started - Entity: {EntityType}, Operation: {Operation}",
+                entityType, "GetAllAsync");
+
+            try
+            {
+                var result = await Context.Set<T>().ToListAsync();
+                stopwatch.Stop();
+                
+                Logger.LogInformation("Database Read Operation Completed - Entity: {EntityType}, Operation: {Operation}, Duration: {Duration}ms, RecordCount: {RecordCount}",
+                    entityType, "GetAllAsync", stopwatch.ElapsedMilliseconds, result.Count);
+                
+                return result;
+            }
+            catch (Exception ex)
+            {
+                stopwatch.Stop();
+                Logger.LogError(ex, "Database Read Operation Failed - Entity: {EntityType}, Operation: {Operation}, Duration: {Duration}ms",
+                    entityType, "GetAllAsync", stopwatch.ElapsedMilliseconds);
+                throw;
+            }
         }
 
         /// <summary>
@@ -53,7 +106,29 @@ namespace OpenA3XX.Core.Repositories.Base
         /// <returns>The entity or null if not found</returns>
         public virtual T Get(int id)
         {
-            return Context.Set<T>().Find(id);
+            var stopwatch = Stopwatch.StartNew();
+            var entityType = typeof(T).Name;
+            
+            Logger.LogInformation("Database Read Operation Started - Entity: {EntityType}, Operation: {Operation}, EntityId: {EntityId}",
+                entityType, "Get", id);
+
+            try
+            {
+                var result = Context.Set<T>().Find(id);
+                stopwatch.Stop();
+                
+                Logger.LogInformation("Database Read Operation Completed - Entity: {EntityType}, Operation: {Operation}, EntityId: {EntityId}, Duration: {Duration}ms, Found: {Found}",
+                    entityType, "Get", id, stopwatch.ElapsedMilliseconds, result != null);
+                
+                return result;
+            }
+            catch (Exception ex)
+            {
+                stopwatch.Stop();
+                Logger.LogError(ex, "Database Read Operation Failed - Entity: {EntityType}, Operation: {Operation}, EntityId: {EntityId}, Duration: {Duration}ms",
+                    entityType, "Get", id, stopwatch.ElapsedMilliseconds);
+                throw;
+            }
         }
 
         /// <summary>
@@ -63,7 +138,29 @@ namespace OpenA3XX.Core.Repositories.Base
         /// <returns>The entity or null if not found</returns>
         public virtual async Task<T> GetAsync(int id)
         {
-            return await Context.Set<T>().FindAsync(id);
+            var stopwatch = Stopwatch.StartNew();
+            var entityType = typeof(T).Name;
+            
+            Logger.LogInformation("Database Read Operation Started - Entity: {EntityType}, Operation: {Operation}, EntityId: {EntityId}",
+                entityType, "GetAsync", id);
+
+            try
+            {
+                var result = await Context.Set<T>().FindAsync(id);
+                stopwatch.Stop();
+                
+                Logger.LogInformation("Database Read Operation Completed - Entity: {EntityType}, Operation: {Operation}, EntityId: {EntityId}, Duration: {Duration}ms, Found: {Found}",
+                    entityType, "GetAsync", id, stopwatch.ElapsedMilliseconds, result != null);
+                
+                return result;
+            }
+            catch (Exception ex)
+            {
+                stopwatch.Stop();
+                Logger.LogError(ex, "Database Read Operation Failed - Entity: {EntityType}, Operation: {Operation}, EntityId: {EntityId}, Duration: {Duration}ms",
+                    entityType, "GetAsync", id, stopwatch.ElapsedMilliseconds);
+                throw;
+            }
         }
 
         /// <summary>
@@ -101,7 +198,29 @@ namespace OpenA3XX.Core.Repositories.Base
         /// <returns>The entity or null if not found</returns>
         public virtual T Find(Expression<Func<T, bool>> match)
         {
-            return Context.Set<T>().SingleOrDefault(match);
+            var stopwatch = Stopwatch.StartNew();
+            var entityType = typeof(T).Name;
+            
+            Logger.LogInformation("Database Read Operation Started - Entity: {EntityType}, Operation: {Operation}, Predicate: {Predicate}",
+                entityType, "Find", match.ToString());
+
+            try
+            {
+                var result = Context.Set<T>().SingleOrDefault(match);
+                stopwatch.Stop();
+                
+                Logger.LogInformation("Database Read Operation Completed - Entity: {EntityType}, Operation: {Operation}, Duration: {Duration}ms, Found: {Found}",
+                    entityType, "Find", stopwatch.ElapsedMilliseconds, result != null);
+                
+                return result;
+            }
+            catch (Exception ex)
+            {
+                stopwatch.Stop();
+                Logger.LogError(ex, "Database Read Operation Failed - Entity: {EntityType}, Operation: {Operation}, Duration: {Duration}ms, Predicate: {Predicate}",
+                    entityType, "Find", stopwatch.ElapsedMilliseconds, match.ToString());
+                throw;
+            }
         }
 
         /// <summary>
@@ -111,7 +230,29 @@ namespace OpenA3XX.Core.Repositories.Base
         /// <returns>The entity or null if not found</returns>
         public virtual async Task<T> FindAsync(Expression<Func<T, bool>> match)
         {
-            return await Context.Set<T>().SingleOrDefaultAsync(match);
+            var stopwatch = Stopwatch.StartNew();
+            var entityType = typeof(T).Name;
+            
+            Logger.LogInformation("Database Read Operation Started - Entity: {EntityType}, Operation: {Operation}, Predicate: {Predicate}",
+                entityType, "FindAsync", match.ToString());
+
+            try
+            {
+                var result = await Context.Set<T>().SingleOrDefaultAsync(match);
+                stopwatch.Stop();
+                
+                Logger.LogInformation("Database Read Operation Completed - Entity: {EntityType}, Operation: {Operation}, Duration: {Duration}ms, Found: {Found}",
+                    entityType, "FindAsync", stopwatch.ElapsedMilliseconds, result != null);
+                
+                return result;
+            }
+            catch (Exception ex)
+            {
+                stopwatch.Stop();
+                Logger.LogError(ex, "Database Read Operation Failed - Entity: {EntityType}, Operation: {Operation}, Duration: {Duration}ms, Predicate: {Predicate}",
+                    entityType, "FindAsync", stopwatch.ElapsedMilliseconds, match.ToString());
+                throw;
+            }
         }
 
         /// <summary>
@@ -121,7 +262,29 @@ namespace OpenA3XX.Core.Repositories.Base
         /// <returns>Collection of matching entities</returns>
         public virtual ICollection<T> FindAll(Expression<Func<T, bool>> match)
         {
-            return Context.Set<T>().Where(match).ToList();
+            var stopwatch = Stopwatch.StartNew();
+            var entityType = typeof(T).Name;
+            
+            Logger.LogInformation("Database Read Operation Started - Entity: {EntityType}, Operation: {Operation}, Predicate: {Predicate}",
+                entityType, "FindAll", match.ToString());
+
+            try
+            {
+                var result = Context.Set<T>().Where(match).ToList();
+                stopwatch.Stop();
+                
+                Logger.LogInformation("Database Read Operation Completed - Entity: {EntityType}, Operation: {Operation}, Duration: {Duration}ms, RecordCount: {RecordCount}",
+                    entityType, "FindAll", stopwatch.ElapsedMilliseconds, result.Count);
+                
+                return result;
+            }
+            catch (Exception ex)
+            {
+                stopwatch.Stop();
+                Logger.LogError(ex, "Database Read Operation Failed - Entity: {EntityType}, Operation: {Operation}, Duration: {Duration}ms, Predicate: {Predicate}",
+                    entityType, "FindAll", stopwatch.ElapsedMilliseconds, match.ToString());
+                throw;
+            }
         }
 
         /// <summary>
@@ -131,7 +294,29 @@ namespace OpenA3XX.Core.Repositories.Base
         /// <returns>Collection of matching entities</returns>
         public virtual async Task<ICollection<T>> FindAllAsync(Expression<Func<T, bool>> match)
         {
-            return await Context.Set<T>().Where(match).ToListAsync();
+            var stopwatch = Stopwatch.StartNew();
+            var entityType = typeof(T).Name;
+            
+            Logger.LogInformation("Database Read Operation Started - Entity: {EntityType}, Operation: {Operation}, Predicate: {Predicate}",
+                entityType, "FindAllAsync", match.ToString());
+
+            try
+            {
+                var result = await Context.Set<T>().Where(match).ToListAsync();
+                stopwatch.Stop();
+                
+                Logger.LogInformation("Database Read Operation Completed - Entity: {EntityType}, Operation: {Operation}, Duration: {Duration}ms, RecordCount: {RecordCount}",
+                    entityType, "FindAllAsync", stopwatch.ElapsedMilliseconds, result.Count);
+                
+                return result;
+            }
+            catch (Exception ex)
+            {
+                stopwatch.Stop();
+                Logger.LogError(ex, "Database Read Operation Failed - Entity: {EntityType}, Operation: {Operation}, Duration: {Duration}ms, Predicate: {Predicate}",
+                    entityType, "FindAllAsync", stopwatch.ElapsedMilliseconds, match.ToString());
+                throw;
+            }
         }
 
         /// <summary>
@@ -208,7 +393,29 @@ namespace OpenA3XX.Core.Repositories.Base
         /// <returns>The total count</returns>
         public virtual int Count()
         {
-            return Context.Set<T>().Count();
+            var stopwatch = Stopwatch.StartNew();
+            var entityType = typeof(T).Name;
+            
+            Logger.LogInformation("Database Read Operation Started - Entity: {EntityType}, Operation: {Operation}",
+                entityType, "Count");
+
+            try
+            {
+                var result = Context.Set<T>().Count();
+                stopwatch.Stop();
+                
+                Logger.LogInformation("Database Read Operation Completed - Entity: {EntityType}, Operation: {Operation}, Duration: {Duration}ms, TotalCount: {TotalCount}",
+                    entityType, "Count", stopwatch.ElapsedMilliseconds, result);
+                
+                return result;
+            }
+            catch (Exception ex)
+            {
+                stopwatch.Stop();
+                Logger.LogError(ex, "Database Read Operation Failed - Entity: {EntityType}, Operation: {Operation}, Duration: {Duration}ms",
+                    entityType, "Count", stopwatch.ElapsedMilliseconds);
+                throw;
+            }
         }
 
         /// <summary>
@@ -217,7 +424,29 @@ namespace OpenA3XX.Core.Repositories.Base
         /// <returns>The total count</returns>
         public virtual async Task<int> CountAsync()
         {
-            return await Context.Set<T>().CountAsync();
+            var stopwatch = Stopwatch.StartNew();
+            var entityType = typeof(T).Name;
+            
+            Logger.LogInformation("Database Read Operation Started - Entity: {EntityType}, Operation: {Operation}",
+                entityType, "CountAsync");
+
+            try
+            {
+                var result = await Context.Set<T>().CountAsync();
+                stopwatch.Stop();
+                
+                Logger.LogInformation("Database Read Operation Completed - Entity: {EntityType}, Operation: {Operation}, Duration: {Duration}ms, TotalCount: {TotalCount}",
+                    entityType, "CountAsync", stopwatch.ElapsedMilliseconds, result);
+                
+                return result;
+            }
+            catch (Exception ex)
+            {
+                stopwatch.Stop();
+                Logger.LogError(ex, "Database Read Operation Failed - Entity: {EntityType}, Operation: {Operation}, Duration: {Duration}ms",
+                    entityType, "CountAsync", stopwatch.ElapsedMilliseconds);
+                throw;
+            }
         }
 
         /// <summary>
@@ -244,7 +473,29 @@ namespace OpenA3XX.Core.Repositories.Base
         /// <returns>Queryable of matching entities</returns>
         public virtual IQueryable<T> FindBy(Expression<Func<T, bool>> predicate)
         {
-            return Context.Set<T>().Where(predicate);
+            var stopwatch = Stopwatch.StartNew();
+            var entityType = typeof(T).Name;
+            
+            Logger.LogInformation("Database Read Operation Started - Entity: {EntityType}, Operation: {Operation}, Predicate: {Predicate}",
+                entityType, "FindBy", predicate.ToString());
+
+            try
+            {
+                var result = Context.Set<T>().Where(predicate);
+                stopwatch.Stop();
+                
+                Logger.LogInformation("Database Read Operation Completed - Entity: {EntityType}, Operation: {Operation}, Duration: {Duration}ms (Queryable)",
+                    entityType, "FindBy", stopwatch.ElapsedMilliseconds);
+                
+                return result;
+            }
+            catch (Exception ex)
+            {
+                stopwatch.Stop();
+                Logger.LogError(ex, "Database Read Operation Failed - Entity: {EntityType}, Operation: {Operation}, Duration: {Duration}ms, Predicate: {Predicate}",
+                    entityType, "FindBy", stopwatch.ElapsedMilliseconds, predicate.ToString());
+                throw;
+            }
         }
 
         /// <summary>
@@ -254,7 +505,29 @@ namespace OpenA3XX.Core.Repositories.Base
         /// <returns>Collection of matching entities</returns>
         public virtual async Task<ICollection<T>> FindByAsync(Expression<Func<T, bool>> predicate)
         {
-            return await Context.Set<T>().Where(predicate).ToListAsync();
+            var stopwatch = Stopwatch.StartNew();
+            var entityType = typeof(T).Name;
+            
+            Logger.LogInformation("Database Read Operation Started - Entity: {EntityType}, Operation: {Operation}, Predicate: {Predicate}",
+                entityType, "FindByAsync", predicate.ToString());
+
+            try
+            {
+                var result = await Context.Set<T>().Where(predicate).ToListAsync();
+                stopwatch.Stop();
+                
+                Logger.LogInformation("Database Read Operation Completed - Entity: {EntityType}, Operation: {Operation}, Duration: {Duration}ms, RecordCount: {RecordCount}",
+                    entityType, "FindByAsync", stopwatch.ElapsedMilliseconds, result.Count);
+                
+                return result;
+            }
+            catch (Exception ex)
+            {
+                stopwatch.Stop();
+                Logger.LogError(ex, "Database Read Operation Failed - Entity: {EntityType}, Operation: {Operation}, Duration: {Duration}ms, Predicate: {Predicate}",
+                    entityType, "FindByAsync", stopwatch.ElapsedMilliseconds, predicate.ToString());
+                throw;
+            }
         }
 
         /// <summary>
@@ -264,8 +537,30 @@ namespace OpenA3XX.Core.Repositories.Base
         /// <returns>Queryable with includes</returns>
         public virtual IQueryable<T> GetAllIncluding(params Expression<Func<T, object>>[] includeProperties)
         {
-            var queryable = GetAll();
-            return includeProperties.Aggregate(queryable, (current, includeProperty) => current.Include(includeProperty));
+            var stopwatch = Stopwatch.StartNew();
+            var entityType = typeof(T).Name;
+            
+            Logger.LogInformation("Database Read Operation Started - Entity: {EntityType}, Operation: {Operation}, IncludeCount: {IncludeCount}",
+                entityType, "GetAllIncluding", includeProperties.Length);
+
+            try
+            {
+                var queryable = GetAll();
+                var result = includeProperties.Aggregate(queryable, (current, includeProperty) => current.Include(includeProperty));
+                stopwatch.Stop();
+                
+                Logger.LogInformation("Database Read Operation Completed - Entity: {EntityType}, Operation: {Operation}, Duration: {Duration}ms, IncludeCount: {IncludeCount} (Queryable)",
+                    entityType, "GetAllIncluding", stopwatch.ElapsedMilliseconds, includeProperties.Length);
+                
+                return result;
+            }
+            catch (Exception ex)
+            {
+                stopwatch.Stop();
+                Logger.LogError(ex, "Database Read Operation Failed - Entity: {EntityType}, Operation: {Operation}, Duration: {Duration}ms, IncludeCount: {IncludeCount}",
+                    entityType, "GetAllIncluding", stopwatch.ElapsedMilliseconds, includeProperties.Length);
+                throw;
+            }
         }
     }
 }

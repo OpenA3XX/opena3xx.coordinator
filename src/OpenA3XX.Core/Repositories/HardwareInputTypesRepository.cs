@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using OpenA3XX.Core.Exceptions;
 using OpenA3XX.Core.Models;
 using OpenA3XX.Core.Repositories.Base;
@@ -16,7 +17,8 @@ namespace OpenA3XX.Core.Repositories
         /// Initializes a new instance of the HardwareInputTypesRepository
         /// </summary>
         /// <param name="context">The database context</param>
-        public HardwareInputTypesRepository(DbContext context) : base(context)
+        /// <param name="logger">The logger instance</param>
+        public HardwareInputTypesRepository(DbContext context, ILogger<BaseRepository<HardwareInputType>> logger) : base(context, logger)
         {
         }
 
@@ -26,7 +28,23 @@ namespace OpenA3XX.Core.Repositories
         /// <returns>List of all hardware input types</returns>
         public IList<HardwareInputType> GetAllHardwareInputTypes()
         {
-            return GetAll().ToList();
+            Logger.LogInformation("Getting all hardware input types");
+            
+            var result = GetAll().ToList();
+            
+            Logger.LogInformation("Retrieved {Count} hardware input types from database", result.Count);
+            
+            if (result.Count == 0)
+            {
+                Logger.LogWarning("No hardware input types found in database - database might be empty or not seeded");
+            }
+            else
+            {
+                Logger.LogInformation("Hardware input types found: {Names}", 
+                    string.Join(", ", result.Select(x => $"'{x.Name}' (ID: {x.Id})")));
+            }
+            
+            return result;
         }
 
         /// <summary>

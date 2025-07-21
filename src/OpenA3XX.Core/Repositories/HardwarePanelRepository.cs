@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using OpenA3XX.Core.Models;
 using OpenA3XX.Core.Repositories.Base;
 using OpenA3XX.Core.Repositories.Extensions;
@@ -16,7 +17,8 @@ namespace OpenA3XX.Core.Repositories
         /// Initializes a new instance of the HardwarePanelRepository
         /// </summary>
         /// <param name="context">The database context</param>
-        public HardwarePanelRepository(DbContext context) : base(context)
+        /// <param name="logger">The logger instance</param>
+        public HardwarePanelRepository(DbContext context, ILogger<BaseRepository<HardwarePanel>> logger) : base(context, logger)
         {
         }
 
@@ -48,9 +50,22 @@ namespace OpenA3XX.Core.Repositories
         /// <returns>The hardware panel with detailed includes</returns>
         public HardwarePanel GetHardwarePanelDetails(int id)
         {
-            return FindBy(panel => panel.Id == id)
+            Logger.LogInformation("Getting hardware panel details by ID: {HardwarePanelId}", id);
+            
+            var result = FindBy(panel => panel.Id == id)
                 .IncludeDetails()
-                .First();
+                .FirstOrDefault();
+                
+            if (result == null)
+            {
+                Logger.LogWarning("Hardware panel with ID {HardwarePanelId} not found", id);
+            }
+            else
+            {
+                Logger.LogInformation("Successfully retrieved hardware panel details with ID {HardwarePanelId}", id);
+            }
+            
+            return result;
         }
     }
 }

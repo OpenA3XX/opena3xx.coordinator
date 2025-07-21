@@ -202,8 +202,7 @@ namespace OpenA3XX.Peripheral.WebApi.Hubs
             hardwareEventingBasicConsumer.ShutdownAsync += OnConsumerShutdown;
             hardwareEventingBasicConsumer.RegisteredAsync += OnConsumerRegistered;
             hardwareEventingBasicConsumer.UnregisteredAsync += OnConsumerUnregistered;
-            //hardwareEventingBasicConsumer.ConsumerCancelled += OnConsumerConsumerCancelled;
-
+            
             _logger.LogDebug("Starting hardware events consumer");
             _hardwareInputSelectorsEventsChannel.BasicConsumeAsync("admin.hardware-input-selectors", false,
                 hardwareEventingBasicConsumer);

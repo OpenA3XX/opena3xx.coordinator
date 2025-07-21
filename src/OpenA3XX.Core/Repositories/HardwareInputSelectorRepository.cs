@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using OpenA3XX.Core.Models;
 using OpenA3XX.Core.Repositories.Base;
 using OpenA3XX.Core.Repositories.Extensions;
@@ -10,7 +11,7 @@ namespace OpenA3XX.Core.Repositories
     public class HardwareInputSelectorRepository : BaseRepository<HardwareInputSelector>,
         IHardwareInputSelectorRepository
     {
-        public HardwareInputSelectorRepository(DbContext context) : base(context)
+        public HardwareInputSelectorRepository(DbContext context, ILogger<BaseRepository<HardwareInputSelector>> logger) : base(context, logger)
         {
         }
 
@@ -22,9 +23,22 @@ namespace OpenA3XX.Core.Repositories
 
         public HardwareInputSelector GetHardwareInputSelectorBy(int hardwareInputSelectorId)
         {
-            return FindBy(selector => selector.Id == hardwareInputSelectorId)
+            Logger.LogInformation("Getting hardware input selector by ID: {HardwareInputSelectorId}", hardwareInputSelectorId);
+            
+            var result = FindBy(selector => selector.Id == hardwareInputSelectorId)
                 .IncludeSimulatorEvent()
-                .First();
+                .FirstOrDefault();
+                
+            if (result == null)
+            {
+                Logger.LogWarning("Hardware input selector with ID {HardwareInputSelectorId} not found", hardwareInputSelectorId);
+            }
+            else
+            {
+                Logger.LogInformation("Successfully retrieved hardware input selector with ID {HardwareInputSelectorId}", hardwareInputSelectorId);
+            }
+            
+            return result;
         }
         
         

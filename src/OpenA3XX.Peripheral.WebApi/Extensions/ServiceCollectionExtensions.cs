@@ -10,8 +10,10 @@ using OpenA3XX.Core.Configuration;
 using OpenA3XX.Core.DataContexts;
 using OpenA3XX.Core.Models;
 using OpenA3XX.Core.Repositories;
+using OpenA3XX.Core.Repositories.Base;
 using OpenA3XX.Core.Services;
 using OpenA3XX.Peripheral.WebApi.Hubs;
+using Microsoft.Extensions.Logging;
 
 namespace OpenA3XX.Peripheral.WebApi.Extensions
 {
@@ -61,8 +63,30 @@ namespace OpenA3XX.Peripheral.WebApi.Extensions
             {
                 var openA3XXOptions = serviceProvider.GetService<IOptions<OpenA3XXOptions>>()?.Value;
                 var databasePath = openA3XXOptions?.Database?.Path;
+                var logger = serviceProvider.GetService<ILogger<CoreDataContext>>();
                 
-                options.UseSqlite(CoordinatorConfiguration.GetDatabasesFolderPath(OpenA3XXDatabase.Core, databasePath));
+                var connectionString = CoordinatorConfiguration.GetDatabasesFolderPath(OpenA3XXDatabase.Core, databasePath);
+                
+                // Log database configuration for debugging
+                if (logger != null)
+                {
+                    logger.LogInformation("Database Configuration - ConfigPath: '{ConfigPath}', ConnectionString: '{ConnectionString}'", 
+                        databasePath ?? "NULL", connectionString);
+                }
+                
+                options.UseSqlite(connectionString);
+                
+                // Enable EF Core logging for SQL queries and database operations
+                if (logger != null)
+                {
+                    options.LogTo(message => logger.LogInformation("EF Core SQL: {SqlQuery}", message),
+                        new[] { DbLoggerCategory.Database.Command.Name },
+                        LogLevel.Information);
+                        
+                    options.EnableSensitiveDataLogging(false); // Don't log sensitive data in production
+                    options.EnableDetailedErrors(true);
+                    options.EnableServiceProviderCaching(true);
+                }
             });
             
             services.AddScoped<DbContext, CoreDataContext>();
@@ -77,16 +101,55 @@ namespace OpenA3XX.Peripheral.WebApi.Extensions
         /// <returns>The service collection for chaining</returns>
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
-            services.AddTransient<ISystemConfigurationRepository, SystemConfigurationRepository>();
-            services.AddTransient<IHardwarePanelTokensRepository, HardwarePanelTokensRepository>();
-            services.AddTransient<IHardwareInputTypesRepository, HardwareInputTypesRepository>();
-            services.AddTransient<IHardwareInputSelectorRepository, HardwareInputSelectorRepository>();
-            services.AddTransient<IHardwareOutputSelectorRepository, HardwareOutputSelectorRepository>();
-            services.AddTransient<IHardwareOutputTypesRepository, HardwareOutputTypesRepository>();
-            services.AddTransient<IHardwarePanelRepository, HardwarePanelRepository>();
-            services.AddTransient<IHardwareBoardRepository, HardwareBoardRepository>();
-            services.AddTransient<IAircraftModelRepository, AircraftModelRepository>();
-            services.AddTransient<ISimulatorEventRepository, SimulatorEventRepository>();
+            services.AddTransient<ISystemConfigurationRepository>(provider =>
+                new SystemConfigurationRepository(
+                    provider.GetRequiredService<DbContext>(),
+                    provider.GetRequiredService<ILogger<BaseRepository<SystemConfiguration>>>()));
+                    
+            services.AddTransient<IHardwarePanelTokensRepository>(provider =>
+                new HardwarePanelTokensRepository(
+                    provider.GetRequiredService<DbContext>(),
+                    provider.GetRequiredService<ILogger<BaseRepository<HardwarePanelToken>>>()));
+                    
+            services.AddTransient<IHardwareInputTypesRepository>(provider =>
+                new HardwareInputTypesRepository(
+                    provider.GetRequiredService<DbContext>(),
+                    provider.GetRequiredService<ILogger<BaseRepository<HardwareInputType>>>()));
+                    
+            services.AddTransient<IHardwareInputSelectorRepository>(provider =>
+                new HardwareInputSelectorRepository(
+                    provider.GetRequiredService<DbContext>(),
+                    provider.GetRequiredService<ILogger<BaseRepository<HardwareInputSelector>>>()));
+                    
+            services.AddTransient<IHardwareOutputSelectorRepository>(provider =>
+                new HardwareOutputSelectorRepository(
+                    provider.GetRequiredService<DbContext>(),
+                    provider.GetRequiredService<ILogger<BaseRepository<HardwareOutputSelector>>>()));
+                    
+            services.AddTransient<IHardwareOutputTypesRepository>(provider =>
+                new HardwareOutputTypesRepository(
+                    provider.GetRequiredService<DbContext>(),
+                    provider.GetRequiredService<ILogger<BaseRepository<HardwareOutputType>>>()));
+                    
+            services.AddTransient<IHardwarePanelRepository>(provider =>
+                new HardwarePanelRepository(
+                    provider.GetRequiredService<DbContext>(),
+                    provider.GetRequiredService<ILogger<BaseRepository<HardwarePanel>>>()));
+                    
+            services.AddTransient<IHardwareBoardRepository>(provider =>
+                new HardwareBoardRepository(
+                    provider.GetRequiredService<DbContext>(),
+                    provider.GetRequiredService<ILogger<BaseRepository<HardwareBoard>>>()));
+                    
+            services.AddTransient<IAircraftModelRepository>(provider =>
+                new AircraftModelRepository(
+                    provider.GetRequiredService<DbContext>(),
+                    provider.GetRequiredService<ILogger<BaseRepository<AircraftModel>>>()));
+                    
+            services.AddTransient<ISimulatorEventRepository>(provider =>
+                new SimulatorEventRepository(
+                    provider.GetRequiredService<DbContext>(),
+                    provider.GetRequiredService<ILogger<BaseRepository<SimulatorEvent>>>()));
             
             return services;
         }

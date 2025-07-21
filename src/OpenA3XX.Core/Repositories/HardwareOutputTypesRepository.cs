@@ -4,12 +4,13 @@ using Microsoft.EntityFrameworkCore;
 using OpenA3XX.Core.Exceptions;
 using OpenA3XX.Core.Models;
 using OpenA3XX.Core.Repositories.Base;
+using Microsoft.Extensions.Logging;
 
 namespace OpenA3XX.Core.Repositories
 {
     public class HardwareOutputTypesRepository : BaseRepository<HardwareOutputType>, IHardwareOutputTypesRepository
     {
-        public HardwareOutputTypesRepository(DbContext context) : base(context)
+        public HardwareOutputTypesRepository(DbContext context, ILogger<BaseRepository<HardwareOutputType>> logger) : base(context, logger)
         {
         }
 

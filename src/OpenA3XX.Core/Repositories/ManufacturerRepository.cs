@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using OpenA3XX.Core.Models;
 using OpenA3XX.Core.Repositories.Base;
 using OpenA3XX.Core.Repositories.Extensions;
@@ -16,7 +17,8 @@ namespace OpenA3XX.Core.Repositories
         /// Initializes a new instance of the ManufacturerRepository
         /// </summary>
         /// <param name="context">The database context</param>
-        public ManufacturerRepository(DbContext context) : base(context)
+        /// <param name="logger">The logger instance</param>
+        public ManufacturerRepository(DbContext context, ILogger<BaseRepository<Manufacturer>> logger) : base(context, logger)
         {
         }
 
