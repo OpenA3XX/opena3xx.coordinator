@@ -139,6 +139,12 @@ namespace OpenA3XX.Core.Services
         public IList<FieldConfig> GetSettingsFormFields()
         {
             var configuration = _systemConfigurationRepository.GetAllConfiguration();
+            
+            // Helper method to safely get configuration values with defaults
+            string GetConfigValue(string key, string defaultValue = "")
+            {
+                return configuration.FirstOrDefault(c => c.Key == key)?.Value ?? defaultValue;
+            }
 
             var settingsForm = new List<FieldConfig>
             {
@@ -154,7 +160,7 @@ namespace OpenA3XX.Core.Services
                     Label = "RabbitMQ Host Address",
                     Name = "opena3xx-amqp-host",
                     Hint = "RabbitMQ Host Address is the IP Address where RabbitMQ is running.",
-                    Value = configuration.First(c => c.Key == "opena3xx-amqp-host").Value,
+                    Value = GetConfigValue("opena3xx-amqp-host", "localhost"),
                     Validations = new List<FieldValidatorConfig>
                     {
                         new()
@@ -178,7 +184,7 @@ namespace OpenA3XX.Core.Services
                     Label = "RabbitMQ Host Port",
                     Name = "opena3xx-amqp-port",
                     Hint = "RabbitMQ Port on which it is running (amqp protocol)",
-                    Value = configuration.First(c => c.Key == "opena3xx-amqp-port").Value,
+                    Value = GetConfigValue("opena3xx-amqp-port", "5672"),
                     Validations = new List<FieldValidatorConfig>
                     {
                         new()
@@ -202,7 +208,7 @@ namespace OpenA3XX.Core.Services
                     Label = "RabbitMQ Username",
                     Name = "opena3xx-amqp-username",
                     Hint = "RabbitMQ Username used for Authentication",
-                    Value = configuration.First(c => c.Key == "opena3xx-amqp-username").Value,
+                    Value = GetConfigValue("opena3xx-amqp-username", "guest"),
                     Validations = new List<FieldValidatorConfig>
                     {
                         new()
@@ -219,7 +225,7 @@ namespace OpenA3XX.Core.Services
                     Label = "RabbitMQ Password",
                     Name = "opena3xx-amqp-password",
                     Hint = "RabbitMQ Password used for Authentication",
-                    Value = configuration.First(c => c.Key == "opena3xx-amqp-password").Value,
+                    Value = GetConfigValue("opena3xx-amqp-password", "guest"),
                     Validations = new List<FieldValidatorConfig>
                     {
                         new()
@@ -236,7 +242,7 @@ namespace OpenA3XX.Core.Services
                     Label = "RabbitMQ Virtual Host",
                     Name = "opena3xx-amqp-vhost",
                     Hint = "RabbitMQ Virtual Host",
-                    Value = configuration.First(c => c.Key == "opena3xx-amqp-vhost").Value,
+                    Value = GetConfigValue("opena3xx-amqp-vhost", "/"),
                     Validations = new List<FieldValidatorConfig>
                     {
                         new()
@@ -253,7 +259,7 @@ namespace OpenA3XX.Core.Services
                     Label = "Keep Alive Exchange Bindings",
                     Name = "opena3xx-amqp-keepalive-exchange-bindings-configuration",
                     Hint = "RabbitMQ Keep Alive Exchange Bindings",
-                    Value = configuration.First(c => c.Key == "opena3xx-amqp-keepalive-exchange-bindings-configuration").Value,
+                    Value = GetConfigValue("opena3xx-amqp-keepalive-exchange-bindings-configuration", "opena3xx-keepalive-events|admin.keepalive,KeepAlive"),
                     Validations = new List<FieldValidatorConfig>
                     {
                         new()
@@ -270,7 +276,7 @@ namespace OpenA3XX.Core.Services
                     Label = "Hardware Input Selectors Events Queue Name",
                     Name = "opena3xx-amqp-hardware-input-selectors-exchange-bindings-configuration",
                     Hint = "RabbitMQ Hardware Input Selectors Exchange Bindings",
-                    Value = configuration.First(c => c.Key == "opena3xx-amqp-hardware-input-selectors-exchange-bindings-configuration").Value,
+                    Value = GetConfigValue("opena3xx-amqp-hardware-input-selectors-exchange-bindings-configuration", "opena3xx-hardware-input-selectors-events|admin.hardware-input-selectors,HardwareEvent"),
                     Validations = new List<FieldValidatorConfig>
                     {
                         new()
@@ -292,7 +298,7 @@ namespace OpenA3XX.Core.Services
                     Label = "SEQ Host Address",
                     Name = "opena3xx-logging-seq-host",
                     Hint = "SEQ Host Address is the IP Address where SEQ is running.",
-                    Value = configuration.First(c => c.Key == "opena3xx-logging-seq-host").Value,
+                    Value = GetConfigValue("opena3xx-logging-seq-host", "localhost"),
                     Validations = new List<FieldValidatorConfig>
                     {
                         new()
@@ -316,7 +322,7 @@ namespace OpenA3XX.Core.Services
                     Label = "SEQ Host Port",
                     Name = "opena3xx-logging-seq-port",
                     Hint = "SEQ Port on which it is running",
-                    Value = configuration.First(c => c.Key == "opena3xx-logging-seq-port").Value,
+                    Value = GetConfigValue("opena3xx-logging-seq-port", "5341"),
                     Validations = new List<FieldValidatorConfig>
                     {
                         new()
