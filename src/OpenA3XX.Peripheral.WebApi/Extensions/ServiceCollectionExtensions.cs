@@ -171,6 +171,7 @@ namespace OpenA3XX.Peripheral.WebApi.Extensions
             services.AddTransient<IFormService, FormsService>();
             services.AddTransient<IFlightIntegrationService, FlightIntegrationService>();
             services.AddTransient<ISimulatorEventingService, SimulatorEventingService>();
+            services.AddTransient<IDependencyStatusService, DependencyStatusService>();
             
             return services;
         }
@@ -242,7 +243,32 @@ namespace OpenA3XX.Peripheral.WebApi.Extensions
                 .AddDatabaseServices()
                 .AddRepositories()
                 .AddDomainServices()
-                .AddInfrastructureServices();
+                .AddInfrastructureServices()
+                .AddExternalServices();
+        }
+
+        /// <summary>
+        /// Configures external services
+        /// </summary>
+        /// <param name="services">The service collection</param>
+        /// <returns>The service collection for chaining</returns>
+        public static IServiceCollection AddExternalServices(this IServiceCollection services)
+        {
+            // Add general HttpClientFactory for dependency status checks
+            services.AddHttpClient();
+            
+            // Add HubHop API integration service
+            services.AddScoped<IHubHopIntegrationService, HubHopIntegrationService>();
+            
+            // Configure HttpClient for HubHop API
+            services.AddHttpClient<HubHopIntegrationService>(client =>
+            {
+                client.DefaultRequestHeaders.Add("User-Agent", "OpenA3XX-Coordinator/1.0");
+                client.DefaultRequestHeaders.Add("Accept", "application/json");
+                client.Timeout = TimeSpan.FromSeconds(30);
+            });
+            
+            return services;
         }
 
         /// <summary>

@@ -208,6 +208,11 @@ namespace OpenA3XX.Core.Configuration
         /// Coordinator API settings
         /// </summary>
         public CoordinatorApiSettings CoordinatorApi { get; set; } = new();
+        
+        /// <summary>
+        /// HubHop API integration settings
+        /// </summary>
+        public HubHopApiSettings HubHopApi { get; set; } = new();
     }
 
     /// <summary>
@@ -235,5 +240,41 @@ namespace OpenA3XX.Core.Configuration
         /// Hardware input selectors endpoint path
         /// </summary>
         public string HardwareInputSelectors { get; set; } = "hardware-input-selectors";
+    }
+
+    /// <summary>
+    /// HubHop API configuration settings
+    /// </summary>
+    public class HubHopApiSettings
+    {
+        /// <summary>
+        /// Base URL for HubHop API
+        /// </summary>
+        public string BaseUrl { get; set; } = "https://hubhop-api-mgtm.azure-api.net";
+        
+        /// <summary>
+        /// FS2020 presets endpoint path
+        /// </summary>
+        public string PresetsEndpoint { get; set; } = "api/v1/fs2020/presets";
+        
+        /// <summary>
+        /// HTTP client timeout in seconds
+        /// </summary>
+        public int TimeoutSeconds { get; set; } = 30;
+        
+        /// <summary>
+        /// Enable automatic synchronization on startup
+        /// </summary>
+        public bool AutoSyncOnStartup { get; set; } = false;
+        
+        /// <summary>
+        /// Interval between automatic syncs in minutes (0 = disabled)
+        /// </summary>
+        public int AutoSyncIntervalMinutes { get; set; } = 0;
+        
+        /// <summary>
+        /// Maximum number of retries for failed API requests
+        /// </summary>
+        public int MaxRetries { get; set; } = 3;
     }
 } 

@@ -19,6 +19,12 @@ namespace OpenA3XX.Core.Repositories
             return Add(simulatorEvent);
         }
 
+        public SimulatorEvent UpdateSimulatorEvent(SimulatorEvent simulatorEvent)
+        {
+            Update(simulatorEvent, simulatorEvent.Id);
+            return simulatorEvent;
+        }
+
         public IList<SimulatorEvent> GetAllSimulatorEvents()
         {
             return GetAll().ToList();
