@@ -1,4 +1,22 @@
 ﻿services:
+  webapi:
+    build:
+      context: .
+      dockerfile: src/OpenA3XX.Peripheral.WebApi/Dockerfile
+    container_name: opena3xx.coordinator.webapi
+    restart: unless-stopped
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+    ports:
+      - "5000:8080"
+    volumes:
+      - webapi_data:/app/data
+    depends_on:
+      - rabbitmq
+      - seq
+    networks:
+      - opena3xx-network
+
   rabbitmq:
     image: rabbitmq:3.12-management-alpine
     container_name: opena3xx.coordinator.rabbitmq
@@ -12,6 +30,8 @@
       - "15672:15672"
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - opena3xx-network
 
   seq:
     image: datalust/seq:2025.2
@@ -25,9 +45,17 @@
       - "8080:80"
     volumes:
       - seq_data:/data
+    networks:
+      - opena3xx-network
 
 volumes:
+  webapi_data:
+    driver: local
   rabbitmq_data:
     driver: local
   seq_data:
     driver: local
+
+networks:
+  opena3xx-network:
+    driver: bridge

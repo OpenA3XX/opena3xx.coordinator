@@ -1,0 +1,70 @@
+# Dockerfile and .dockerignore themselves
+Dockerfile*
+.dockerignore
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Documentation
+README.md
+*.md
+
+# Visual Studio / Visual Studio Code
+.vs
+.vscode
+*.user
+*.suo
+*.userprefs
+
+# Build outputs
+**/bin/
+**/obj/
+**/out/
+**/TestResults/
+**/packages/
+
+# Environment files
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+*.swp
+*.swo
+*~
+
+# Temporary files
+tmp/
+temp/
+
+# Node modules (if any)
+node_modules/
+
+# Package files
+*.nupkg
+*.snupkg
+
+# Database files (local development)
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3 
