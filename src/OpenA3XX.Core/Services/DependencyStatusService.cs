@@ -20,21 +20,21 @@ namespace OpenA3XX.Core.Services
         private readonly ILogger<DependencyStatusService> _logger;
         private readonly RabbitMQOptions _rabbitMqOptions;
         private readonly FlightSimulatorOptions _flightSimulatorOptions;
+        private readonly SeqOptions _seqOptions;
         private readonly IHttpClientFactory _httpClientFactory;
-        private readonly ISystemConfigurationRepository _systemConfigurationRepository;
 
         public DependencyStatusService(
             ILogger<DependencyStatusService> logger,
             IOptions<RabbitMQOptions> rabbitMqOptions,
             IOptions<FlightSimulatorOptions> flightSimulatorOptions,
-            IHttpClientFactory httpClientFactory,
-            ISystemConfigurationRepository systemConfigurationRepository)
+            IOptions<SeqOptions> seqOptions,
+            IHttpClientFactory httpClientFactory)
         {
             _logger = logger;
             _rabbitMqOptions = rabbitMqOptions.Value;
             _flightSimulatorOptions = flightSimulatorOptions.Value;
+            _seqOptions = seqOptions.Value;
             _httpClientFactory = httpClientFactory;
-            _systemConfigurationRepository = systemConfigurationRepository;
         }
 
         public async Task<DependencyStatusDto> GetDependencyStatusAsync()
@@ -168,7 +168,7 @@ namespace OpenA3XX.Core.Services
 
             try
             {
-                // Get SEQ configuration from database
+                // Get SEQ configuration from appsettings
                 var seqEndpoint = GetSeqEndpointFromConfiguration();
                 
                 _logger.LogDebug("Checking SEQ status at {Endpoint}", seqEndpoint);
@@ -223,7 +223,7 @@ namespace OpenA3XX.Core.Services
         }
 
         /// <summary>
-        /// Gets the SEQ root URL from database configuration for health checking.
+        /// Gets the SEQ root URL from appsettings configuration for health checking.
         /// Any HTTP response (including 404) indicates SEQ is operational.
         /// </summary>
         /// <returns>The constructed SEQ root URL for health checks</returns>
@@ -231,31 +231,20 @@ namespace OpenA3XX.Core.Services
         {
             try
             {
-                var configuration = _systemConfigurationRepository.GetAllConfiguration();
-                
-                // Helper method to safely get configuration values with defaults
-                string GetConfigValue(string key, string defaultValue = "")
-                {
-                    return configuration.FirstOrDefault(c => c.Key == key)?.Value ?? defaultValue;
-                }
-
-                var seqHost = GetConfigValue("opena3xx-logging-seq-host", "localhost");
-                var seqPort = GetConfigValue("opena3xx-logging-seq-port", "5341");
-
                 // Construct the SEQ root endpoint URL for health checking
                 // SEQ doesn't have a dedicated health endpoint, so we check the root URL
                 // Any HTTP response (including 404) indicates SEQ is running and operational
-                var endpoint = $"http://{seqHost}:{seqPort}";
+                var endpoint = $"http://{_seqOptions.Host}:{_seqOptions.Port}";
                 
-                _logger.LogDebug("Built SEQ endpoint from database configuration: {Endpoint} (Host: {Host}, Port: {Port})", 
-                    endpoint, seqHost, seqPort);
+                _logger.LogDebug("Built SEQ endpoint from appsettings configuration: {Endpoint} (Host: {Host}, Port: {Port})", 
+                    endpoint, _seqOptions.Host, _seqOptions.Port);
                 
                 return endpoint;
             }
             catch (Exception ex)
             {
-                _logger.LogWarning(ex, "Failed to get SEQ configuration from database, falling back to default");
-                // Fallback to default SEQ configuration if database read fails
+                _logger.LogWarning(ex, "Failed to get SEQ configuration from appsettings, falling back to default");
+                // Fallback to default SEQ configuration if appsettings read fails
                 return "http://localhost:5341";
             }
         }

@@ -101,11 +101,6 @@ namespace OpenA3XX.Peripheral.WebApi.Extensions
         /// <returns>The service collection for chaining</returns>
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
-            services.AddTransient<ISystemConfigurationRepository>(provider =>
-                new SystemConfigurationRepository(
-                    provider.GetRequiredService<DbContext>(),
-                    provider.GetRequiredService<ILogger<BaseRepository<SystemConfiguration>>>()));
-                    
             services.AddTransient<IHardwarePanelTokensRepository>(provider =>
                 new HardwarePanelTokensRepository(
                     provider.GetRequiredService<DbContext>(),
@@ -155,23 +150,24 @@ namespace OpenA3XX.Peripheral.WebApi.Extensions
         }
 
         /// <summary>
-        /// Registers all domain service interfaces and implementations
+        /// Registers all domain services
         /// </summary>
         /// <param name="services">The service collection</param>
         /// <returns>The service collection for chaining</returns>
         public static IServiceCollection AddDomainServices(this IServiceCollection services)
         {
-            services.AddTransient<ISimulatorEventService, SimulatorEventService>();
-            services.AddTransient<IHardwarePanelService, HardwarePanelService>();
+            services.AddTransient<IFormService, FormsService>();
+            services.AddTransient<IDependencyStatusService, DependencyStatusService>();
             services.AddTransient<IHardwareBoardService, HardwareBoardService>();
             services.AddTransient<IHardwareInputTypeService, HardwareInputTypeService>();
             services.AddTransient<IHardwareInputSelectorService, HardwareInputSelectorService>();
-            services.AddTransient<IHardwareOutputSelectorService, HardwareOutputSelectorService>();
             services.AddTransient<IHardwareOutputTypeService, HardwareOutputTypeService>();
-            services.AddTransient<IFormService, FormsService>();
-            services.AddTransient<IFlightIntegrationService, FlightIntegrationService>();
+            services.AddTransient<IHardwareOutputSelectorService, HardwareOutputSelectorService>();
+            services.AddTransient<IHardwarePanelService, HardwarePanelService>();
+            services.AddTransient<ISimulatorEventService, SimulatorEventService>();
             services.AddTransient<ISimulatorEventingService, SimulatorEventingService>();
-            services.AddTransient<IDependencyStatusService, DependencyStatusService>();
+            services.AddTransient<IFlightIntegrationService, FlightIntegrationService>();
+            services.AddTransient<IHubHopIntegrationService, HubHopIntegrationService>();
             
             return services;
         }
@@ -207,7 +203,7 @@ namespace OpenA3XX.Peripheral.WebApi.Extensions
         }
 
         /// <summary>
-        /// Configures strongly-typed configuration options
+        /// Configures configuration options
         /// </summary>
         /// <param name="services">The service collection</param>
         /// <param name="configuration">The configuration instance</param>
@@ -219,12 +215,14 @@ namespace OpenA3XX.Peripheral.WebApi.Extensions
             services.Configure<RabbitMQOptions>(configuration.GetSection(RabbitMQOptions.SectionName));
             services.Configure<FlightSimulatorOptions>(configuration.GetSection(FlightSimulatorOptions.SectionName));
             services.Configure<ExternalServicesOptions>(configuration.GetSection(ExternalServicesOptions.SectionName));
+            services.Configure<SeqOptions>(configuration.GetSection(SeqOptions.SectionName));
             
             // Register as singletons for easy access
             services.AddSingleton<IValidateOptions<OpenA3XXOptions>, ValidateOptionsAdapter<OpenA3XXOptions>>();
             services.AddSingleton<IValidateOptions<RabbitMQOptions>, ValidateOptionsAdapter<RabbitMQOptions>>();
             services.AddSingleton<IValidateOptions<FlightSimulatorOptions>, ValidateOptionsAdapter<FlightSimulatorOptions>>();
             services.AddSingleton<IValidateOptions<ExternalServicesOptions>, ValidateOptionsAdapter<ExternalServicesOptions>>();
+            services.AddSingleton<IValidateOptions<SeqOptions>, ValidateOptionsAdapter<SeqOptions>>();
             
             return services;
         }

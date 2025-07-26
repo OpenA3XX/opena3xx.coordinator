@@ -30,9 +30,6 @@ namespace OpenA3XX.Core.DataContexts
 
         public DbSet<HardwarePanelToken> HardwarePanelTokens { get; set; }
 
-        public DbSet<SystemConfiguration> SystemConfiguration { get; set; }
-
-
         public DbSet<HardwareBoard> HardwareBoards { get; set; }
 
         public DbSet<IOExtenderBus> IOExtenderBuses { get; set; }

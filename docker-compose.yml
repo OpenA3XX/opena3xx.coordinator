@@ -1,22 +1,4 @@
 ﻿services:
-  webapi:
-    build:
-      context: .
-      dockerfile: src/OpenA3XX.Peripheral.WebApi/Dockerfile
-    container_name: opena3xx.coordinator.webapi
-    restart: unless-stopped
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Docker
-    ports:
-      - "5000:8080"
-    volumes:
-      - webapi_data:/app/data
-    depends_on:
-      - rabbitmq
-      - seq
-    networks:
-      - opena3xx-network
-
   rabbitmq:
     image: rabbitmq:3.12-management-alpine
     container_name: opena3xx.coordinator.rabbitmq

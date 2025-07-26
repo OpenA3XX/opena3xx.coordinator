@@ -108,6 +108,11 @@ namespace OpenA3XX.Core.Configuration
         /// Queue configuration
         /// </summary>
         public QueueOptions Queues { get; set; } = new();
+        
+        /// <summary>
+        /// Exchange bindings configuration
+        /// </summary>
+        public ExchangeBindingsOptions ExchangeBindings { get; set; } = new();
     }
 
     /// <summary>
@@ -156,6 +161,40 @@ namespace OpenA3XX.Core.Configuration
         /// MSFS processor queue name
         /// </summary>
         public string ProcessorMsfs { get; set; } = "processor-msfs";
+    }
+
+    /// <summary>
+    /// RabbitMQ exchange bindings configuration
+    /// </summary>
+    public class ExchangeBindingsOptions
+    {
+        /// <summary>
+        /// Keep alive exchange binding configuration
+        /// </summary>
+        public string KeepAlive { get; set; } = "opena3xx-keepalive-events|admin.keepalive,KeepAlive";
+        
+        /// <summary>
+        /// Hardware input selectors exchange binding configuration
+        /// </summary>
+        public string HardwareInputSelectors { get; set; } = "opena3xx-hardware-input-selectors-events|admin.hardware-input-selectors,HardwareEvent";
+    }
+
+    /// <summary>
+    /// SEQ (logging) configuration options
+    /// </summary>
+    public class SeqOptions
+    {
+        public const string SectionName = "Serilog:Seq";
+        
+        /// <summary>
+        /// SEQ server hostname
+        /// </summary>
+        public string Host { get; set; } = "localhost";
+        
+        /// <summary>
+        /// SEQ server port
+        /// </summary>
+        public int Port { get; set; } = 5341;
     }
 
     /// <summary>
