@@ -141,6 +141,11 @@ namespace OpenA3XX.Peripheral.WebApi.Extensions
                     provider.GetRequiredService<DbContext>(),
                     provider.GetRequiredService<ILogger<BaseRepository<AircraftModel>>>()));
                     
+            services.AddTransient<IManufacturerRepository>(provider =>
+                new ManufacturerRepository(
+                    provider.GetRequiredService<DbContext>(),
+                    provider.GetRequiredService<ILogger<BaseRepository<Manufacturer>>>()));
+                    
             services.AddTransient<ISimulatorEventRepository>(provider =>
                 new SimulatorEventRepository(
                     provider.GetRequiredService<DbContext>(),
@@ -164,6 +169,7 @@ namespace OpenA3XX.Peripheral.WebApi.Extensions
             services.AddTransient<IHardwareOutputTypeService, HardwareOutputTypeService>();
             services.AddTransient<IHardwareOutputSelectorService, HardwareOutputSelectorService>();
             services.AddTransient<IHardwarePanelService, HardwarePanelService>();
+            services.AddTransient<IAircraftModelService, AircraftModelService>();
             services.AddTransient<ISimulatorEventService, SimulatorEventService>();
             services.AddTransient<ISimulatorEventingService, SimulatorEventingService>();
             services.AddTransient<IFlightIntegrationService, FlightIntegrationService>();

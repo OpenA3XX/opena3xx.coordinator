@@ -32,5 +32,17 @@ namespace OpenA3XX.Core.Repositories
                 .IncludeHierarchy()
                 .ToList();
         }
+
+        /// <summary>
+        /// Adds a new manufacturer
+        /// </summary>
+        /// <param name="manufacturer">The manufacturer to add</param>
+        /// <returns>The added manufacturer</returns>
+        public Manufacturer Add(Manufacturer manufacturer)
+        {
+            var result = base.Add(manufacturer);
+            Save();
+            return result;
+        }
     }
 }

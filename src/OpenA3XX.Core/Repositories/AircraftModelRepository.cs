@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using OpenA3XX.Core.Models;
@@ -32,6 +33,73 @@ namespace OpenA3XX.Core.Repositories
             }
             
             return result;
+        }
+
+        public IList<AircraftModel> GetAll()
+        {
+            Logger.LogInformation("Getting all aircraft models");
+            
+            var result = base.GetAll()
+                .IncludeManufacturer()
+                .ToList();
+                
+            Logger.LogInformation("Retrieved {Count} aircraft models", result.Count);
+            
+            return result;
+        }
+
+        public IList<AircraftModel> GetActive()
+        {
+            Logger.LogInformation("Getting active aircraft models");
+            
+            var result = FindBy(model => model.IsActive)
+                .IncludeManufacturer()
+                .ToList();
+                
+            Logger.LogInformation("Retrieved {Count} active aircraft models", result.Count);
+            
+            return result;
+        }
+
+        public AircraftModel Add(AircraftModel aircraftModel)
+        {
+            Logger.LogInformation("Adding new aircraft model: {ModelName}", aircraftModel.Model);
+            
+            var result = base.Add(aircraftModel);
+            Save();
+            
+            Logger.LogInformation("Successfully added aircraft model with ID {AircraftModelId}", result.Id);
+            
+            return result;
+        }
+
+        public AircraftModel Update(AircraftModel aircraftModel)
+        {
+            Logger.LogInformation("Updating aircraft model with ID: {AircraftModelId}", aircraftModel.Id);
+            
+            var result = Update(aircraftModel, aircraftModel.Id);
+            Save();
+            
+            Logger.LogInformation("Successfully updated aircraft model with ID {AircraftModelId}", result.Id);
+            
+            return result;
+        }
+
+        public void Delete(int id)
+        {
+            Logger.LogInformation("Deleting aircraft model with ID: {AircraftModelId}", id);
+            
+            var aircraftModel = GetById(id);
+            if (aircraftModel != null)
+            {
+                Delete(aircraftModel);
+                Save();
+                Logger.LogInformation("Successfully deleted aircraft model with ID {AircraftModelId}", id);
+            }
+            else
+            {
+                Logger.LogWarning("Aircraft model with ID {AircraftModelId} not found for deletion", id);
+            }
         }
     }
 }

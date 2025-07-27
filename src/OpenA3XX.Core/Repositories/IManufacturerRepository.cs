@@ -6,5 +6,6 @@ namespace OpenA3XX.Core.Repositories
     public interface IManufacturerRepository
     {
         IList<Manufacturer> GetAllManufacturers();
+        Manufacturer Add(Manufacturer manufacturer);
     }
 }

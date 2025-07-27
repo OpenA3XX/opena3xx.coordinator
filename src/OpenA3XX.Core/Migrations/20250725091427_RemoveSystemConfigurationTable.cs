@@ -10,8 +10,8 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "SystemConfiguration");
+            // Check if the table exists before trying to drop it
+            migrationBuilder.Sql("DROP TABLE IF EXISTS \"SystemConfiguration\"");
         }
 
         /// <inheritdoc />
