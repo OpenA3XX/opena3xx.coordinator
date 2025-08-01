@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 
 namespace OpenA3XX.Core.Models
@@ -8,10 +9,14 @@ namespace OpenA3XX.Core.Models
     {
         public int Id { get; set; }
 
+        [Required]
+        [MaxLength(100)]
         public string Model { get; set; }
         
+        [MaxLength(50)]
         public string Type { get; set; }
         
+        [MaxLength(500)]
         public string Description { get; set; }
         
         public bool IsActive { get; set; } = true;
