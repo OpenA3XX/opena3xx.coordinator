@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using OpenA3XX.Core.Dtos;
@@ -65,6 +66,11 @@ namespace OpenA3XX.Core.Services
         public IList<HardwarePanelOverviewDto> GetAllHardwarePanels()
         {
             var hardwarePanelList = _hardwarePanelRepository.GetAllHardwarePanels();
+            if (hardwarePanelList == null || !hardwarePanelList.Any())
+            {
+                return new List<HardwarePanelOverviewDto>();
+            }
+            
             var hardwarePaneDtoList =
                 _mapper.Map<IList<HardwarePanel>, IList<HardwarePanelOverviewDto>>(hardwarePanelList);
             return hardwarePaneDtoList;
@@ -89,23 +95,47 @@ namespace OpenA3XX.Core.Services
         public HardwarePanelDto GetHardwarePanelDetails(int id)
         {
             var hardwarePanel = _hardwarePanelRepository.GetHardwarePanelDetails(id);
+            if (hardwarePanel == null)
+            {
+                return null;
+            }
+            
             var hardwarePanelDto = _mapper.Map<HardwarePanel, HardwarePanelDto>(hardwarePanel);
 
+            // Handle null collections
+            if (hardwarePanelDto.HardwareInputs == null)
+            {
+                hardwarePanelDto.HardwareInputs = new List<HardwareInputDto>();
+            }
+            
+            if (hardwarePanelDto.HardwareOutputs == null)
+            {
+                hardwarePanelDto.HardwareOutputs = new List<HardwareOutputDto>();
+            }
             
             var hardwareBoards = _hardwareBoardRepository.GetAllHardwareBoards();
             foreach (var hardwareInput in hardwarePanelDto.HardwareInputs)
             {
-                foreach (var hardwareInputSelector in hardwareInput.HardwareInputSelectors)
+                if (hardwareInput.HardwareInputSelectors != null)
                 {
-                    foreach (var hardwareBoard in hardwareBoards)
+                    foreach (var hardwareInputSelector in hardwareInput.HardwareInputSelectors)
                     {
-                        foreach (var bus in hardwareBoard.Buses)
+                        foreach (var hardwareBoard in hardwareBoards)
                         {
-                            foreach (var bit in bus.Bits)
+                            if (hardwareBoard.Buses != null)
                             {
-                                if (bit.HardwareInputSelector != null && bit.HardwareInputSelector.Id == hardwareInputSelector.Id)
+                                foreach (var bus in hardwareBoard.Buses)
                                 {
-                                    hardwareInputSelector.IsHardwareInputSelectorMappedWithHardware = true;
+                                    if (bus.Bits != null)
+                                    {
+                                        foreach (var bit in bus.Bits)
+                                        {
+                                            if (bit.HardwareInputSelector != null && bit.HardwareInputSelector.Id == hardwareInputSelector.Id)
+                                            {
+                                                hardwareInputSelector.IsHardwareInputSelectorMappedWithHardware = true;
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }

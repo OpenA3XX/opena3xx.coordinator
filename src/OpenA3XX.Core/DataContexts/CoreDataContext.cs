@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using OpenA3XX.Core.Configuration;
 using OpenA3XX.Core.Models;
 
@@ -22,10 +22,14 @@ namespace OpenA3XX.Core.DataContexts
 
         public DbSet<HardwareInputSelector> HardwareInputSelectors { get; set; }
 
+        public DbSet<HardwareInputType> HardwareInputTypes { get; set; }
+
 
         public DbSet<HardwareOutput> HardwareOutputs { get; set; }
 
         public DbSet<HardwareOutputSelector> HardwareOutputSelectors { get; set; }
+
+        public DbSet<HardwareOutputType> HardwareOutputTypes { get; set; }
 
 
         public DbSet<HardwarePanelToken> HardwarePanelTokens { get; set; }
@@ -35,6 +39,8 @@ namespace OpenA3XX.Core.DataContexts
         public DbSet<IOExtenderBus> IOExtenderBuses { get; set; }
 
         public DbSet<IOExtenderBit> IOExtenderBits { get; set; }
+
+        public DbSet<HardwareComponent> HardwareComponents { get; set; }
 
 
         public DbSet<SimulatorEvent> SimulatorEvents { get; set; }
@@ -52,6 +58,35 @@ namespace OpenA3XX.Core.DataContexts
             modelBuilder.Entity<AircraftModel>()
                 .HasIndex(p => new { p.Id })
                 .IsUnique(false);
+
+            // Configure table names for entities that don't follow plural convention
+            modelBuilder.Entity<HardwareInputType>()
+                .ToTable("HardwareInputType");
+                
+            modelBuilder.Entity<HardwareOutputType>()
+                .ToTable("HardwareOutputType");
+
+            // Configure enum conversions for SimulatorEvent
+            modelBuilder.Entity<SimulatorEvent>()
+                .Property(e => e.SimulatorEventType)
+                .HasConversion<int>();
+                
+            modelBuilder.Entity<SimulatorEvent>()
+                .Property(e => e.SimulatorSoftware)
+                .HasConversion<int>();
+                
+            modelBuilder.Entity<SimulatorEvent>()
+                .Property(e => e.SimulatorEventSdkType)
+                .HasConversion<int>();
+
+            // Configure enum conversions for HardwarePanel
+            modelBuilder.Entity<HardwarePanel>()
+                .Property(e => e.CockpitArea)
+                .HasConversion<int>();
+                
+            modelBuilder.Entity<HardwarePanel>()
+                .Property(e => e.HardwarePanelOwner)
+                .HasConversion<int>();
         }
     }
 }
