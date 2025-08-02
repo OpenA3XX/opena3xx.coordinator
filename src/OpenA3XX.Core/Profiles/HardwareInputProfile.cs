@@ -14,7 +14,10 @@ namespace OpenA3XX.Core.Profiles
                 .ForMember(c => c.HardwarePanelId, m => m.MapFrom(c => c.HardwarePanelId));
                 
             CreateMap<HardwareInputDto, HardwareInput>()
-                .ForMember(c => c.HardwarePanelId, m => m.MapFrom(c => c.HardwarePanelId));
+                .ForMember(c => c.HardwarePanelId, m => m.MapFrom(c => c.HardwarePanelId))
+                .ForMember(c => c.HardwareInputTypeId, m => m.MapFrom(c => c.HardwareInputTypeId))
+                .ForMember(c => c.HardwareInputType, m => m.Ignore()) // Ignore the string field when mapping to model
+                .ForMember(c => c.HardwareInputSelectorList, m => m.Ignore()); // Ignore the selectors array when mapping to model
         }
     }
 }

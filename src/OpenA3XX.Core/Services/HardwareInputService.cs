@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using OpenA3XX.Core.Dtos;
@@ -15,6 +16,7 @@ namespace OpenA3XX.Core.Services
     {
         private readonly IHttpContextAccessor _accessor;
         private readonly IHardwareInputRepository _hardwareInputRepository;
+        private readonly IHardwareInputTypesRepository _hardwareInputTypesRepository;
         private readonly IMapper _mapper;
 
         /// <summary>
@@ -22,12 +24,16 @@ namespace OpenA3XX.Core.Services
         /// </summary>
         /// <param name="accessor">HTTP context accessor</param>
         /// <param name="hardwareInputRepository">Hardware input repository</param>
+        /// <param name="hardwareInputTypesRepository">Hardware input types repository</param>
         /// <param name="mapper">AutoMapper instance</param>
         public HardwareInputService(IHttpContextAccessor accessor,
-            IHardwareInputRepository hardwareInputRepository, IMapper mapper)
+            IHardwareInputRepository hardwareInputRepository,
+            IHardwareInputTypesRepository hardwareInputTypesRepository,
+            IMapper mapper)
         {
             _accessor = accessor;
             _hardwareInputRepository = hardwareInputRepository;
+            _hardwareInputTypesRepository = hardwareInputTypesRepository;
             _mapper = mapper;
         }
 
@@ -83,6 +89,13 @@ namespace OpenA3XX.Core.Services
         /// <returns>The created hardware input DTO</returns>
         public HardwareInputDto Add(HardwareInputDto hardwareInputDto)
         {
+            // Find or create hardware input type if specified
+            if (!string.IsNullOrEmpty(hardwareInputDto.HardwareInputType))
+            {
+                var hardwareInputType = FindOrCreateHardwareInputType(hardwareInputDto.HardwareInputType);
+                hardwareInputDto.HardwareInputTypeId = hardwareInputType.Id;
+            }
+            
             var hardwareInput = _mapper.Map<HardwareInputDto, HardwareInput>(hardwareInputDto);
             hardwareInput = _hardwareInputRepository.AddHardwareInput(hardwareInput);
             hardwareInputDto = _mapper.Map<HardwareInput, HardwareInputDto>(hardwareInput);
@@ -103,6 +116,13 @@ namespace OpenA3XX.Core.Services
                 throw new EntityNotFoundException("HardwareInput", hardwareInputDto.Id);
             }
 
+            // Find or create hardware input type if specified
+            if (!string.IsNullOrEmpty(hardwareInputDto.HardwareInputType))
+            {
+                var hardwareInputType = FindOrCreateHardwareInputType(hardwareInputDto.HardwareInputType);
+                hardwareInputDto.HardwareInputTypeId = hardwareInputType.Id;
+            }
+
             var hardwareInput = _mapper.Map<HardwareInputDto, HardwareInput>(hardwareInputDto);
             hardwareInput = _hardwareInputRepository.UpdateHardwareInput(hardwareInput);
             hardwareInputDto = _mapper.Map<HardwareInput, HardwareInputDto>(hardwareInput);
@@ -116,6 +136,26 @@ namespace OpenA3XX.Core.Services
         public void Delete(int id)
         {
             _hardwareInputRepository.DeleteHardwareInput(id);
+        }
+
+        /// <summary>
+        /// Finds or creates a hardware input type by name
+        /// </summary>
+        /// <param name="hardwareInputTypeName">The name of the hardware input type</param>
+        /// <returns>The hardware input type</returns>
+        private HardwareInputType FindOrCreateHardwareInputType(string hardwareInputTypeName)
+        {
+            var hardwareInputTypes = _hardwareInputTypesRepository.GetAllHardwareInputTypes();
+            var hardwareInputType = hardwareInputTypes.FirstOrDefault(t => t.Name.Equals(hardwareInputTypeName, System.StringComparison.OrdinalIgnoreCase));
+            
+            if (hardwareInputType == null)
+            {
+                // Create new hardware input type
+                var newHardwareInputType = new HardwareInputType { Name = hardwareInputTypeName };
+                hardwareInputType = _hardwareInputTypesRepository.AddHardwareInputType(newHardwareInputType);
+            }
+            
+            return hardwareInputType;
         }
     }
 } 
