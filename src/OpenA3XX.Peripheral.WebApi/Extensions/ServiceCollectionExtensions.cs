@@ -150,6 +150,11 @@ namespace OpenA3XX.Peripheral.WebApi.Extensions
                 new SimulatorEventRepository(
                     provider.GetRequiredService<DbContext>(),
                     provider.GetRequiredService<ILogger<BaseRepository<SimulatorEvent>>>()));
+                    
+            services.AddTransient<IHardwareInputRepository>(provider =>
+                new HardwareInputRepository(
+                    provider.GetRequiredService<DbContext>(),
+                    provider.GetRequiredService<ILogger<BaseRepository<HardwareInput>>>()));
             
             return services;
         }
@@ -165,6 +170,7 @@ namespace OpenA3XX.Peripheral.WebApi.Extensions
             services.AddTransient<IDependencyStatusService, DependencyStatusService>();
             services.AddTransient<IHardwareBoardService, HardwareBoardService>();
             services.AddTransient<IHardwareInputTypeService, HardwareInputTypeService>();
+            services.AddTransient<IHardwareInputService, HardwareInputService>();
             services.AddTransient<IHardwareInputSelectorService, HardwareInputSelectorService>();
             services.AddTransient<IHardwareOutputTypeService, HardwareOutputTypeService>();
             services.AddTransient<IHardwareOutputSelectorService, HardwareOutputSelectorService>();
