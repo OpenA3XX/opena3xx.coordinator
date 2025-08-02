@@ -11,6 +11,7 @@ namespace OpenA3XX.Core.Models
         [MaxLength(100)]
         public string Name { get; set; }
         
+        public int? HardwareInputTypeId { get; set; }
         public virtual HardwareInputType HardwareInputType { get; set; }
 
         public IList<HardwareInputSelector> HardwareInputSelectorList { get; set; }

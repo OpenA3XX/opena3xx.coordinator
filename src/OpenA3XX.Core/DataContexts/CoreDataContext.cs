@@ -66,6 +66,32 @@ namespace OpenA3XX.Core.DataContexts
             modelBuilder.Entity<HardwareOutputType>()
                 .ToTable("HardwareOutputType");
 
+            // Configure foreign key relationships for HardwareInput
+            modelBuilder.Entity<HardwareInput>()
+                .HasOne(i => i.HardwareInputType)
+                .WithMany()
+                .HasForeignKey(i => i.HardwareInputTypeId)
+                .OnDelete(DeleteBehavior.Restrict);
+                
+            modelBuilder.Entity<HardwareInput>()
+                .HasOne(i => i.HardwarePanel)
+                .WithMany(p => p.HardwareInput)
+                .HasForeignKey(i => i.HardwarePanelId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Configure foreign key relationships for HardwareOutput
+            modelBuilder.Entity<HardwareOutput>()
+                .HasOne(o => o.HardwareOutputType)
+                .WithMany()
+                .HasForeignKey(o => o.HardwareOutputTypeId)
+                .OnDelete(DeleteBehavior.Restrict);
+                
+            modelBuilder.Entity<HardwareOutput>()
+                .HasOne(o => o.HardwarePanel)
+                .WithMany(p => p.HardwareOutput)
+                .HasForeignKey(o => o.HardwarePanelId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             // Configure enum conversions for SimulatorEvent
             modelBuilder.Entity<SimulatorEvent>()
                 .Property(e => e.SimulatorEventType)
