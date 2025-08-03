@@ -20,5 +20,8 @@ namespace OpenA3XX.Core.Services
         
         MapExtenderBitToHardwareOutputSelectorDto GetHardwareBoardAssociationForHardwareOutputSelector(
             int hardwareOutputSelectorId);
+        
+        void Delete(int id);
+        HardwareBoardDto Update(HardwareBoardDto hardwareBoardDto);
     }
 }

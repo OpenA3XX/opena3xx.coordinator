@@ -40,9 +40,47 @@ namespace OpenA3XX.Core.Repositories
         
         
 
-        public HardwareOutputSelector UpdateHardwareOutputSelector(HardwareOutputSelector hardwareInputSelector)
+        public HardwareOutputSelector AddHardwareOutputSelector(HardwareOutputSelector hardwareOutputSelector)
         {
-            return Update(hardwareInputSelector, hardwareInputSelector.Id);
+            Logger.LogInformation("Adding new hardware output selector: {Name} for hardware output {HardwareOutputId}", 
+                hardwareOutputSelector.Name, hardwareOutputSelector.HardwareOutputId);
+            
+            var result = Add(hardwareOutputSelector);
+            Save(); // Explicit save since base repository no longer auto-saves
+            
+            Logger.LogInformation("Successfully added hardware output selector: {Name} (ID: {Id}) for hardware output {HardwareOutputId}", 
+                result.Name, result.Id, result.HardwareOutputId);
+            
+            return result;
+        }
+
+        public HardwareOutputSelector UpdateHardwareOutputSelector(HardwareOutputSelector hardwareOutputSelector)
+        {
+            return Update(hardwareOutputSelector, hardwareOutputSelector.Id);
+        }
+
+        /// <summary>
+        /// Deletes a hardware output selector by its ID
+        /// </summary>
+        /// <param name="id">The hardware output selector ID to delete</param>
+        public void DeleteHardwareOutputSelector(int id)
+        {
+            Logger.LogInformation("Deleting hardware output selector with ID: {Id}", id);
+            
+            var hardwareOutputSelector = Get(id);
+            if (hardwareOutputSelector != null)
+            {
+                Delete(hardwareOutputSelector);
+                Save(); // Explicit save since base repository no longer auto-saves
+                
+                Logger.LogInformation("Successfully deleted hardware output selector: {Name} (ID: {Id})", 
+                    hardwareOutputSelector.Name, hardwareOutputSelector.Id);
+            }
+            else
+            {
+                Logger.LogWarning("Failed to delete hardware output selector with ID {Id} - not found", id);
+                throw new OpenA3XX.Core.Exceptions.EntityNotFoundException("HardwareOutputSelector", id);
+            }
         }
     }
 }

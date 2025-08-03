@@ -12,5 +12,6 @@ namespace OpenA3XX.Core.Repositories
         HardwareInputType AddHardwareInputType(HardwareInputType hardwareInputType);
 
         HardwareInputType UpdateHardwareInputType(HardwareInputType hardwareInputType);
+        void DeleteHardwareInputType(int id);
     }
 }

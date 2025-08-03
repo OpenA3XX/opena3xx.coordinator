@@ -37,5 +37,41 @@ namespace OpenA3XX.Core.Repositories
         {
             return Update(hardwareOutputType, hardwareOutputType.Id);
         }
+
+        /// <summary>
+        /// Deletes a hardware output type by its ID
+        /// </summary>
+        /// <param name="id">The hardware output type ID to delete</param>
+        public void DeleteHardwareOutputType(int id)
+        {
+            Logger.LogInformation("Deleting hardware output type with ID: {Id}", id);
+            
+            var hardwareOutputType = Get(id);
+            if (hardwareOutputType != null)
+            {
+                // Check if there are any HardwareOutput entities using this type
+                var hardwareOutputsUsingType = Context.Set<HardwareOutput>()
+                    .Where(ho => ho.HardwareOutputTypeId == id)
+                    .ToList();
+                
+                if (hardwareOutputsUsingType.Any())
+                {
+                    Logger.LogWarning("Cannot delete hardware output type '{Name}' (ID: {Id}) - it is being used by {Count} hardware outputs", 
+                        hardwareOutputType.Name, hardwareOutputType.Id, hardwareOutputsUsingType.Count);
+                    throw new ValidationException($"Cannot delete hardware output type '{hardwareOutputType.Name}' - it is being used by {hardwareOutputsUsingType.Count} hardware outputs");
+                }
+                
+                Delete(hardwareOutputType);
+                Save(); // Explicit save since base repository no longer auto-saves
+                
+                Logger.LogInformation("Successfully deleted hardware output type: {Name} (ID: {Id})", 
+                    hardwareOutputType.Name, hardwareOutputType.Id);
+            }
+            else
+            {
+                Logger.LogWarning("Failed to delete hardware output type with ID {Id} - not found", id);
+                throw new EntityNotFoundException("HardwareOutputType", id);
+            }
+        }
     }
 }

@@ -12,5 +12,6 @@ namespace OpenA3XX.Core.Repositories
         HardwareOutputType AddHardwareOutputType(HardwareOutputType hardwareOutputType);
 
         HardwareOutputType UpdateHardwareOutputType(HardwareOutputType hardwareOutputType);
+        void DeleteHardwareOutputType(int id);
     }
 }

@@ -127,6 +127,20 @@ namespace OpenA3XX.Core.DataContexts
             modelBuilder.Entity<HardwarePanel>()
                 .Property(e => e.HardwarePanelOwner)
                 .HasConversion<int>();
+
+            // Configure HardwareBoard cascade delete relationships
+            modelBuilder.Entity<IOExtenderBus>()
+                .HasOne(b => b.HardwareBoard)
+                .WithMany(hb => hb.Buses)
+                .HasForeignKey(b => b.HardwareBoardId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Configure IOExtenderBit cascade delete relationships
+            modelBuilder.Entity<IOExtenderBit>()
+                .HasOne(bit => bit.IOExtenderBus)
+                .WithMany(bus => bus.Bits)
+                .HasForeignKey(bit => bit.IOExtenderBusId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

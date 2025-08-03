@@ -4,6 +4,7 @@ using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using OpenA3XX.Core.Dtos;
+using OpenA3XX.Core.Exceptions;
 using OpenA3XX.Core.Models;
 using OpenA3XX.Core.Repositories;
 
@@ -173,6 +174,32 @@ namespace OpenA3XX.Core.Services
             // - HardwareInputSelector records (via HardwareInput)
             // - HardwareOutputSelector records (via HardwareOutput)
             _hardwarePanelRepository.DeleteHardwarePanel(id);
+        }
+
+        /// <summary>
+        /// Updates an existing hardware panel
+        /// </summary>
+        /// <param name="id">The hardware panel ID to update</param>
+        /// <param name="updateHardwarePanelDto">The hardware panel data to update</param>
+        /// <returns>The updated hardware panel</returns>
+        public HardwarePanelDto Update(int id, UpdateHardwarePanelDto updateHardwarePanelDto)
+        {
+            // Get the existing hardware panel
+            var existingHardwarePanel = _hardwarePanelRepository.GetHardwarePanelDetails(id);
+            if (existingHardwarePanel == null)
+            {
+                throw new EntityNotFoundException("HardwarePanel", id);
+            }
+
+            // Update the properties
+            existingHardwarePanel.Name = updateHardwarePanelDto.Name;
+            existingHardwarePanel.AircraftModel = _aircraftModelRepository.GetById(updateHardwarePanelDto.AircraftModel);
+            existingHardwarePanel.CockpitArea = (CockpitArea)updateHardwarePanelDto.CockpitArea;
+            existingHardwarePanel.HardwarePanelOwner = (HardwarePanelOwner)updateHardwarePanelDto.Owner;
+
+            // Save the updated hardware panel
+            var updatedHardwarePanel = _hardwarePanelRepository.UpdateHardwarePanel(existingHardwarePanel);
+            return _mapper.Map<HardwarePanel, HardwarePanelDto>(updatedHardwarePanel);
         }
     }
 }

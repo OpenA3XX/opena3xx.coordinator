@@ -10,6 +10,10 @@ namespace OpenA3XX.Core.Dtos
 
         public string HardwareOutputType { get; set; }
 
+        public int? HardwareOutputTypeId { get; set; }
+
+        public int HardwarePanelId { get; set; }
+
         public IList<HardwareOutputSelectorDto> HardwareOutputSelectors { get; set; }
     }
 }

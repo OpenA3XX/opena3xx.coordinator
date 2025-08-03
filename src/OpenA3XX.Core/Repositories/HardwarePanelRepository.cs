@@ -98,5 +98,24 @@ namespace OpenA3XX.Core.Repositories
                 throw new EntityNotFoundException("HardwarePanel", id);
             }
         }
+
+        /// <summary>
+        /// Updates an existing hardware panel
+        /// </summary>
+        /// <param name="hardwarePanel">The hardware panel to update</param>
+        /// <returns>The updated hardware panel</returns>
+        public HardwarePanel UpdateHardwarePanel(HardwarePanel hardwarePanel)
+        {
+            Logger.LogInformation("Updating hardware panel: {Name} (ID: {Id})", hardwarePanel.Name, hardwarePanel.Id);
+            
+            var result = Update(hardwarePanel, hardwarePanel.Id);
+            if (result != null)
+            {
+                Save(); // Explicit save since base repository no longer auto-saves
+                Logger.LogInformation("Successfully updated hardware panel: {Name} (ID: {Id})", hardwarePanel.Name, hardwarePanel.Id);
+            }
+            
+            return result;
+        }
     }
 }

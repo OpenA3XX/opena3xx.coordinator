@@ -12,5 +12,6 @@ namespace OpenA3XX.Core.Services
         HardwareInputTypeDto Add(HardwareInputTypeDto hardwareInputTypeDto);
 
         HardwareInputTypeDto Update(HardwareInputTypeDto hardwareInputTypeDto);
+        void Delete(int id);
     }
 }

@@ -8,6 +8,10 @@ namespace OpenA3XX.Core.Repositories
         IList<HardwareOutputSelector> GetAllOutputSelectors();
         HardwareOutputSelector GetHardwareOutputSelectorBy(int hardwareOutputSelectorId);
 
+        HardwareOutputSelector AddHardwareOutputSelector(HardwareOutputSelector hardwareOutputSelector);
+
         HardwareOutputSelector UpdateHardwareOutputSelector(HardwareOutputSelector hardwareOutputSelector);
+
+        void DeleteHardwareOutputSelector(int id);
     }
 }

@@ -294,5 +294,48 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
                 return StatusCode(500, new { error = ex.Message, stackTrace = ex.StackTrace });
             }
         }
+
+        /// <summary>
+        /// Deletes a hardware input type from the system
+        /// </summary>
+        /// <param name="hardwareInputTypeId">The unique identifier of the hardware input type to delete</param>
+        /// <returns>No content on successful deletion</returns>
+        /// <response code="204">If the hardware input type was successfully deleted</response>
+        /// <response code="404">If the hardware input type is not found</response>
+        /// <response code="400">If the hardware input type is being used by hardware inputs</response>
+        /// <response code="500">If an internal server error occurs</response>
+        [HttpDelete("{hardwareInputTypeId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorDto))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDto))]
+        public IActionResult DeleteHardwareInputType(int hardwareInputTypeId)
+        {
+            _logger.LogInformation("API Request: Deleting hardware input type with ID {Id}", hardwareInputTypeId);
+
+            try
+            {
+                _hardwareInputTypeService.Delete(hardwareInputTypeId);
+                
+                _logger.LogInformation("API Response: Successfully deleted hardware input type with ID {Id}", hardwareInputTypeId);
+                
+                return NoContent();
+            }
+            catch (EntityNotFoundException)
+            {
+                _logger.LogWarning("Hardware input type with ID {Id} not found for deletion", hardwareInputTypeId);
+                throw;
+            }
+            catch (ValidationException ex)
+            {
+                _logger.LogWarning("Cannot delete hardware input type with ID {Id}: {Message}", hardwareInputTypeId, ex.Message);
+                return BadRequest(ErrorDto.Create(ex.Message, "HARDWARE_INPUT_TYPE_IN_USE"));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to delete hardware input type with ID {Id}", hardwareInputTypeId);
+                throw;
+            }
+        }
     }
 }

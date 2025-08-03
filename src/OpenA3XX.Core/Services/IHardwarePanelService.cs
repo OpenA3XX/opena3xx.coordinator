@@ -24,5 +24,6 @@ namespace OpenA3XX.Core.Services
 
         HardwarePanelDto AddHardwarePanel(AddHardwarePanelDto hardwarePanelDto);
         void Delete(int id);
+        HardwarePanelDto Update(int id, UpdateHardwarePanelDto updateHardwarePanelDto);
     }
 }

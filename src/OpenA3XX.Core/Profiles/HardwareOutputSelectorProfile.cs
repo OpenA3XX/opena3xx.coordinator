@@ -8,7 +8,11 @@ namespace OpenA3XX.Core.Profiles
     {
         public HardwareOutputSelectorProfile()
         {
-            CreateMap<HardwareOutputSelector, HardwareOutputSelectorDto>();
+            CreateMap<HardwareOutputSelector, HardwareOutputSelectorDto>()
+                .ForMember(c => c.HardwareOutputId, m => m.MapFrom(c => c.HardwareOutputId));
+                
+            CreateMap<AddHardwareOutputSelectorDto, HardwareOutputSelector>()
+                .ForMember(c => c.HardwareOutputId, m => m.MapFrom(c => c.HardwareOutputId));
         }
     }
 }

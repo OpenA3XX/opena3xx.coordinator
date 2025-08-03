@@ -91,5 +91,41 @@ namespace OpenA3XX.Core.Repositories
             }
             return result;
         }
+
+        /// <summary>
+        /// Deletes a hardware input type by its ID
+        /// </summary>
+        /// <param name="id">The hardware input type ID to delete</param>
+        public void DeleteHardwareInputType(int id)
+        {
+            Logger.LogInformation("Deleting hardware input type with ID: {Id}", id);
+            
+            var hardwareInputType = Get(id);
+            if (hardwareInputType != null)
+            {
+                // Check if there are any HardwareInput entities using this type
+                var hardwareInputsUsingType = Context.Set<HardwareInput>()
+                    .Where(hi => hi.HardwareInputTypeId == id)
+                    .ToList();
+                
+                if (hardwareInputsUsingType.Any())
+                {
+                    Logger.LogWarning("Cannot delete hardware input type '{Name}' (ID: {Id}) - it is being used by {Count} hardware inputs", 
+                        hardwareInputType.Name, hardwareInputType.Id, hardwareInputsUsingType.Count);
+                    throw new ValidationException($"Cannot delete hardware input type '{hardwareInputType.Name}' - it is being used by {hardwareInputsUsingType.Count} hardware inputs");
+                }
+                
+                Delete(hardwareInputType);
+                Save(); // Explicit save since base repository no longer auto-saves
+                
+                Logger.LogInformation("Successfully deleted hardware input type: {Name} (ID: {Id})", 
+                    hardwareInputType.Name, hardwareInputType.Id);
+            }
+            else
+            {
+                Logger.LogWarning("Failed to delete hardware input type with ID {Id} - not found", id);
+                throw new EntityNotFoundException("HardwareInputType", id);
+            }
+        }
     }
 }

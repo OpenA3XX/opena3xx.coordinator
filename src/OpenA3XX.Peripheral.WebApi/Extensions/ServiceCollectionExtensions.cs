@@ -155,6 +155,11 @@ namespace OpenA3XX.Peripheral.WebApi.Extensions
                 new HardwareInputRepository(
                     provider.GetRequiredService<DbContext>(),
                     provider.GetRequiredService<ILogger<BaseRepository<HardwareInput>>>()));
+                    
+            services.AddTransient<IHardwareOutputRepository>(provider =>
+                new HardwareOutputRepository(
+                    provider.GetRequiredService<DbContext>(),
+                    provider.GetRequiredService<ILogger<BaseRepository<HardwareOutput>>>()));
             
             return services;
         }
@@ -171,6 +176,7 @@ namespace OpenA3XX.Peripheral.WebApi.Extensions
             services.AddTransient<IHardwareBoardService, HardwareBoardService>();
             services.AddTransient<IHardwareInputTypeService, HardwareInputTypeService>();
             services.AddTransient<IHardwareInputService, HardwareInputService>();
+            services.AddTransient<IHardwareOutputService, HardwareOutputService>();
             services.AddTransient<IHardwareInputSelectorService, HardwareInputSelectorService>();
             services.AddTransient<IHardwareOutputTypeService, HardwareOutputTypeService>();
             services.AddTransient<IHardwareOutputSelectorService, HardwareOutputSelectorService>();

@@ -52,5 +52,14 @@ namespace OpenA3XX.Core.Services
             hardwareOutputTypeDto = _mapper.Map<HardwareOutputType, HardwareOutputTypeDto>(hardwareOutputType);
             return hardwareOutputTypeDto;
         }
+
+        /// <summary>
+        /// Deletes a hardware output type by its ID
+        /// </summary>
+        /// <param name="id">The hardware output type ID to delete</param>
+        public void Delete(int id)
+        {
+            _hardwareOutputTypesRepository.DeleteHardwareOutputType(id);
+        }
     }
 }

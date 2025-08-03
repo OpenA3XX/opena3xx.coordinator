@@ -52,5 +52,14 @@ namespace OpenA3XX.Core.Services
             hardwareInputTypeDto = _mapper.Map<HardwareInputType, HardwareInputTypeDto>(hardwareInputType);
             return hardwareInputTypeDto;
         }
+
+        /// <summary>
+        /// Deletes a hardware input type by its ID
+        /// </summary>
+        /// <param name="id">The hardware input type ID to delete</param>
+        public void Delete(int id)
+        {
+            _hardwareInputTypesRepository.DeleteHardwareInputType(id);
+        }
     }
 }

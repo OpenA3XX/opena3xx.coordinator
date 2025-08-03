@@ -45,6 +45,12 @@ namespace OpenA3XX.Core.Profiles
                 .ForMember(c => c.Name, m => m.MapFrom(c => c.HardwarePanelName))
                 .ForMember(c => c.HardwarePanelOwner, m => m.MapFrom(c => c.HardwarePanelOwner));
 
+            CreateMap<UpdateHardwarePanelDto, HardwarePanel>()
+                .ForMember(c => c.AircraftModelId, m => m.MapFrom(c => c.AircraftModel))
+                .ForMember(c => c.CockpitArea, m => m.MapFrom(c => c.CockpitArea))
+                .ForMember(c => c.Name, m => m.MapFrom(c => c.Name))
+                .ForMember(c => c.HardwarePanelOwner, m => m.MapFrom(c => c.Owner));
+
 
 
         }

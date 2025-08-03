@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using OpenA3XX.Core.Exceptions;
 using OpenA3XX.Core.Models;
 using OpenA3XX.Core.Repositories.Base;
 using OpenA3XX.Core.Repositories.Extensions;
@@ -93,6 +94,34 @@ namespace OpenA3XX.Core.Repositories
                 Save();
             }
             return result;
+        }
+
+        /// <summary>
+        /// Deletes a hardware board and all its associated entities (cascade delete)
+        /// </summary>
+        /// <param name="id">The hardware board ID to delete</param>
+        public void DeleteHardwareBoard(int id)
+        {
+            Logger.LogInformation("Deleting hardware board with ID: {Id} and all associated entities", id);
+            
+            var hardwareBoard = Get(id);
+            if (hardwareBoard != null)
+            {
+                // Due to cascade delete configuration in CoreDataContext:
+                // - IOExtenderBus records will be automatically deleted
+                // - IOExtenderBit records will be automatically deleted (via IOExtenderBus)
+                
+                Delete(hardwareBoard);
+                Save(); // Explicit save since base repository no longer auto-saves
+                
+                Logger.LogInformation("Successfully deleted hardware board: {Name} (ID: {Id}) and all associated entities", 
+                    hardwareBoard.Name, hardwareBoard.Id);
+            }
+            else
+            {
+                Logger.LogWarning("Failed to delete hardware board with ID {Id} - not found", id);
+                throw new EntityNotFoundException("HardwareBoard", id);
+            }
         }
     }
 }

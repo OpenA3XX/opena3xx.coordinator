@@ -21,10 +21,22 @@ namespace OpenA3XX.Core.Services
         {
             var hardwareOutputSelector =
                 _hardwareOutputSelectorRepository.GetHardwareOutputSelectorBy(hardwareOutputSelectorId);
-            var hardwareInputSelectorDto =
+            var hardwareOutputSelectorDto =
                 _mapper.Map<HardwareOutputSelector, HardwareOutputSelectorDto>(hardwareOutputSelector);
-            return hardwareInputSelectorDto;
+            return hardwareOutputSelectorDto;
         }
-        
+
+        public HardwareOutputSelectorDto Add(AddHardwareOutputSelectorDto addHardwareOutputSelectorDto)
+        {
+            var hardwareOutputSelector = _mapper.Map<AddHardwareOutputSelectorDto, HardwareOutputSelector>(addHardwareOutputSelectorDto);
+            hardwareOutputSelector = _hardwareOutputSelectorRepository.AddHardwareOutputSelector(hardwareOutputSelector);
+            var hardwareOutputSelectorDto = _mapper.Map<HardwareOutputSelector, HardwareOutputSelectorDto>(hardwareOutputSelector);
+            return hardwareOutputSelectorDto;
+        }
+
+        public void Delete(int id)
+        {
+            _hardwareOutputSelectorRepository.DeleteHardwareOutputSelector(id);
+        }
     }
 }
