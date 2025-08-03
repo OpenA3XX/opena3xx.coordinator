@@ -135,6 +135,8 @@ namespace OpenA3XX.Core.Services
         /// <param name="id">The hardware input ID to delete</param>
         public void Delete(int id)
         {
+            // Note: With the cascade delete configuration in CoreDataContext,
+            // related HardwareInputSelector records will be automatically deleted
             _hardwareInputRepository.DeleteHardwareInput(id);
         }
 

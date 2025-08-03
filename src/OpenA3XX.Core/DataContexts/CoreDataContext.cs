@@ -79,6 +79,13 @@ namespace OpenA3XX.Core.DataContexts
                 .HasForeignKey(i => i.HardwarePanelId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            // Configure HardwareInputSelector relationship with cascade delete
+            modelBuilder.Entity<HardwareInputSelector>()
+                .HasOne(s => s.HardwareInput)
+                .WithMany(i => i.HardwareInputSelectorList)
+                .HasForeignKey(s => s.HardwareInputId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             // Configure foreign key relationships for HardwareOutput
             modelBuilder.Entity<HardwareOutput>()
                 .HasOne(o => o.HardwareOutputType)
@@ -90,6 +97,13 @@ namespace OpenA3XX.Core.DataContexts
                 .HasOne(o => o.HardwarePanel)
                 .WithMany(p => p.HardwareOutput)
                 .HasForeignKey(o => o.HardwarePanelId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Configure HardwareOutputSelector relationship with cascade delete
+            modelBuilder.Entity<HardwareOutputSelector>()
+                .HasOne(s => s.HardwareOutput)
+                .WithMany(o => o.HardwareOutputSelectorList)
+                .HasForeignKey(s => s.HardwareOutputId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             // Configure enum conversions for SimulatorEvent

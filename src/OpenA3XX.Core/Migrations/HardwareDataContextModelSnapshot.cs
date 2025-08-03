@@ -50,7 +50,7 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
 
                     b.HasIndex("ManufacturerId");
 
-                    b.ToTable("AircraftModels");
+                    b.ToTable("AircraftModels", (string)null);
                 });
 
             modelBuilder.Entity("OpenA3XX.Core.Models.HardwareBoard", b =>
@@ -64,7 +64,7 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("HardwareBoards");
+                    b.ToTable("HardwareBoards", (string)null);
                 });
 
             modelBuilder.Entity("OpenA3XX.Core.Models.HardwareInput", b =>
@@ -88,7 +88,7 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
 
                     b.HasIndex("HardwarePanelId");
 
-                    b.ToTable("HardwareInputs");
+                    b.ToTable("HardwareInputs", (string)null);
                 });
 
             modelBuilder.Entity("OpenA3XX.Core.Models.HardwareInputSelector", b =>
@@ -112,7 +112,7 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
 
                     b.HasIndex("SimulatorEventId");
 
-                    b.ToTable("HardwareInputSelectors");
+                    b.ToTable("HardwareInputSelectors", (string)null);
                 });
 
             modelBuilder.Entity("OpenA3XX.Core.Models.HardwareInputType", b =>
@@ -126,7 +126,7 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("HardwareInputType");
+                    b.ToTable("HardwareInputType", (string)null);
                 });
 
             modelBuilder.Entity("OpenA3XX.Core.Models.HardwareOutput", b =>
@@ -150,7 +150,7 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
 
                     b.HasIndex("HardwarePanelId");
 
-                    b.ToTable("HardwareOutputs");
+                    b.ToTable("HardwareOutputs", (string)null);
                 });
 
             modelBuilder.Entity("OpenA3XX.Core.Models.HardwareOutputSelector", b =>
@@ -169,7 +169,7 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
 
                     b.HasIndex("HardwareOutputId");
 
-                    b.ToTable("HardwareOutputSelectors");
+                    b.ToTable("HardwareOutputSelectors", (string)null);
                 });
 
             modelBuilder.Entity("OpenA3XX.Core.Models.HardwareOutputType", b =>
@@ -183,7 +183,7 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("HardwareOutputType");
+                    b.ToTable("HardwareOutputType", (string)null);
                 });
 
             modelBuilder.Entity("OpenA3XX.Core.Models.HardwarePanel", b =>
@@ -208,7 +208,7 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
 
                     b.HasIndex("AircraftModelId");
 
-                    b.ToTable("HardwarePanels");
+                    b.ToTable("HardwarePanels", (string)null);
                 });
 
             modelBuilder.Entity("OpenA3XX.Core.Models.HardwarePanelToken", b =>
@@ -236,7 +236,7 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
 
                     b.HasIndex("HardwarePanelId");
 
-                    b.ToTable("HardwarePanelTokens");
+                    b.ToTable("HardwarePanelTokens", (string)null);
                 });
 
             modelBuilder.Entity("OpenA3XX.Core.Models.IOExtenderBit", b =>
@@ -268,7 +268,7 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
 
                     b.HasIndex("IOExtenderBusId");
 
-                    b.ToTable("IOExtenderBits");
+                    b.ToTable("IOExtenderBits", (string)null);
                 });
 
             modelBuilder.Entity("OpenA3XX.Core.Models.IOExtenderBus", b =>
@@ -287,7 +287,7 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
 
                     b.HasIndex("HardwareBoardId");
 
-                    b.ToTable("IOExtenderBuses");
+                    b.ToTable("IOExtenderBuses", (string)null);
                 });
 
             modelBuilder.Entity("OpenA3XX.Core.Models.Manufacturer", b =>
@@ -303,7 +303,7 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
 
                     b.HasIndex("Id");
 
-                    b.ToTable("Manufacturers");
+                    b.ToTable("Manufacturers", (string)null);
                 });
 
             modelBuilder.Entity("OpenA3XX.Core.Models.SimulatorEvent", b =>
@@ -332,7 +332,7 @@ namespace OpenA3XX.Coordinator.TestHarness.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SimulatorEvents");
+                    b.ToTable("SimulatorEvents", (string)null);
                 });
 
             modelBuilder.Entity("OpenA3XX.Core.Models.AircraftModel", b =>
