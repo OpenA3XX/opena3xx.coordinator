@@ -21,6 +21,18 @@ namespace OpenA3XX.Core.Services
         MapExtenderBitToHardwareOutputSelectorDto GetHardwareBoardAssociationForHardwareOutputSelector(
             int hardwareOutputSelectorId);
         
+        /// <summary>
+        /// Unmaps a hardware input selector from its current hardware board association
+        /// </summary>
+        /// <param name="hardwareInputSelectorId">The ID of the hardware input selector to unmap</param>
+        void UnmapHardwareInputSelector(int hardwareInputSelectorId);
+        
+        /// <summary>
+        /// Unmaps a hardware output selector from its current hardware board association
+        /// </summary>
+        /// <param name="hardwareOutputSelectorId">The ID of the hardware output selector to unmap</param>
+        void UnmapHardwareOutputSelector(int hardwareOutputSelectorId);
+        
         void Delete(int id);
         HardwareBoardDto Update(HardwareBoardDto hardwareBoardDto);
     }

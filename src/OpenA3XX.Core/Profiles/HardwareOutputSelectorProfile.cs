@@ -9,7 +9,8 @@ namespace OpenA3XX.Core.Profiles
         public HardwareOutputSelectorProfile()
         {
             CreateMap<HardwareOutputSelector, HardwareOutputSelectorDto>()
-                .ForMember(c => c.HardwareOutputId, m => m.MapFrom(c => c.HardwareOutputId));
+                .ForMember(c => c.HardwareOutputId, m => m.MapFrom(c => c.HardwareOutputId))
+                .ForMember(c => c.SimulatorEventDto, m => m.Ignore()); // HardwareOutputSelector doesn't have SimulatorEvent
                 
             CreateMap<AddHardwareOutputSelectorDto, HardwareOutputSelector>()
                 .ForMember(c => c.HardwareOutputId, m => m.MapFrom(c => c.HardwareOutputId));

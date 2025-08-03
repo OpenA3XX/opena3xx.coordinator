@@ -123,12 +123,84 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
             var linkExtenderBitToHardwareInputSelectorDto = _hardwareBoardService.GetHardwareBoardAssociationForHardwareInputSelector(hardwareInputSelectorId);
             return linkExtenderBitToHardwareInputSelectorDto;
         }
+
+        /// <summary>
+        /// Unmaps a hardware input selector from its current hardware board association
+        /// </summary>
+        /// <param name="hardwareInputSelectorId">The ID of the hardware input selector to unmap</param>
+        /// <returns>No content on successful unmapping</returns>
+        /// <response code="204">If the hardware input selector was successfully unmapped</response>
+        /// <response code="404">If the hardware input selector is not found or not mapped</response>
+        /// <response code="500">If an internal server error occurs</response>
+        [HttpDelete("unmap/hardware-input-selector/{hardwareInputSelectorId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDto))]
+        public IActionResult UnmapHardwareInputSelector(int hardwareInputSelectorId)
+        {
+            _logger.LogInformation("API Request: Unmapping hardware input selector with ID {Id}", hardwareInputSelectorId);
+
+            try
+            {
+                _hardwareBoardService.UnmapHardwareInputSelector(hardwareInputSelectorId);
+                
+                _logger.LogInformation("API Response: Successfully unmapped hardware input selector with ID {Id}", hardwareInputSelectorId);
+                
+                return NoContent();
+            }
+            catch (EntityNotFoundException)
+            {
+                _logger.LogWarning("Hardware input selector with ID {Id} not found for unmapping", hardwareInputSelectorId);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to unmap hardware input selector with ID {Id}", hardwareInputSelectorId);
+                throw;
+            }
+        }
         
         [HttpGet("hardware-output-selector/{hardwareOutputSelectorId}")]
         public MapExtenderBitToHardwareOutputSelectorDto GetHardwareBoardAssociationForHardwareOutputSelector(int hardwareOutputSelectorId)
         {
             var linkExtenderBitToHardwareOutputSelectorDto = _hardwareBoardService.GetHardwareBoardAssociationForHardwareOutputSelector(hardwareOutputSelectorId);
             return linkExtenderBitToHardwareOutputSelectorDto;
+        }
+
+        /// <summary>
+        /// Unmaps a hardware output selector from its current hardware board association
+        /// </summary>
+        /// <param name="hardwareOutputSelectorId">The ID of the hardware output selector to unmap</param>
+        /// <returns>No content on successful unmapping</returns>
+        /// <response code="204">If the hardware output selector was successfully unmapped</response>
+        /// <response code="404">If the hardware output selector is not found or not mapped</response>
+        /// <response code="500">If an internal server error occurs</response>
+        [HttpDelete("unmap/hardware-output-selector/{hardwareOutputSelectorId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDto))]
+        public IActionResult UnmapHardwareOutputSelector(int hardwareOutputSelectorId)
+        {
+            _logger.LogInformation("API Request: Unmapping hardware output selector with ID {Id}", hardwareOutputSelectorId);
+
+            try
+            {
+                _hardwareBoardService.UnmapHardwareOutputSelector(hardwareOutputSelectorId);
+                
+                _logger.LogInformation("API Response: Successfully unmapped hardware output selector with ID {Id}", hardwareOutputSelectorId);
+                
+                return NoContent();
+            }
+            catch (EntityNotFoundException)
+            {
+                _logger.LogWarning("Hardware output selector with ID {Id} not found for unmapping", hardwareOutputSelectorId);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to unmap hardware output selector with ID {Id}", hardwareOutputSelectorId);
+                throw;
+            }
         }
 
         /// <summary>

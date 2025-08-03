@@ -157,6 +157,34 @@ namespace OpenA3XX.Core.Services
 
             return linkExtenderBitToHardwareInputSelectorDto;
         }
+
+        /// <summary>
+        /// Unmaps a hardware input selector from its current hardware board association
+        /// </summary>
+        /// <param name="hardwareInputSelectorId">The ID of the hardware input selector to unmap</param>
+        public void UnmapHardwareInputSelector(int hardwareInputSelectorId)
+        {
+            // Find the current mapping for the hardware input selector
+            var currentMapping = GetHardwareBoardAssociationForHardwareInputSelector(hardwareInputSelectorId);
+            
+            // If no mapping exists, there's nothing to unmap
+            if (currentMapping.HardwareBoardId == 0)
+            {
+                return;
+            }
+
+            // Get the hardware board and remove the mapping
+            var hardwareBoard = _hardwareBoardRepository.GetByHardwareBoard(currentMapping.HardwareBoardId);
+            var bus = hardwareBoard.Buses.First(c => c.Id == currentMapping.HardwareExtenderBusId);
+            var bit = bus.Bits.First(c => c.Id == currentMapping.HardwareExtenderBusBitId);
+            
+            // Set the HardwareInputSelectorId to null to unmap
+            bit.HardwareInputSelectorId = null;
+            bit.HardwareInputSelector = null;
+            
+            // Save the changes
+            _hardwareBoardRepository.UpdateHardwareBoard(hardwareBoard);
+        }
         
         public MapExtenderBitToHardwareOutputSelectorDto GetHardwareBoardAssociationForHardwareOutputSelector(
             int hardwareOutputSelectorId)
@@ -183,6 +211,34 @@ namespace OpenA3XX.Core.Services
             }
 
             return linkExtenderBitToHardwareOutputSelectorDto;
+        }
+
+        /// <summary>
+        /// Unmaps a hardware output selector from its current hardware board association
+        /// </summary>
+        /// <param name="hardwareOutputSelectorId">The ID of the hardware output selector to unmap</param>
+        public void UnmapHardwareOutputSelector(int hardwareOutputSelectorId)
+        {
+            // Find the current mapping for the hardware output selector
+            var currentMapping = GetHardwareBoardAssociationForHardwareOutputSelector(hardwareOutputSelectorId);
+            
+            // If no mapping exists, there's nothing to unmap
+            if (currentMapping.HardwareBoardId == 0)
+            {
+                return;
+            }
+
+            // Get the hardware board and remove the mapping
+            var hardwareBoard = _hardwareBoardRepository.GetByHardwareBoard(currentMapping.HardwareBoardId);
+            var bus = hardwareBoard.Buses.First(c => c.Id == currentMapping.HardwareExtenderBusId);
+            var bit = bus.Bits.First(c => c.Id == currentMapping.HardwareExtenderBusBitId);
+            
+            // Set the HardwareOutputSelectorId to null to unmap
+            bit.HardwareOutputSelectorId = null;
+            bit.HardwareOutputSelector = null;
+            
+            // Save the changes
+            _hardwareBoardRepository.UpdateHardwareBoard(hardwareBoard);
         }
 
         /// <summary>

@@ -143,6 +143,35 @@ namespace OpenA3XX.Core.Services
                     }
                 }
             }
+
+            foreach (var hardwareInput in hardwarePanelDto.HardwareOutputs)
+            {
+                if (hardwareInput.HardwareOutputSelectors != null)
+                {
+                    foreach (var hardwareOutputSelector in hardwareInput.HardwareOutputSelectors)
+                    {
+                        foreach (var hardwareBoard in hardwareBoards)
+                        {
+                            if (hardwareBoard.Buses != null)
+                            {
+                                foreach (var bus in hardwareBoard.Buses)
+                                {
+                                    if (bus.Bits != null)
+                                    {
+                                        foreach (var bit in bus.Bits)
+                                        {
+                                            if (bit.HardwareOutputSelector != null && bit.HardwareOutputSelector.Id == hardwareOutputSelector.Id)
+                                            {
+                                                hardwareOutputSelector.IsHardwareOutputSelectorMappedWithHardware = true;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
             
             return hardwarePanelDto;
         }
