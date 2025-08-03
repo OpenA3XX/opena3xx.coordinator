@@ -8,6 +8,8 @@ namespace OpenA3XX.Core.Repositories
         IList<HardwareInputSelector> GetAllInputSelectors();
         HardwareInputSelector GetHardwareInputSelectorBy(int hardwareInputSelectorId);
 
+        HardwareInputSelector AddHardwareInputSelector(HardwareInputSelector hardwareInputSelector);
         HardwareInputSelector UpdateHardwareInputSelector(HardwareInputSelector hardwareInputSelector);
+        void DeleteHardwareInputSelector(int id);
     }
 }

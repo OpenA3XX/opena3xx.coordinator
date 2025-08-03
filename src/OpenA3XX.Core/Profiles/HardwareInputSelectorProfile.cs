@@ -9,7 +9,11 @@ namespace OpenA3XX.Core.Profiles
         public HardwareInputSelectorProfile()
         {
             CreateMap<HardwareInputSelector, HardwareInputSelectorDto>()
-                .ForMember(c => c.SimulatorEventDto, m => m.MapFrom(c => c.SimulatorEvent));
+                .ForMember(c => c.SimulatorEventDto, m => m.MapFrom(c => c.SimulatorEvent))
+                .ForMember(c => c.HardwareInputId, m => m.MapFrom(c => c.HardwareInputId));
+                
+            CreateMap<AddHardwareInputSelectorDto, HardwareInputSelector>()
+                .ForMember(c => c.HardwareInputId, m => m.MapFrom(c => c.HardwareInputId));
         }
     }
 }

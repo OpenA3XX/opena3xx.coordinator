@@ -6,6 +6,8 @@
 
         public string Name { get; set; }
 
+        public int HardwareInputId { get; set; }
+
         public bool IsHardwareInputSelectorMappedWithHardware { get; set; }
         public SimulatorEventDto SimulatorEventDto { get; set; }
     }

@@ -25,6 +25,19 @@ namespace OpenA3XX.Core.Services
                 _mapper.Map<HardwareInputSelector, HardwareInputSelectorDto>(hardwareInputSelector);
             return hardwareInputSelectorDto;
         }
+
+        public HardwareInputSelectorDto Add(AddHardwareInputSelectorDto addHardwareInputSelectorDto)
+        {
+            var hardwareInputSelector = _mapper.Map<AddHardwareInputSelectorDto, HardwareInputSelector>(addHardwareInputSelectorDto);
+            hardwareInputSelector = _hardwareInputSelectorRepository.AddHardwareInputSelector(hardwareInputSelector);
+            var hardwareInputSelectorDto = _mapper.Map<HardwareInputSelector, HardwareInputSelectorDto>(hardwareInputSelector);
+            return hardwareInputSelectorDto;
+        }
+
+        public void Delete(int id)
+        {
+            _hardwareInputSelectorRepository.DeleteHardwareInputSelector(id);
+        }
         
     }
 }

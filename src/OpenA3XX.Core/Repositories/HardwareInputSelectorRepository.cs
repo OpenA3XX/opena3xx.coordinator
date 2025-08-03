@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using OpenA3XX.Core.Exceptions;
 using OpenA3XX.Core.Models;
 using OpenA3XX.Core.Repositories.Base;
 using OpenA3XX.Core.Repositories.Extensions;
@@ -43,9 +44,42 @@ namespace OpenA3XX.Core.Repositories
         
         
 
+        public HardwareInputSelector AddHardwareInputSelector(HardwareInputSelector hardwareInputSelector)
+        {
+            Logger.LogInformation("Adding new hardware input selector: {Name} for hardware input {HardwareInputId}", 
+                hardwareInputSelector.Name, hardwareInputSelector.HardwareInputId);
+            
+            var result = Add(hardwareInputSelector);
+            Save(); // Explicit save since base repository no longer auto-saves
+            
+            Logger.LogInformation("Successfully added hardware input selector: {Name} (ID: {Id}) for hardware input {HardwareInputId}", 
+                result.Name, result.Id, result.HardwareInputId);
+            
+            return result;
+        }
+
         public HardwareInputSelector UpdateHardwareInputSelector(HardwareInputSelector hardwareInputSelector)
         {
             return Update(hardwareInputSelector, hardwareInputSelector.Id);
+        }
+
+        public void DeleteHardwareInputSelector(int id)
+        {
+            Logger.LogInformation("Deleting hardware input selector with ID: {Id}", id);
+            
+            var hardwareInputSelector = Get(id);
+            if (hardwareInputSelector != null)
+            {
+                Delete(hardwareInputSelector);
+                Save(); // Explicit save since base repository no longer auto-saves
+                Logger.LogInformation("Successfully deleted hardware input selector: {Name} (ID: {Id})", 
+                    hardwareInputSelector.Name, hardwareInputSelector.Id);
+            }
+            else
+            {
+                Logger.LogWarning("Failed to delete hardware input selector with ID {Id} - not found", id);
+                throw new EntityNotFoundException("HardwareInputSelector", id);
+            }
         }
     }
 }
