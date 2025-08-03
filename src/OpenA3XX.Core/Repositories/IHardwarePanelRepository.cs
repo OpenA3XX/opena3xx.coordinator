@@ -9,5 +9,6 @@ namespace OpenA3XX.Core.Repositories
         IList<HardwarePanel> GetAllHardwarePanels();
 
         HardwarePanel GetHardwarePanelDetails(int id);
+        void DeleteHardwarePanel(int id);
     }
 }

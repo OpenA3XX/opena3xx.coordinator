@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using OpenA3XX.Core.Exceptions;
 using OpenA3XX.Core.Models;
 using OpenA3XX.Core.Repositories.Base;
 using OpenA3XX.Core.Repositories.Extensions;
@@ -66,6 +67,36 @@ namespace OpenA3XX.Core.Repositories
             }
             
             return result;
+        }
+
+        /// <summary>
+        /// Deletes a hardware panel and all its associated entities (cascade delete)
+        /// </summary>
+        /// <param name="id">The hardware panel ID to delete</param>
+        public void DeleteHardwarePanel(int id)
+        {
+            Logger.LogInformation("Deleting hardware panel with ID: {Id} and all associated entities", id);
+            
+            var hardwarePanel = Get(id);
+            if (hardwarePanel != null)
+            {
+                // Due to cascade delete configuration in CoreDataContext:
+                // - HardwareInput records will be automatically deleted
+                // - HardwareOutput records will be automatically deleted  
+                // - HardwareInputSelector records will be automatically deleted (via HardwareInput)
+                // - HardwareOutputSelector records will be automatically deleted (via HardwareOutput)
+                
+                Delete(hardwarePanel);
+                Save(); // Explicit save since base repository no longer auto-saves
+                
+                Logger.LogInformation("Successfully deleted hardware panel: {Name} (ID: {Id}) and all associated entities", 
+                    hardwarePanel.Name, hardwarePanel.Id);
+            }
+            else
+            {
+                Logger.LogWarning("Failed to delete hardware panel with ID {Id} - not found", id);
+                throw new EntityNotFoundException("HardwarePanel", id);
+            }
         }
     }
 }

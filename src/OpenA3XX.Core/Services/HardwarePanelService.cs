@@ -159,5 +159,20 @@ namespace OpenA3XX.Core.Services
             hardwarePanel = _hardwarePanelRepository.AddHardwarePanel(hardwarePanel);
             return _mapper.Map<HardwarePanel, HardwarePanelDto>(hardwarePanel);
         }
+
+        /// <summary>
+        /// Deletes a hardware panel and all its associated entities (cascade delete)
+        /// </summary>
+        /// <param name="id">The hardware panel ID to delete</param>
+        public void Delete(int id)
+        {
+            // Note: With the cascade delete configuration in CoreDataContext,
+            // all related entities will be automatically deleted:
+            // - HardwareInput records
+            // - HardwareOutput records  
+            // - HardwareInputSelector records (via HardwareInput)
+            // - HardwareOutputSelector records (via HardwareOutput)
+            _hardwarePanelRepository.DeleteHardwarePanel(id);
+        }
     }
 }
