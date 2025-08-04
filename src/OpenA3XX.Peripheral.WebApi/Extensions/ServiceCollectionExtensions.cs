@@ -9,9 +9,17 @@ using Microsoft.OpenApi.Models;
 using OpenA3XX.Core.Configuration;
 using OpenA3XX.Core.DataContexts;
 using OpenA3XX.Core.Models;
-using OpenA3XX.Core.Repositories;
+using OpenA3XX.Core.Repositories.Hardware;
+using OpenA3XX.Core.Repositories.Aircraft;
+using OpenA3XX.Core.Repositories.Simulation;
+using OpenA3XX.Core.Repositories.Search;
 using OpenA3XX.Core.Repositories.Base;
-using OpenA3XX.Core.Services;
+using OpenA3XX.Core.Services.Hardware;
+using OpenA3XX.Core.Services.Aircraft;
+using OpenA3XX.Core.Services.Integration;
+using OpenA3XX.Core.Services.Simulation;
+using OpenA3XX.Core.Services.System;
+using OpenA3XX.Core.Services.Search;
 using OpenA3XX.Peripheral.WebApi.Hubs;
 using Microsoft.Extensions.Logging;
 
@@ -160,6 +168,11 @@ namespace OpenA3XX.Peripheral.WebApi.Extensions
                 new HardwareOutputRepository(
                     provider.GetRequiredService<DbContext>(),
                     provider.GetRequiredService<ILogger<BaseRepository<HardwareOutput>>>()));
+                    
+            services.AddTransient<ISearchRepository>(provider =>
+                new SearchRepository(
+                    provider.GetRequiredService<CoreDataContext>(),
+                    provider.GetRequiredService<ILogger<SearchRepository>>()));
             
             return services;
         }
@@ -186,6 +199,7 @@ namespace OpenA3XX.Peripheral.WebApi.Extensions
             services.AddTransient<ISimulatorEventingService, SimulatorEventingService>();
             services.AddTransient<IFlightIntegrationService, FlightIntegrationService>();
             services.AddTransient<IHubHopIntegrationService, HubHopIntegrationService>();
+            services.AddTransient<ISearchService, SearchService>();
             
             return services;
         }

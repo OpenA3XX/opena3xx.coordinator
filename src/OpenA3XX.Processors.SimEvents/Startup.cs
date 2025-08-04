@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using OpenA3XX.Core.Logging;
-using OpenA3XX.Core.Repositories;
+using OpenA3XX.Core.Repositories.Simulation;
 using OpenA3XX.Core.Sockets.Handlers;
 
 namespace OpenA3XX.Coordinator.SimulatorEventProcessor

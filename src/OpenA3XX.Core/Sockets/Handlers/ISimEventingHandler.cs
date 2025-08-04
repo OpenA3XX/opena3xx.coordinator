@@ -1,7 +1,7 @@
 ﻿using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
-using OpenA3XX.Core.Repositories;
+using OpenA3XX.Core.Repositories.Simulation;
 
 namespace OpenA3XX.Core.Sockets.Handlers
 {

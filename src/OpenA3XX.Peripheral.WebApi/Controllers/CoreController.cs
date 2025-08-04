@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 using OpenA3XX.Core.Dtos;
-using OpenA3XX.Core.Repositories;
+using OpenA3XX.Core.Repositories.Hardware;
 using OpenA3XX.Peripheral.WebApi.Hubs;
 
 namespace OpenA3XX.Peripheral.WebApi.Controllers

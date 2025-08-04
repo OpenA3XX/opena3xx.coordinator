@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using OpenA3XX.Core.Eventing;
-using OpenA3XX.Core.Repositories;
+using OpenA3XX.Core.Repositories.Simulation;
 
 namespace OpenA3XX.Core.Sockets.Handlers
 {

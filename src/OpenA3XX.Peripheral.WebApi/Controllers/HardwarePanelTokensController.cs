@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using OpenA3XX.Core.Dtos;
-using OpenA3XX.Core.Services;
+using OpenA3XX.Core.Services.Hardware;
 
 namespace OpenA3XX.Peripheral.WebApi.Controllers
 {

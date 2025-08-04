@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using OpenA3XX.Core.Dtos;
-using OpenA3XX.Core.Services;
+using OpenA3XX.Core.Services.Aircraft;
 
 namespace OpenA3XX.Peripheral.WebApi.Controllers
 {

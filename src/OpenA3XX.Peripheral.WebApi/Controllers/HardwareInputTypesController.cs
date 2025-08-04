@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using OpenA3XX.Core.Dtos;
 using OpenA3XX.Core.Exceptions;
-using OpenA3XX.Core.Services;
+using OpenA3XX.Core.Services.Hardware;
 using System;
 using System.Linq;
 using Microsoft.Extensions.Options;
