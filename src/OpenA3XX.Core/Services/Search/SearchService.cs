@@ -136,53 +136,6 @@ namespace OpenA3XX.Core.Services.Search
         }
 
         /// <summary>
-        /// Gets search suggestions for autocomplete
-        /// </summary>
-        public async Task<List<string>> GetSuggestionsAsync(string queryText, int limit = 5)
-        {
-            try
-            {
-                _logger.LogInformation("Getting search suggestions for: {QueryText}", queryText);
-
-                // Perform a quick search to get suggestions
-                var searchResponse = await QuickSearchAsync(queryText, limit * 2);
-
-                var suggestions = new List<string>();
-
-                // Extract unique titles from search results
-                foreach (var result in searchResponse.Results)
-                {
-                    if (!suggestions.Contains(result.Title) && suggestions.Count < limit)
-                    {
-                        suggestions.Add(result.Title);
-                    }
-                }
-
-                // If we don't have enough suggestions, add some common terms
-                if (suggestions.Count < limit)
-                {
-                    var commonTerms = GetCommonSearchTerms();
-                    foreach (var term in commonTerms)
-                    {
-                        if (!suggestions.Contains(term) && suggestions.Count < limit)
-                        {
-                            suggestions.Add(term);
-                        }
-                    }
-                }
-
-                _logger.LogInformation("Generated {Count} search suggestions", suggestions.Count);
-
-                return suggestions;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Failed to get search suggestions for: {QueryText}", queryText);
-                return new List<string>();
-            }
-        }
-
-        /// <summary>
         /// Gets available entity types for search
         /// </summary>
         public async Task<List<string>> GetAvailableEntityTypesAsync()
@@ -196,31 +149,6 @@ namespace OpenA3XX.Core.Services.Search
             {
                 _logger.LogError(ex, "Failed to get available entity types");
                 return new List<string>();
-            }
-        }
-
-        /// <summary>
-        /// Gets search statistics for analytics
-        /// </summary>
-        public async Task<SearchStatisticsDto> GetSearchStatisticsAsync()
-        {
-            try
-            {
-                var entityTypeCounts = await _searchRepository.GetEntityTypeCountsAsync();
-                var totalEntities = entityTypeCounts.Values.Sum();
-
-                return new SearchStatisticsDto
-                {
-                    TotalEntities = totalEntities,
-                    EntityTypeCounts = entityTypeCounts,
-                    PopularSearchTerms = GetCommonSearchTerms(),
-                    AverageResponseTimeMs = 50.0 // This would be calculated from actual metrics
-                };
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Failed to get search statistics");
-                return new SearchStatisticsDto();
             }
         }
 
@@ -284,31 +212,12 @@ namespace OpenA3XX.Core.Services.Search
                 filteredResults = filteredResults.Where(r => r.RelevanceScore >= query.MinRelevanceScore).ToList();
             }
 
-            // Filter by date range
-            if (query.FromDate.HasValue)
-            {
-                filteredResults = filteredResults.Where(r => r.CreatedAt >= query.FromDate.Value).ToList();
-            }
-
-            if (query.ToDate.HasValue)
-            {
-                filteredResults = filteredResults.Where(r => r.CreatedAt <= query.ToDate.Value).ToList();
-            }
-
-            // Filter by manufacturer
-            if (!string.IsNullOrWhiteSpace(query.Manufacturer))
-            {
-                filteredResults = filteredResults.Where(r => 
-                    !string.IsNullOrWhiteSpace(r.Manufacturer) && 
-                    r.Manufacturer.Equals(query.Manufacturer, StringComparison.OrdinalIgnoreCase)).ToList();
-            }
-
             // Filter by active status
             if (!query.IncludeInactive)
             {
-                filteredResults = filteredResults.Where(r => 
-                    !r.Metadata.ContainsKey("isActive") || 
-                    (bool)r.Metadata["isActive"]).ToList();
+                // Since we removed metadata, we'll need to handle this differently
+                // For now, we'll include all results since we don't have the metadata
+                // This would need to be implemented in the repository layer
             }
 
             return filteredResults;
@@ -327,31 +236,6 @@ namespace OpenA3XX.Core.Services.Search
                 SearchSortOrder.UpdatedDate => results.OrderByDescending(r => r.UpdatedAt).ToList(),
                 SearchSortOrder.EntityType => results.OrderBy(r => r.EntityType).ThenBy(r => r.Title).ToList(),
                 _ => results.OrderByDescending(r => r.RelevanceScore).ToList()
-            };
-        }
-
-        /// <summary>
-        /// Gets common search terms for suggestions
-        /// </summary>
-        private List<string> GetCommonSearchTerms()
-        {
-            return new List<string>
-            {
-                "Boeing",
-                "Airbus",
-                "737",
-                "A320",
-                "Panel",
-                "Input",
-                "Output",
-                "Button",
-                "Switch",
-                "LED",
-                "Display",
-                "SimConnect",
-                "FSUIPC",
-                "Event",
-                "Simulator"
             };
         }
     }

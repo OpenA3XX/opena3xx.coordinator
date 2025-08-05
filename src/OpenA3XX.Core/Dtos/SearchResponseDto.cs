@@ -62,25 +62,5 @@ namespace OpenA3XX.Core.Dtos
         /// Facets by entity type
         /// </summary>
         public Dictionary<string, int> EntityTypes { get; set; } = new Dictionary<string, int>();
-
-        /// <summary>
-        /// Facets by manufacturer
-        /// </summary>
-        public Dictionary<string, int> Manufacturers { get; set; } = new Dictionary<string, int>();
-
-        /// <summary>
-        /// Facets by hardware type
-        /// </summary>
-        public Dictionary<string, int> HardwareTypes { get; set; } = new Dictionary<string, int>();
-
-        /// <summary>
-        /// Facets by simulator SDK type
-        /// </summary>
-        public Dictionary<string, int> SimulatorSdkTypes { get; set; } = new Dictionary<string, int>();
-
-        /// <summary>
-        /// Facets by date ranges
-        /// </summary>
-        public Dictionary<string, int> DateRanges { get; set; } = new Dictionary<string, int>();
     }
 } 

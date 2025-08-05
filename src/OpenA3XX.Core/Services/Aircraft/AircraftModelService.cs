@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
@@ -126,7 +127,7 @@ namespace OpenA3XX.Core.Services.Aircraft
         private Manufacturer FindOrCreateManufacturer(string manufacturerName)
         {
             var manufacturers = _manufacturerRepository.GetAllManufacturers();
-            var manufacturer = manufacturers.FirstOrDefault(m => m.Name.Equals(manufacturerName, global::System.StringComparison.OrdinalIgnoreCase));
+            var manufacturer = manufacturers.FirstOrDefault(m => m.Name.Equals(manufacturerName, StringComparison.OrdinalIgnoreCase));
             
             if (manufacturer == null)
             {

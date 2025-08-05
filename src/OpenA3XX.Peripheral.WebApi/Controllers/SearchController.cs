@@ -42,9 +42,6 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
         /// <param name="offset">Number of results to skip (default: 0)</param>
         /// <param name="minScore">Minimum relevance score (default: 0.1)</param>
         /// <param name="includeInactive">Whether to include inactive entities (default: false)</param>
-        /// <param name="fromDate">Filter by creation date from</param>
-        /// <param name="toDate">Filter by creation date to</param>
-        /// <param name="manufacturer">Filter by manufacturer</param>
         /// <param name="sortBy">Sort order (relevance, title, createdDate, updatedDate, entityType)</param>
         /// <param name="includeFacets">Whether to include facets in response (default: true)</param>
         /// <returns>Search results with facets</returns>
@@ -62,9 +59,6 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
             [FromQuery] int offset = 0,
             [FromQuery] double minScore = 0.1,
             [FromQuery] bool includeInactive = false,
-            [FromQuery] DateTime? fromDate = null,
-            [FromQuery] DateTime? toDate = null,
-            [FromQuery] string manufacturer = null,
             [FromQuery] string sortBy = "relevance",
             [FromQuery] bool includeFacets = true)
         {
@@ -95,9 +89,6 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
                     Offset = offset,
                     MinRelevanceScore = minScore,
                     IncludeInactive = includeInactive,
-                    FromDate = fromDate,
-                    ToDate = toDate,
-                    Manufacturer = manufacturer,
                     IncludeFacets = includeFacets
                 };
 
@@ -167,45 +158,6 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
         }
 
         /// <summary>
-        /// Gets search suggestions for autocomplete
-        /// </summary>
-        /// <param name="q">Partial search query</param>
-        /// <param name="limit">Maximum number of suggestions (default: 5)</param>
-        /// <returns>List of search suggestions</returns>
-        /// <response code="200">Returns search suggestions</response>
-        /// <response code="400">If the query is invalid</response>
-        /// <response code="500">If an internal server error occurs</response>
-        [HttpGet("suggestions")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<string>))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorDto))]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDto))]
-        public async Task<IActionResult> GetSuggestions(
-            [FromQuery] string q = "",
-            [FromQuery] int limit = 5)
-        {
-            if (string.IsNullOrWhiteSpace(q))
-            {
-                return BadRequest(ErrorDto.Create("Search query is required", "MISSING_QUERY"));
-            }
-
-            try
-            {
-                _logger.LogInformation("Search suggestions request: Query='{Query}', Limit={Limit}", q, limit);
-
-                var suggestions = await _searchService.GetSuggestionsAsync(q.Trim(), limit);
-
-                _logger.LogInformation("Search suggestions completed: {Count} suggestions found", suggestions.Count);
-
-                return Ok(suggestions);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Search suggestions failed for query: {Query}", q);
-                return StatusCode(500, ErrorDto.Create("An error occurred while getting search suggestions", "SUGGESTIONS_ERROR"));
-            }
-        }
-
-        /// <summary>
         /// Gets available entity types for search
         /// </summary>
         /// <returns>List of available entity types</returns>
@@ -230,34 +182,6 @@ namespace OpenA3XX.Peripheral.WebApi.Controllers
             {
                 _logger.LogError(ex, "Get entity types failed");
                 return StatusCode(500, ErrorDto.Create("An error occurred while getting entity types", "ENTITY_TYPES_ERROR"));
-            }
-        }
-
-        /// <summary>
-        /// Gets search statistics for analytics
-        /// </summary>
-        /// <returns>Search statistics</returns>
-        /// <response code="200">Returns search statistics</response>
-        /// <response code="500">If an internal server error occurs</response>
-        [HttpGet("statistics")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SearchStatisticsDto))]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDto))]
-        public async Task<IActionResult> GetStatistics()
-        {
-            try
-            {
-                _logger.LogInformation("Get search statistics request");
-
-                var statistics = await _searchService.GetSearchStatisticsAsync();
-
-                _logger.LogInformation("Get search statistics completed: {TotalEntities} total entities", statistics.TotalEntities);
-
-                return Ok(statistics);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Get search statistics failed");
-                return StatusCode(500, ErrorDto.Create("An error occurred while getting search statistics", "STATISTICS_ERROR"));
             }
         }
     }

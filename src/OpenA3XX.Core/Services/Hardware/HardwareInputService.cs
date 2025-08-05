@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
@@ -148,7 +149,7 @@ namespace OpenA3XX.Core.Services.Hardware
         private HardwareInputType FindOrCreateHardwareInputType(string hardwareInputTypeName)
         {
             var hardwareInputTypes = _hardwareInputTypesRepository.GetAllHardwareInputTypes();
-            var hardwareInputType = hardwareInputTypes.FirstOrDefault(t => t.Name.Equals(hardwareInputTypeName, global::System.StringComparison.OrdinalIgnoreCase));
+            var hardwareInputType = hardwareInputTypes.FirstOrDefault(t => t.Name.Equals(hardwareInputTypeName, StringComparison.OrdinalIgnoreCase));
             
             if (hardwareInputType == null)
             {

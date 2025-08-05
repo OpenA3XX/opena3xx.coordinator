@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace OpenA3XX.Coordinator.TestHarness.Migrations
+namespace OpenA3XX.Core.Migrations
 {
-    public partial class wuhahaha : Migration
+    public partial class TestMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

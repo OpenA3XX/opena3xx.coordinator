@@ -55,25 +55,17 @@ namespace OpenA3XX.Core.Repositories.Search
                         Snippet = GenerateSnippet(aircraft, searchTerms),
                         CreatedAt = aircraft.CreatedAt,
                         UpdatedAt = aircraft.UpdatedAt,
-                        Metadata = new Dictionary<string, object>
-                        {
-                            ["isActive"] = aircraft.IsActive,
-                            ["type"] = aircraft.Type,
-                            ["manufacturerId"] = aircraft.ManufacturerId
-                        },
                         Actions = new List<SearchResultActionDto>
                         {
                             new SearchResultActionDto
                             {
                                 Name = "View",
-                                Url = $"/api/aircraft-models/{aircraft.Id}",
-                                Method = "GET"
+                                Url = $"/api/aircraft-models/{aircraft.Id}"
                             },
                             new SearchResultActionDto
                             {
                                 Name = "Edit",
-                                Url = $"/api/aircraft-models/{aircraft.Id}",
-                                Method = "PUT"
+                                Url = $"/api/aircraft-models/{aircraft.Id}"
                             }
                         }
                     };
@@ -97,7 +89,6 @@ namespace OpenA3XX.Core.Repositories.Search
             var searchTerms = query.Split(' ', StringSplitOptions.RemoveEmptyEntries);
             
             var results = await _context.HardwarePanels
-                .Include(hp => hp.HardwarePanelOwner)
                 .Include(hp => hp.AircraftModel)
                 .ToListAsync();
 
@@ -119,24 +110,17 @@ namespace OpenA3XX.Core.Repositories.Search
                         Snippet = GenerateSnippet(panel, searchTerms),
                         CreatedAt = DateTime.UtcNow, // Default since no CreatedAt property
                         UpdatedAt = DateTime.UtcNow, // Default since no UpdatedAt property
-                        Metadata = new Dictionary<string, object>
-                        {
-                            ["aircraftModel"] = panel.AircraftModel?.Model,
-                            ["cockpitArea"] = panel.CockpitArea.ToString()
-                        },
                         Actions = new List<SearchResultActionDto>
                         {
                             new SearchResultActionDto
                             {
                                 Name = "View",
-                                Url = $"/api/hardware-panels/{panel.Id}",
-                                Method = "GET"
+                                Url = $"/api/hardware-panels/{panel.Id}"
                             },
                             new SearchResultActionDto
                             {
                                 Name = "Edit",
-                                Url = $"/api/hardware-panels/{panel.Id}",
-                                Method = "PUT"
+                                Url = $"/api/hardware-panels/{panel.Id}"
                             }
                         }
                     };
@@ -179,23 +163,17 @@ namespace OpenA3XX.Core.Repositories.Search
                         Snippet = GenerateSnippet(board, searchTerms),
                         CreatedAt = DateTime.UtcNow, // Default since no CreatedAt property
                         UpdatedAt = DateTime.UtcNow, // Default since no UpdatedAt property
-                        Metadata = new Dictionary<string, object>
-                        {
-                            ["busCount"] = board.Buses?.Count ?? 0
-                        },
                         Actions = new List<SearchResultActionDto>
                         {
                             new SearchResultActionDto
                             {
                                 Name = "View",
-                                Url = $"/api/hardware-boards/{board.Id}",
-                                Method = "GET"
+                                Url = $"/api/hardware-boards/{board.Id}"
                             },
                             new SearchResultActionDto
                             {
                                 Name = "Edit",
-                                Url = $"/api/hardware-boards/{board.Id}",
-                                Method = "PUT"
+                                Url = $"/api/hardware-boards/{board.Id}"
                             }
                         }
                     };
@@ -241,24 +219,17 @@ namespace OpenA3XX.Core.Repositories.Search
                         Snippet = GenerateSnippet(input, searchTerms),
                         CreatedAt = DateTime.UtcNow, // Default since no CreatedAt property
                         UpdatedAt = DateTime.UtcNow, // Default since no UpdatedAt property
-                        Metadata = new Dictionary<string, object>
-                        {
-                            ["type"] = input.HardwareInputType?.Name,
-                            ["panelName"] = input.HardwarePanel?.Name
-                        },
                         Actions = new List<SearchResultActionDto>
                         {
                             new SearchResultActionDto
                             {
                                 Name = "View",
-                                Url = $"/api/hardware-inputs/{input.Id}",
-                                Method = "GET"
+                                Url = $"/api/hardware-inputs/{input.Id}"
                             },
                             new SearchResultActionDto
                             {
                                 Name = "Edit",
-                                Url = $"/api/hardware-inputs/{input.Id}",
-                                Method = "PUT"
+                                Url = $"/api/hardware-inputs/{input.Id}"
                             }
                         }
                     };
@@ -304,24 +275,17 @@ namespace OpenA3XX.Core.Repositories.Search
                         Snippet = GenerateSnippet(output, searchTerms),
                         CreatedAt = DateTime.UtcNow, // Default since no CreatedAt property
                         UpdatedAt = DateTime.UtcNow, // Default since no UpdatedAt property
-                        Metadata = new Dictionary<string, object>
-                        {
-                            ["type"] = output.HardwareOutputType?.Name,
-                            ["panelName"] = output.HardwarePanel?.Name
-                        },
                         Actions = new List<SearchResultActionDto>
                         {
                             new SearchResultActionDto
                             {
                                 Name = "View",
-                                Url = $"/api/hardware-outputs/{output.Id}",
-                                Method = "GET"
+                                Url = $"/api/hardware-outputs/{output.Id}"
                             },
                             new SearchResultActionDto
                             {
                                 Name = "Edit",
-                                Url = $"/api/hardware-outputs/{output.Id}",
-                                Method = "PUT"
+                                Url = $"/api/hardware-outputs/{output.Id}"
                             }
                         }
                     };
@@ -345,8 +309,6 @@ namespace OpenA3XX.Core.Repositories.Search
             var searchTerms = query.Split(' ', StringSplitOptions.RemoveEmptyEntries);
             
             var results = await _context.SimulatorEvents
-                .Include(se => se.SimulatorEventType)
-                .Include(se => se.SimulatorEventSdkType)
                 .ToListAsync();
 
             var searchResults = new List<SearchResultDto>();
@@ -367,26 +329,17 @@ namespace OpenA3XX.Core.Repositories.Search
                         Snippet = GenerateSnippet(simEvent, searchTerms),
                         CreatedAt = DateTime.UtcNow, // Default since no CreatedAt property
                         UpdatedAt = DateTime.UtcNow, // Default since no UpdatedAt property
-                        Metadata = new Dictionary<string, object>
-                        {
-                            ["eventCode"] = simEvent.EventCode,
-                            ["eventName"] = simEvent.EventName,
-                            ["eventType"] = simEvent.SimulatorEventType.ToString(),
-                            ["sdkType"] = simEvent.SimulatorEventSdkType.ToString()
-                        },
                         Actions = new List<SearchResultActionDto>
                         {
                             new SearchResultActionDto
                             {
                                 Name = "View",
-                                Url = $"/api/simulator-events/{simEvent.Id}",
-                                Method = "GET"
+                                Url = $"/api/simulator-events/{simEvent.Id}"
                             },
                             new SearchResultActionDto
                             {
                                 Name = "Edit",
-                                Url = $"/api/simulator-events/{simEvent.Id}",
-                                Method = "PUT"
+                                Url = $"/api/simulator-events/{simEvent.Id}"
                             }
                         }
                     };
@@ -416,53 +369,6 @@ namespace OpenA3XX.Core.Repositories.Search
             facets.EntityTypes["HardwareInput"] = await _context.HardwareInputs.CountAsync();
             facets.EntityTypes["HardwareOutput"] = await _context.HardwareOutputs.CountAsync();
             facets.EntityTypes["SimulatorEvent"] = await _context.SimulatorEvents.CountAsync();
-
-            // Manufacturer facets
-            var manufacturers = await _context.Manufacturers
-                .Select(m => m.Name)
-                .Distinct()
-                .ToListAsync();
-
-            foreach (var manufacturer in manufacturers)
-            {
-                var count = await _context.AircraftModels
-                    .CountAsync(am => am.Manufacturer.Name == manufacturer && am.IsActive);
-                if (count > 0)
-                {
-                    facets.Manufacturers[manufacturer] = count;
-                }
-            }
-
-            // Hardware type facets
-            var inputTypes = await _context.HardwareInputTypes
-                .Select(it => it.Name)
-                .Distinct()
-                .ToListAsync();
-
-            foreach (var inputType in inputTypes)
-            {
-                var count = await _context.HardwareInputs
-                    .CountAsync(hi => hi.HardwareInputType.Name == inputType);
-                if (count > 0)
-                {
-                    facets.HardwareTypes[inputType] = count;
-                }
-            }
-
-            var outputTypes = await _context.HardwareOutputTypes
-                .Select(ot => ot.Name)
-                .Distinct()
-                .ToListAsync();
-
-            foreach (var outputType in outputTypes)
-            {
-                var count = await _context.HardwareOutputs
-                    .CountAsync(ho => ho.HardwareOutputType.Name == outputType);
-                if (count > 0)
-                {
-                    facets.HardwareTypes[outputType] = count;
-                }
-            }
 
             return facets;
         }

@@ -44,11 +44,6 @@ namespace OpenA3XX.Core.Dtos
         public string Snippet { get; set; }
 
         /// <summary>
-        /// Additional metadata specific to the entity type
-        /// </summary>
-        public Dictionary<string, object> Metadata { get; set; } = new Dictionary<string, object>();
-
-        /// <summary>
         /// Available actions for this result
         /// </summary>
         public List<SearchResultActionDto> Actions { get; set; } = new List<SearchResultActionDto>();
@@ -78,15 +73,5 @@ namespace OpenA3XX.Core.Dtos
         /// URL to perform the action
         /// </summary>
         public string Url { get; set; }
-
-        /// <summary>
-        /// HTTP method for the action
-        /// </summary>
-        public string Method { get; set; } = "GET";
-
-        /// <summary>
-        /// Whether this action requires confirmation
-        /// </summary>
-        public bool RequiresConfirmation { get; set; } = false;
     }
 } 

@@ -1,6 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Net.Sockets;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
@@ -77,7 +76,7 @@ namespace OpenA3XX.Core.Services.System
 
                 // For MSFS, we'll attempt a quick connection test using a timeout
                 // Since we can't directly use FsConnect here (different assembly), we'll use a TCP connection test
-                using var tcpClient = new global::System.Net.Sockets.TcpClient();
+                using var tcpClient = new TcpClient();
                 var connectTask = tcpClient.ConnectAsync(_flightSimulatorOptions.Connection.HostName, (int)_flightSimulatorOptions.Connection.Port);
                 var timeoutTask = Task.Delay(5000); // 5 second timeout
 

@@ -39,21 +39,6 @@ namespace OpenA3XX.Core.Dtos
         public bool IncludeInactive { get; set; } = false;
 
         /// <summary>
-        /// Date range filter - from date
-        /// </summary>
-        public DateTime? FromDate { get; set; }
-
-        /// <summary>
-        /// Date range filter - to date
-        /// </summary>
-        public DateTime? ToDate { get; set; }
-
-        /// <summary>
-        /// Manufacturer filter (for aircraft models)
-        /// </summary>
-        public string Manufacturer { get; set; }
-
-        /// <summary>
         /// Sort order for results
         /// </summary>
         public SearchSortOrder SortOrder { get; set; } = SearchSortOrder.Relevance;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
@@ -142,7 +143,7 @@ namespace OpenA3XX.Core.Services.Hardware
         private HardwareOutputType FindOrCreateHardwareOutputType(string hardwareOutputTypeName)
         {
             var hardwareOutputTypes = _hardwareOutputTypesRepository.GetAllHardwareOutputTypes();
-            var hardwareOutputType = hardwareOutputTypes.FirstOrDefault(t => t.Name.Equals(hardwareOutputTypeName, global::System.StringComparison.OrdinalIgnoreCase));
+            var hardwareOutputType = hardwareOutputTypes.FirstOrDefault(t => t.Name.Equals(hardwareOutputTypeName, StringComparison.OrdinalIgnoreCase));
             
             if (hardwareOutputType == null)
             {

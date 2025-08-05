@@ -20,6 +20,7 @@ using OpenA3XX.Core.Services.Integration;
 using OpenA3XX.Core.Services.Simulation;
 using OpenA3XX.Core.Services.System;
 using OpenA3XX.Core.Services.Search;
+using OpenA3XX.Core.Services.Audit;
 using OpenA3XX.Peripheral.WebApi.Hubs;
 using Microsoft.Extensions.Logging;
 
@@ -67,6 +68,9 @@ namespace OpenA3XX.Peripheral.WebApi.Extensions
         /// <returns>The service collection for chaining</returns>
         public static IServiceCollection AddDatabaseServices(this IServiceCollection services)
         {
+            // Register audit service first
+            services.AddScoped<IAuditService, AuditService>();
+            
             services.AddDbContext<CoreDataContext>((serviceProvider, options) =>
             {
                 var openA3XXOptions = serviceProvider.GetService<IOptions<OpenA3XXOptions>>()?.Value;

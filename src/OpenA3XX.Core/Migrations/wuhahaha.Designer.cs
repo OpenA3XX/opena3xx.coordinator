@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OpenA3XX.Core.DataContexts;
 
-namespace OpenA3XX.Coordinator.TestHarness.Migrations
+namespace OpenA3XX.Core.Migrations
 {
     [DbContext(typeof(CoreDataContext))]
-    [Migration("20210126204510_wuhahaha")]
-    partial class wuhahaha
+    [Migration("20210126204510_TestMigration")]
+    partial class TestMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
