@@ -44,5 +44,21 @@ namespace OpenA3XX.Core.Repositories.Aircraft
             Save();
             return result;
         }
+
+        /// <summary>
+        /// Retrieves a manufacturer by name using a case-insensitive comparison.
+        /// </summary>
+        /// <param name="name">Name of the manufacturer to retrieve.</param>
+        /// <returns>The matching manufacturer or null if not found.</returns>
+        public Manufacturer GetByName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                return null;
+            }
+
+            return GetAll()
+                .FirstOrDefault(m => m.Name.Equals(name, System.StringComparison.OrdinalIgnoreCase));
+        }
     }
 }
