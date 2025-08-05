@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using AutoMapper;
 using Microsoft.Extensions.Logging;
 using OpenA3XX.Core.Dtos;
@@ -126,16 +125,20 @@ namespace OpenA3XX.Core.Services.Aircraft
 
         private Manufacturer FindOrCreateManufacturer(string manufacturerName)
         {
-            var manufacturers = _manufacturerRepository.GetAllManufacturers();
-            var manufacturer = manufacturers.FirstOrDefault(m => m.Name.Equals(manufacturerName, StringComparison.OrdinalIgnoreCase));
-            
+            if (string.IsNullOrWhiteSpace(manufacturerName))
+            {
+                throw new ArgumentException("Manufacturer name cannot be null or whitespace.", nameof(manufacturerName));
+            }
+
+            var manufacturer = _manufacturerRepository.GetByName(manufacturerName);
+
             if (manufacturer == null)
             {
                 _logger.LogInformation("Creating new manufacturer: {ManufacturerName}", manufacturerName);
                 manufacturer = new Manufacturer { Name = manufacturerName };
                 manufacturer = _manufacturerRepository.Add(manufacturer);
             }
-            
+
             return manufacturer;
         }
     }
